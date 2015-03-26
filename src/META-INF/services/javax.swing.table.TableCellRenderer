@@ -1,0 +1,5 @@
+com.l2fprod.common.swing.renderer.BooleanCellRenderer
+com.l2fprod.common.swing.renderer.CalendarRenderer
+com.l2fprod.common.swing.renderer.ColorCellRenderer
+com.l2fprod.common.swing.renderer.DateRenderer
+com.l2fprod.common.swing.renderer.DefaultCellRenderer

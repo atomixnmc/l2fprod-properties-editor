@@ -53,7 +53,7 @@ public class ColorCellRenderer extends DefaultCellRenderer {
     @Override
     protected String convertToString(Object value) {
         if (value instanceof Integer) {
-            value = new Color(((Integer) value).intValue());
+            value = new Color(((Integer) value));
         }
         if (!(value instanceof Color)) {
             return null;

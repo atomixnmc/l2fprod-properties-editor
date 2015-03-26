@@ -17,28 +17,22 @@
  */
 package com.l2fprod.common.propertysheet;
 
-import com.l2fprod.common.beans.editor.*;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.Rectangle;
+import com.l2fprod.common.annotations.EditorRegistry;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
-import java.io.File;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Mapping between Properties, Property Types and Property Editors.
  */
-public class PropertyEditorRegistry implements PropertyEditorFactory {
+public final class PropertyEditorRegistry implements PropertyEditorFactory {
 
     private final Map typeToEditor;
     private final Map propertyToEditor;
@@ -177,52 +171,29 @@ public class PropertyEditorRegistry implements PropertyEditorFactory {
     /**
      * Adds default editors. This method is called by the constructor but may be
      * called later to reset any customizations made through the
-     * <code>registerEditor</code> methods. <b>Note: if overriden,
+     * <code>registerEditor</code> methods. <b>Note: if overridden,
      * <code>super.registerDefaults()</code> must be called before plugging
      * custom defaults. </b>
      */
     public void registerDefaults() {
         typeToEditor.clear();
         propertyToEditor.clear();
-
-        // our editors
-        registerEditor(String.class, StringPropertyEditor.class);
-
-        registerEditor(double.class, DoublePropertyEditor.class);
-        registerEditor(Double.class, DoublePropertyEditor.class);
-
-        registerEditor(float.class, FloatPropertyEditor.class);
-        registerEditor(Float.class, FloatPropertyEditor.class);
-
-        registerEditor(int.class, IntegerPropertyEditor.class);
-        registerEditor(Integer.class, IntegerPropertyEditor.class);
-
-        registerEditor(long.class, LongPropertyEditor.class);
-        registerEditor(Long.class, LongPropertyEditor.class);
-
-        registerEditor(short.class, ShortPropertyEditor.class);
-        registerEditor(Short.class, ShortPropertyEditor.class);
-
-        registerEditor(boolean.class, BooleanAsCheckBoxPropertyEditor.class);
-        registerEditor(Boolean.class, BooleanAsCheckBoxPropertyEditor.class);
-
-        registerEditor(File.class, FilePropertyEditor.class);
-
-        registerEditor(Calendar.class, CalendarStringPropertyEditor.class);
-        registerEditor(Date.class, DateStringPropertyEditor.class);
-
-        // awt object editors
-        registerEditor(Color.class, ColorPropertyEditor.class);
-        registerEditor(Dimension.class, DimensionPropertyEditor.class);
-        registerEditor(Insets.class, InsetsPropertyEditor.class);
+        
+        //switch to service loader and use of custom annotation
+        ServiceLoader<PropertyEditor> propertyLoader = ServiceLoader.load(PropertyEditor.class);
         try {
-            Class fontEditor
-                    = Class.forName("com.l2fprod.common.beans.editor.FontPropertyEditor");
-            registerEditor(Font.class, fontEditor);
-        } catch (ClassNotFoundException e) {
-            // FontPropertyEditor might not be there when using the split jars
+            Iterator<PropertyEditor> controllers_it = propertyLoader.iterator();
+            while (controllers_it.hasNext()) {
+                PropertyEditor c = controllers_it.next();
+                EditorRegistry annotation = c.getClass().getAnnotation(EditorRegistry.class);
+                if (annotation != null) {
+                    for (Class<?> clazz : annotation.type()) {
+                        registerEditor(clazz, c.getClass());
+                    }
+                }
+            }
+        } catch (ServiceConfigurationError serviceError) {
         }
-        registerEditor(Rectangle.class, RectanglePropertyEditor.class);
     }
 
 }

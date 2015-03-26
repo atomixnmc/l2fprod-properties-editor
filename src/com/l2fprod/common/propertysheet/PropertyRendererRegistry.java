@@ -17,19 +17,15 @@
  */
 package com.l2fprod.common.propertysheet;
 
-import com.l2fprod.common.swing.renderer.BooleanCellRenderer;
-import com.l2fprod.common.swing.renderer.ColorCellRenderer;
-import com.l2fprod.common.swing.renderer.DateRenderer;
-import com.l2fprod.common.swing.renderer.DefaultCellRenderer;
+import com.l2fprod.common.annotations.RendererRegistry;
 import com.l2fprod.common.beans.ExtendedPropertyDescriptor;
-import com.l2fprod.common.swing.renderer.CalendarRenderer;
-
-import java.awt.Color;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.beans.PropertyDescriptor;
-import java.util.Calendar;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +34,7 @@ import javax.swing.table.TableCellRenderer;
 /**
  * Mapping between Properties, Property Types and Renderers.
  */
-public class PropertyRendererRegistry implements PropertyRendererFactory {
+public final class PropertyRendererRegistry implements PropertyRendererFactory {
 
     private final Map typeToRenderer;
     private final Map propertyToRenderer;
@@ -176,40 +172,23 @@ public class PropertyRendererRegistry implements PropertyRendererFactory {
         typeToRenderer.clear();
         propertyToRenderer.clear();
 
-        // use the default renderer for Object and all primitives
-        DefaultCellRenderer renderer = new DefaultCellRenderer();
-        renderer.setShowOddAndEvenRows(false);
-
-        ColorCellRenderer colorRenderer = new ColorCellRenderer();
-        colorRenderer.setShowOddAndEvenRows(false);
-
-        BooleanCellRenderer booleanRenderer = new BooleanCellRenderer();
-
-        DateRenderer dateRenderer = new DateRenderer();
-        dateRenderer.setShowOddAndEvenRows(false);
-        CalendarRenderer calRenderer = new CalendarRenderer();
-        calRenderer.setShowOddAndEvenRows(false);
-
-        registerRenderer(Object.class, renderer);
-        registerRenderer(Color.class, colorRenderer);
-        registerRenderer(boolean.class, booleanRenderer);
-        registerRenderer(Boolean.class, booleanRenderer);
-        registerRenderer(byte.class, renderer);
-        registerRenderer(Byte.class, renderer);
-        registerRenderer(char.class, renderer);
-        registerRenderer(Character.class, renderer);
-        registerRenderer(double.class, renderer);
-        registerRenderer(Double.class, renderer);
-        registerRenderer(float.class, renderer);
-        registerRenderer(Float.class, renderer);
-        registerRenderer(int.class, renderer);
-        registerRenderer(Integer.class, renderer);
-        registerRenderer(long.class, renderer);
-        registerRenderer(Long.class, renderer);
-        registerRenderer(short.class, renderer);
-        registerRenderer(Short.class, renderer);
-        registerRenderer(Date.class, dateRenderer);
-        registerRenderer(Calendar.class, calRenderer);
+        ServiceLoader<TableCellRenderer> serviceLoader = ServiceLoader.load(TableCellRenderer.class);
+        Iterator<TableCellRenderer> iterator = serviceLoader.iterator();
+        while (iterator.hasNext()) {
+            TableCellRenderer next = iterator.next();
+            try {
+                RendererRegistry annotation = next.getClass().getAnnotation(RendererRegistry.class);
+                if (annotation != null) {
+                    for (Class<?> clazz : annotation.type()) {
+                        registerRenderer(clazz, next);
+                    }
+                }
+                Method m = next.getClass().getMethod("setShowOddAndEvenRows", boolean.class);
+                if (m != null) {
+                    m.invoke(next, false);
+                }
+            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            }
+        }
     }
-
 }

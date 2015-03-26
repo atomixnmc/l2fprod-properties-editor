@@ -16,8 +16,7 @@ import java.lang.annotation.Target;
  * @author matta
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-public @interface RendererRegistry {
-    Class<?>[] type();
-    
+@Target({ElementType.METHOD})
+public @interface Browsable {
+    boolean enabled() default true;
 }
