@@ -13,6 +13,7 @@ import java.beans.BeanInfo;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.UIManager;
 
@@ -38,22 +39,28 @@ public class BeanBinder {
         sheet.setProperties(beanInfo.getPropertyDescriptors());
         sheet.readFromObject(bean);
 
+        final AtomicBoolean fire = new AtomicBoolean(true);
+
         // everytime a property change, update the button with it
         listener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                Property prop = (Property) evt.getSource();
-                try {
-                    prop.writeToObject(BeanBinder.this.bean);
-                    sheet.readFromObject(bean);
-                } catch (RuntimeException e) {
-                    // handle PropertyVetoException and restore previous value
-                    if (e.getCause() instanceof PropertyVetoException) {
-                        UIManager.getLookAndFeel().provideErrorFeedback(
-                                BeanBinder.this.sheet);
-                        prop.setValue(evt.getOldValue());
+                if (fire.get()) {
+                    fire.set(false);
+                    Property prop = (Property) evt.getSource();
+                    try {
+                        prop.writeToObject(BeanBinder.this.bean);
+                        sheet.readFromObject(bean);
+                    } catch (RuntimeException e) {
+                        // handle PropertyVetoException and restore previous value
+                        if (e.getCause() instanceof PropertyVetoException) {
+                            UIManager.getLookAndFeel().provideErrorFeedback(
+                                    BeanBinder.this.sheet);
+                            prop.setValue(evt.getOldValue());
+                        }
                     }
                 }
+                fire.set(true);
             }
         };
         sheet.addPropertySheetChangeListener(listener);
