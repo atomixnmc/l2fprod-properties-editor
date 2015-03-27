@@ -17,6 +17,7 @@
  */
 package com.l2fprod.common.model;
 
+import com.l2fprod.common.beans.BeanInfoFactory;
 import com.l2fprod.common.beans.BeanInfoResolver;
 
 import java.beans.BeanInfo;
@@ -32,6 +33,13 @@ public class DefaultBeanInfoResolver implements BeanInfoResolver {
 
     public static synchronized void addBeanInfo(Class<?> clazz, BeanInfo bi) {
         map.put(clazz.getName(), bi);
+    }
+    
+    public static synchronized BeanInfo getBeanInfoHelper(Class<?> clazz) {
+        if (map.containsKey(clazz.getName())) {
+            return map.get(clazz.getName());
+        }
+        return null;
     }
     
     public DefaultBeanInfoResolver() {
@@ -81,7 +89,7 @@ public class DefaultBeanInfoResolver implements BeanInfoResolver {
                 return map.get(classname);
             }
             else {
-                return null;
+                return BeanInfoFactory.createBeanInfo(clazz);
             }
         }
     }

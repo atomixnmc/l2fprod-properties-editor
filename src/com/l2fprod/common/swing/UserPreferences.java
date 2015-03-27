@@ -267,17 +267,17 @@ public class UserPreferences {
      * @param text
      */
     public static void track(JTextComponent text) {
-        new TextListener(text);
+        TextListener textListener = new TextListener(text);
     }
 
     private static class TextListener implements DocumentListener {
 
-        private JTextComponent text;
+        private final JTextComponent text;
 
         public TextListener(JTextComponent text) {
             this.text = text;
             restore();
-            text.getDocument().addDocumentListener(this);
+            text.getDocument().addDocumentListener((DocumentListener) this);
         }
 
         @Override

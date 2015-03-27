@@ -43,10 +43,12 @@ public interface ComponentFactory {
 
     public static class DefaultComponentFactory implements ComponentFactory {
 
+        @Override
         public JButton createMiniButton() {
             return new FixedButton();
         }
 
+        @Override
         public JComboBox createComboBox() {
             return new JComboBox();
         }

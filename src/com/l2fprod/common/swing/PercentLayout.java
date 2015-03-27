@@ -23,7 +23,7 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.LayoutManager2;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -78,18 +78,18 @@ public class PercentLayout implements LayoutManager2 {
         }
 
         public int intValue() {
-            return ((Integer) value).intValue();
+            return ((Integer) value);
         }
     }
 
     static class PercentConstraint extends Constraint {
 
         public PercentConstraint(float d) {
-            super(new Float(d));
+            super(d);
         }
 
         public float floatValue() {
-            return ((Float) value).floatValue();
+            return ((Float) value);
         }
     }
 
@@ -100,7 +100,7 @@ public class PercentLayout implements LayoutManager2 {
     private int orientation;
     private int gap;
 
-    private Hashtable m_ComponentToConstraint;
+    private HashMap<Component, Object> m_ComponentToConstraint;
 
     /**
      * Creates a new HORIZONTAL PercentLayout with a gap of 0.
@@ -113,7 +113,7 @@ public class PercentLayout implements LayoutManager2 {
         setOrientation(orientation);
         this.gap = gap;
 
-        m_ComponentToConstraint = new Hashtable();
+        m_ComponentToConstraint = new HashMap<>();
     }
 
     public void setGap(int gap) {
@@ -121,6 +121,7 @@ public class PercentLayout implements LayoutManager2 {
     }
 
     /**
+     * @return 
      * @javabean.property bound="true" preferred="true"
      */
     public int getGap() {
@@ -135,6 +136,7 @@ public class PercentLayout implements LayoutManager2 {
     }
 
     /**
+     * @return 
      * @javabean.property bound="true" preferred="true"
      */
     public int getOrientation() {
@@ -159,8 +161,7 @@ public class PercentLayout implements LayoutManager2 {
         } else if (constraints instanceof String) {
             String s = (String) constraints;
             if (s.endsWith("%")) {
-                float value = Float.valueOf(s.substring(0, s.length() - 1))
-                        .floatValue() / 100;
+                float value = Float.parseFloat(s.substring(0, s.length() - 1)) / 100;
                 if (value > 1 || value < 0) {
                     throw new IllegalArgumentException("percent value must be >= 0 and <= 100");
                 }
@@ -176,6 +177,7 @@ public class PercentLayout implements LayoutManager2 {
         }
     }
 
+    @Override
     public void addLayoutComponent(Component component, Object constraints) {
         setConstraint(component, constraints);
     }
@@ -186,7 +188,10 @@ public class PercentLayout implements LayoutManager2 {
      * be a number between 0 and 1 where 0 represents alignment along the
      * origin, 1 is aligned the furthest away from the origin, 0.5 is centered,
      * etc.
+     * @param target
+     * @return 
      */
+    @Override
     public float getLayoutAlignmentX(Container target) {
         return 1.0f / 2.0f;
     }
@@ -197,7 +202,10 @@ public class PercentLayout implements LayoutManager2 {
      * be a number between 0 and 1 where 0 represents alignment along the
      * origin, 1 is aligned the furthest away from the origin, 0.5 is centered,
      * etc.
+     * @param target
+     * @return 
      */
+    @Override
     public float getLayoutAlignmentY(Container target) {
         return 1.0f / 2.0f;
     }
@@ -205,7 +213,9 @@ public class PercentLayout implements LayoutManager2 {
     /**
      * Invalidates the layout, indicating that if the layout manager has cached
      * information it should be discarded.
+     * @param target
      */
+    @Override
     public void invalidateLayout(Container target) {
     }
 
@@ -215,6 +225,7 @@ public class PercentLayout implements LayoutManager2 {
      * @param name the component name
      * @param comp the component to be added
      */
+    @Override
     public void addLayoutComponent(String name, Component comp) {
     }
 
@@ -223,6 +234,7 @@ public class PercentLayout implements LayoutManager2 {
      *
      * @param comp the component ot be removed
      */
+    @Override
     public void removeLayoutComponent(Component comp) {
         m_ComponentToConstraint.remove(comp);
     }
@@ -232,8 +244,10 @@ public class PercentLayout implements LayoutManager2 {
      * components in the specified parent container.
      *
      * @param parent the component to be laid out
+     * @return 
      * @see #preferredLayoutSize
      */
+    @Override
     public Dimension minimumLayoutSize(Container parent) {
         return preferredLayoutSize(parent);
     }
@@ -241,14 +255,18 @@ public class PercentLayout implements LayoutManager2 {
     /**
      * Returns the maximum size of this component.
      *
+     * @param parent
+     * @return 
      * @see java.awt.Component#getMinimumSize()
      * @see java.awt.Component#getPreferredSize()
      * @see java.awt.LayoutManager
      */
+    @Override
     public Dimension maximumLayoutSize(Container parent) {
         return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
     }
 
+    @Override
     public Dimension preferredLayoutSize(Container parent) {
         Component[] components = parent.getComponents();
         Insets insets = parent.getInsets();
@@ -283,6 +301,7 @@ public class PercentLayout implements LayoutManager2 {
                 height + insets.top + insets.bottom);
     }
 
+    @Override
     public void layoutContainer(Container parent) {
         Insets insets = parent.getInsets();
         Dimension d = parent.getSize();
@@ -344,7 +363,7 @@ public class PercentLayout implements LayoutManager2 {
                 Constraint constraint
                         = (Constraint) m_ComponentToConstraint.get(components[i]);
                 if (constraint == REMAINING_SPACE) {
-                    remaining.add(new Integer(i));
+                    remaining.add(i);
                     sizes[i] = 0;
                 }
             }
@@ -353,7 +372,7 @@ public class PercentLayout implements LayoutManager2 {
         if (remaining.size() > 0) {
             int rest = availableSize / remaining.size();
             for (Iterator iter = remaining.iterator(); iter.hasNext();) {
-                sizes[((Integer) iter.next()).intValue()] = rest;
+                sizes[((Integer) iter.next())] = rest;
             }
         }
 

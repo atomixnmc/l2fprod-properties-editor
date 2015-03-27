@@ -34,6 +34,7 @@ public class DefaultObjectRenderer implements ObjectRenderer {
     idVisible = b;
   }
 
+  @Override
   public String getText(Object object) {
     if (object == null) {
       return null;
@@ -55,7 +56,7 @@ public class DefaultObjectRenderer implements ObjectRenderer {
       return ((File)object).getAbsolutePath();
     }
 
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
     if (idVisible && object instanceof HasId) {
       buffer.append(((HasId)object).getId());
     }

@@ -11,7 +11,9 @@ import java.beans.Introspector;
 import java.beans.MethodDescriptor;
 import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * BeanInfo class for JCollapsiblePane.
@@ -42,6 +44,8 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
 
     /**
      * Constructor for the JCollapsiblePaneBeanInfo object
+     *
+     * @throws java.beans.IntrospectionException
      */
     public JCollapsiblePaneBeanInfo() throws java.beans.IntrospectionException {
         // setup bean descriptor in constructor.
@@ -58,7 +62,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
                 : (String) info.getBeanDescriptor().getValue("propertyorder");
         PropertyDescriptor[] pd = getPropertyDescriptors();
         for (int i = 0; i != pd.length; i++) {
-            if (order.indexOf(pd[i].getName()) == -1) {
+            if (!order.contains(pd[i].getName())) {
                 order = order + (order.length() == 0 ? "" : ":") + pd[i].getName();
             }
         }
@@ -70,17 +74,17 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
      *
      * @return The additionalBeanInfo value
      */
+    @Override
     public BeanInfo[] getAdditionalBeanInfo() {
-        Vector bi = new Vector();
+        ArrayList<BeanInfo> bi = new ArrayList<>();
         BeanInfo[] biarr = null;
         try {
             for (Class cl = com.l2fprod.common.swing.JCollapsiblePane.class
                     .getSuperclass(); !cl.equals(java.awt.Component.class.getSuperclass()); cl = cl
                     .getSuperclass()) {
-                bi.addElement(Introspector.getBeanInfo(cl));
+                bi.add(Introspector.getBeanInfo(cl));
             }
-            biarr = new BeanInfo[bi.size()];
-            bi.copyInto(biarr);
+            biarr = bi.toArray(new BeanInfo[]{});
         } catch (Exception e) {
             // Ignore it
         }
@@ -92,6 +96,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
      *
      * @return The beanDescriptor value
      */
+    @Override
     public BeanDescriptor getBeanDescriptor() {
         return bd;
     }
@@ -101,6 +106,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
      *
      * @return The defaultPropertyIndex value
      */
+    @Override
     public int getDefaultPropertyIndex() {
         String defName = "";
         if (defName.equals("")) {
@@ -121,6 +127,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
      * @param type Description of the Parameter
      * @return The icon value
      */
+    @Override
     public Image getIcon(int type) {
         if (type == BeanInfo.ICON_COLOR_16x16) {
             return iconColor16;
@@ -142,9 +149,10 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
      *
      * @return The propertyDescriptors value
      */
+    @Override
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
-            Vector descriptors = new Vector();
+            ArrayList<PropertyDescriptor> descriptors = new ArrayList<>();
             PropertyDescriptor descriptor = null;
 
             try {
@@ -177,11 +185,11 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
             return (PropertyDescriptor[]) descriptors
                     .toArray(new PropertyDescriptor[descriptors.size()]);
         } catch (Exception e) {
-      // do not ignore, bomb politely so use has chance to discover what went
+            // do not ignore, bomb politely so use has chance to discover what went
             // wrong...
             // I know that this is suboptimal solution, but swallowing silently is
             // even worse... Propose better solution!
-            e.printStackTrace();
+            Logger.getLogger(JCollapsiblePane.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;
     }
@@ -191,6 +199,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
      *
      * @return The methodDescriptors value
      */
+    @Override
     public MethodDescriptor[] getMethodDescriptors() {
         return new MethodDescriptor[0];
     }

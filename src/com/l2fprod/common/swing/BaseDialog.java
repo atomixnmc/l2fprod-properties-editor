@@ -176,7 +176,7 @@ public class BaseDialog extends JDialog {
      * made invisible by calling <code>getBanner().setVisible(false);</code> if
      * it is not needed.
      *
-     * @return 
+     * @return
      * @see BannerPanel
      */
     public final BannerPanel getBanner() {
@@ -278,6 +278,7 @@ public class BaseDialog extends JDialog {
         UIUtilities.centerOnScreen(this);
     }
 
+    @Override
     protected String paramString() {
         return super.paramString()
                 + ",dialogMode="
@@ -317,6 +318,7 @@ public class BaseDialog extends JDialog {
                 JComponent.WHEN_IN_FOCUSED_WINDOW);
 
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 cancel();
             }

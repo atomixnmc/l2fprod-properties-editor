@@ -27,14 +27,17 @@ public class BaseObject extends Observable implements HasId {
 
   private Object id;
   
+  @Override
   public void setId(Object id) {
   	this.id = id;
   }
   
+  @Override
   public Object getId() {
   	return id;  	
   }
     
+  @Override
 	public String toString() {
 		return super.toString() +
 			"[" + paramString() + "]";

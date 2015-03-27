@@ -30,6 +30,7 @@ public class JVM {
     public final static int JDK1_5 = 15;
     public final static int JDK1_6 = 16;
     public final static int JDK1_7 = 17;
+    public final static int JDK1_8 = 18;
 
     private static JVM current;
 
@@ -59,7 +60,9 @@ public class JVM {
      * @param p_JavaVersion
      */
     public JVM(String p_JavaVersion) {
-        if (p_JavaVersion.startsWith("1.7.")) {
+        if (p_JavaVersion.startsWith("1.8.")) {
+            jdkVersion = JDK1_8;
+        } else if (p_JavaVersion.startsWith("1.7.")) {
             jdkVersion = JDK1_7;
         } else if (p_JavaVersion.startsWith("1.6.")) {
             jdkVersion = JDK1_6;
@@ -111,6 +114,10 @@ public class JVM {
 
     public boolean isOneDotSeven() {
         return jdkVersion == JDK1_7;
+    }
+
+    public boolean isOneDotEight() {
+        return jdkVersion == JDK1_8;
     }
 
 }

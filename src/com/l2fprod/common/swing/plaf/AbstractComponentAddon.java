@@ -38,20 +38,23 @@ import javax.swing.UIManager;
  */
 public abstract class AbstractComponentAddon implements ComponentAddon {
 
-  private String name;
+  private final String name;
   
   protected AbstractComponentAddon(String name) {
     this.name = name;
   }
   
+  @Override
   public final String getName() {
     return name;
   }
 
+  @Override
   public void initialize(LookAndFeelAddons addon) {
     addon.loadDefaults(getDefaults(addon));
   }
 
+  @Override
   public void uninitialize(LookAndFeelAddons addon) {
     addon.unloadDefaults(getDefaults(addon));
   }
@@ -152,6 +155,8 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
   /**
    * Adds the all keys/values from the given named resource bundle to the
    * defaults
+     * @param defaults
+     * @param bundleName
    */
   protected void addResource(List defaults, String bundleName) {
     ResourceBundle bundle = ResourceBundle.getBundle(bundleName);
@@ -163,6 +168,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
   }
   
   /**
+     * @param addon
    * @return true if the addon is the Windows addon or its subclasses
    */
   protected boolean isWindows(LookAndFeelAddons addon) {
@@ -170,6 +176,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
   }
   
   /**
+     * @param addon
    * @return true if the addon is the Metal addon or its subclasses
    */
   protected boolean isMetal(LookAndFeelAddons addon) {
@@ -177,6 +184,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
   }
   
   /**
+     * @param addon
    * @return true if the addon is the Aqua addon or its subclasses
    */
   protected boolean isMac(LookAndFeelAddons addon) {
@@ -184,6 +192,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
   }
   
   /**
+     * @param addon
    * @return true if the addon is the Motif addon or its subclasses
    */
   protected boolean isMotif(LookAndFeelAddons addon) {
@@ -194,14 +203,14 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
    * @return true if the current look and feel is one of JGoodies Plastic l&fs
    */
   protected boolean isPlastic() {
-    return UIManager.getLookAndFeel().getClass().getName().indexOf("Plastic") != -1;
+    return UIManager.getLookAndFeel().getClass().getName().contains("Plastic");
   }
 
   /**
    * @return true if the current look and feel is Synth l&f
    */
   protected boolean isSynth() {
-    return UIManager.getLookAndFeel().getClass().getName().indexOf("ynth") != -1;    
+    return UIManager.getLookAndFeel().getClass().getName().contains("ynth");    
   }
 
   protected Font getFont(String key, Font defaultFont) {

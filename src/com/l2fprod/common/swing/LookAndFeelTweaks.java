@@ -20,6 +20,8 @@ package com.l2fprod.common.swing;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -127,7 +129,7 @@ public class LookAndFeelTweaks {
                         null);
             } // end of if (doc != null)
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getLogger(LookAndFeelTweaks.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

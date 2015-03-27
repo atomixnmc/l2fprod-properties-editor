@@ -5,7 +5,6 @@
  */
 package com.l2fprod.common.beans;
 
-
 import com.l2fprod.common.annotations.Browsable;
 import com.l2fprod.common.annotations.Categorization;
 import com.l2fprod.common.annotations.DirectoryProperty;
@@ -31,8 +30,11 @@ public class BeanInfoFactory {
     }
 
     public static BeanInfo createBeanInfo(Class<? extends Object> c) {
-        BeanInfo bi = new ConfigBeanInfo(c);
-        DefaultBeanInfoResolver.addBeanInfo(c, bi);
+        BeanInfo bi = DefaultBeanInfoResolver.getBeanInfoHelper(c);
+        if (bi == null) {
+            bi = new ConfigBeanInfo(c);
+            DefaultBeanInfoResolver.addBeanInfo(c, bi);
+        }
         return bi;
     }
 
@@ -46,7 +48,6 @@ public class BeanInfoFactory {
                     if (prop.getReadMethod().getDeclaringClass() != Object.class) {
                         Categorization cat = prop.getReadMethod().getAnnotation(Categorization.class);
                         Browsable browse = prop.getReadMethod().getAnnotation(Browsable.class);
-//                        EnumeratedType et = prop.getReadMethod().getAnnotation(EnumeratedType.class);
                         FileProperty fp = prop.getReadMethod().getAnnotation(FileProperty.class);
                         DirectoryProperty dir_p = prop.getReadMethod().getAnnotation(DirectoryProperty.class);
 
@@ -57,28 +58,6 @@ public class BeanInfoFactory {
                             } else if (dir_p != null) {
                                 epd.setPropertyEditorClass(DirectoryPropertyEditor.class);
                             } else {
-//                                Reflections ref = buildReflections("com.artistech");
-//                                Set<Class<?>> typesAnnotatedWith = ref.getTypesAnnotatedWith(EditorRegistry.class);
-//                                for (Class<?> t : typesAnnotatedWith) {
-//                                    EditorRegistry er = t.getAnnotation(EditorRegistry.class);
-//                                    for (Class<?> t2 : er.type()) {
-//                                        if (t2.isAssignableFrom(prop.getPropertyType())) {
-//                                            epd.setPropertyEditorClass(t);
-//                                            break;
-//                                        }
-//                                    }
-//                                }
-//
-//                                Set<Class<?>> typesAnnotatedWith1 = ref.getTypesAnnotatedWith(RendererRegistry.class);
-//                                for (Class<?> t : typesAnnotatedWith1) {
-//                                    RendererRegistry rr = t.getAnnotation(RendererRegistry.class);
-//                                    for (Class<?> t2 : rr.type()) {
-//                                        if (t2.isAssignableFrom(prop.getPropertyType())) {
-//                                            epd.setPropertyTableRendererClass(t);
-//                                            break;
-//                                        }
-//                                    }
-//                                }
                             }
                         }
                     }

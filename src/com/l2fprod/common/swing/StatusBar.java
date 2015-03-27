@@ -19,7 +19,7 @@ package com.l2fprod.common.swing;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -40,7 +40,7 @@ public class StatusBar extends JComponent {
      */
     public final static String DEFAULT_ZONE = "default";
 
-    private final Hashtable idToZones;
+    private final HashMap<String, Component> idToZones;
     private Border zoneBorder;
 
     /**
@@ -49,7 +49,7 @@ public class StatusBar extends JComponent {
      */
     public StatusBar() {
         setLayout(LookAndFeelTweaks.createHorizontalPercentLayout());
-        idToZones = new Hashtable();
+        idToZones = new HashMap<>();
         setZoneBorder(BorderFactory.createLineBorder(Color.lightGray));
     }
 

@@ -92,6 +92,7 @@ public class AWTConverters implements Converter {
         registry.addConverter(FontUIResource.class, String.class, this);
     }
 
+    @Override
     public Object convert(Class type, Object value) {
         if (String.class.equals(type)) {
             if (value instanceof Rectangle) {

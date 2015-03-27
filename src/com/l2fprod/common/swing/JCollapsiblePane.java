@@ -135,7 +135,7 @@ public class JCollapsiblePane extends JPanel {
      * Timer used for doing the transparency animation (fade-in)
      */
     private Timer animateTimer;
-    private AnimationListener animator;
+    private final AnimationListener animator;
     private int currentHeight = -1;
     private WrapperContainer wrapper;
     private boolean useAnimation = true;
@@ -175,6 +175,7 @@ public class JCollapsiblePane extends JPanel {
             JCollapsiblePane.this.addPropertyChangeListener("collapsed", this);
         }
 
+        @Override
         public void putValue(String key, Object newValue) {
             super.putValue(key, newValue);
             if (EXPAND_ICON.equals(key) || COLLAPSE_ICON.equals(key)) {
@@ -182,10 +183,12 @@ public class JCollapsiblePane extends JPanel {
             }
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             setCollapsed(!isCollapsed());
         }
 
+        @Override
         public void propertyChange(PropertyChangeEvent evt) {
             updateIcon();
         }
@@ -227,7 +230,9 @@ public class JCollapsiblePane extends JPanel {
 
     /**
      * Overriden to redirect call to the content pane.
+     * @param mgr
      */
+    @Override
     public void setLayout(LayoutManager mgr) {
         // wrapper can be null when setLayout is called by "super()" constructor
         if (wrapper != null) {
@@ -237,21 +242,29 @@ public class JCollapsiblePane extends JPanel {
 
     /**
      * Overriden to redirect call to the content pane.
+     * @param comp
+     * @param constraints
+     * @param index
      */
+    @Override
     protected void addImpl(Component comp, Object constraints, int index) {
         getContentPane().add(comp, constraints, index);
     }
 
     /**
      * Overriden to redirect call to the content pane
+     * @param comp
      */
+    @Override
     public void remove(Component comp) {
         getContentPane().remove(comp);
     }
 
     /**
      * Overriden to redirect call to the content pane.
+     * @param index
      */
+    @Override
     public void remove(int index) {
         getContentPane().remove(index);
     }
@@ -259,6 +272,7 @@ public class JCollapsiblePane extends JPanel {
     /**
      * Overriden to redirect call to the content pane.
      */
+    @Override
     public void removeAll() {
         getContentPane().removeAll();
     }
@@ -318,6 +332,7 @@ public class JCollapsiblePane extends JPanel {
      * JCollapsiblePane will be invisible. If {@link #isAnimated()} returns
      * true, the collapse will be accompanied by an animation.
      *
+     * @param val
      * @see #isAnimated()
      * @see #setAnimated(boolean)
      * @javabean.property bound="true" preferred="true"
@@ -348,6 +363,7 @@ public class JCollapsiblePane extends JPanel {
         }
     }
 
+    @Override
     public Dimension getMinimumSize() {
         return getPreferredSize();
     }
@@ -361,6 +377,7 @@ public class JCollapsiblePane extends JPanel {
      *
      * @return this component preferred size
      */
+    @Override
     public Dimension getPreferredSize() {
         /*
          * The preferred size is calculated based on the current position of the
@@ -477,6 +494,7 @@ public class JCollapsiblePane extends JPanel {
          */
         private float animateAlpha = 1.0f;
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             /*
              * Pre-1) If startHeight == finalHeight, then we're done so stop the timer
@@ -639,6 +657,7 @@ public class JCollapsiblePane extends JPanel {
             }
         }
 
+        @Override
         public void paintComponent(Graphics g) {
             if (!useAnimation || c.isVisible()) {
                 super.paintComponent(g);
@@ -657,6 +676,7 @@ public class JCollapsiblePane extends JPanel {
             }
         }
 
+        @Override
         public void paint(Graphics g) {
             Graphics2D g2d = (Graphics2D) g;
             Composite oldComp = g2d.getComposite();
