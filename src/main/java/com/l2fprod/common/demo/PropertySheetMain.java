@@ -17,6 +17,7 @@
  */
 package com.l2fprod.common.demo;
 
+import com.l2fprod.common.Version;
 import com.l2fprod.common.swing.LookAndFeelTweaks;
 import com.l2fprod.common.util.ResourceManager;
 
@@ -49,7 +50,8 @@ public class PropertySheetMain extends JPanel {
   public static void main(String[] args) throws Exception {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     LookAndFeelTweaks.tweak();
-    
+    System.out.println(new Version().toString());
+
     JFrame frame = new JFrame("PropertySheet");
     frame.getContentPane().setLayout(new BorderLayout());
     frame.getContentPane().add("Center", new PropertySheetMain());

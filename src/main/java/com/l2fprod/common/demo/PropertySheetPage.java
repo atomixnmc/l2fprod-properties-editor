@@ -18,6 +18,7 @@
 package com.l2fprod.common.demo;
 
 import com.l2fprod.common.beans.BaseBeanInfo;
+import com.l2fprod.common.beans.BeanBinder;
 import com.l2fprod.common.beans.editor.ComboBoxPropertyEditor;
 import com.l2fprod.common.propertysheet.PropertySheet;
 import com.l2fprod.common.propertysheet.PropertySheetPanel;
