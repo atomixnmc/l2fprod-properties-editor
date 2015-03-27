@@ -8,6 +8,21 @@
     <name>l2fprod-properties-editor</name>
     <url>https://github.com/ZenHarbinger/l2fprod-properties-editor</url>
     <description>Provides a Swing component for editing properties in a table.</description>
+    <developers>
+        <developer>
+            <id>ZenHarbinger</id>
+            <name>Matthew Aguirre</name>
+            <email>matt.aguirre@gmail.com</email>
+            <url>http://www.example.com/jdoe</url>
+            <organization>tros</organization>
+            <organizationUrl>http://tros.org/</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+        </developer>
+    </developers>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
