@@ -1,14 +1,12 @@
-/**
- * @PROJECT.FULLNAME@ @VERSION@ License.
- *
- * Copyright @YEAR@ L2FProd.com
- *
+/*
+ * Copyright 2015 Matthew Aguirre
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,22 +32,21 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-public class PropertySheetPage3 extends JPanel
-{
-	private static final Class THIS_CLASS = PropertySheetPage3.class;
-	static ResourceManager RESOURCE = ResourceManager.get( THIS_CLASS );
-	
-	public PropertySheetPage3()
-	{
-		setLayout( LookAndFeelTweaks.createVerticalPercentLayout() );
+public class PropertySheetPage3 extends JPanel {
 
-		JTextArea message = new JTextArea();
-		message.setText( PropertySheetMain.RESOURCE.getString( "Main.sheet1.message" ) );
-		LookAndFeelTweaks.makeMultilineLabel( message );
-		add( message );
+    private static final Class THIS_CLASS = PropertySheetPage3.class;
+    static ResourceManager RESOURCE = ResourceManager.get(THIS_CLASS);
 
-		final Colorful data = new Colorful();
-		data.setColor( new Color( 255, 153, 102 ) );
+    public PropertySheetPage3() {
+        setLayout(LookAndFeelTweaks.createVerticalPercentLayout());
+
+        JTextArea message = new JTextArea();
+        message.setText(PropertySheetMain.RESOURCE.getString("Main.sheet1.message"));
+        LookAndFeelTweaks.makeMultilineLabel(message);
+        add(message);
+
+        final Colorful data = new Colorful();
+        data.setColor(new Color(255, 153, 102));
 
         DefaultProperty level0 = new NoReadWriteProperty();
         level0.setDisplayName("Level 0");
@@ -71,117 +68,112 @@ public class PropertySheetPage3 extends JPanel
 
         DefaultProperty root = new NoReadWriteProperty();
         root.setDisplayName("Root");
-        
+
         final PropertySheetPanel sheet = new PropertySheetPanel();
-		sheet.setMode( PropertySheet.VIEW_AS_FLAT_LIST );
-		sheet.setProperties( new Property[] { new ColorProperty(), level0, root } );
-		sheet.readFromObject( data );
-		sheet.setDescriptionVisible( true );
-		sheet.setSortingCategories( true );
-		sheet.setSortingProperties( true );
-		add( sheet, "*" );
-        
-		// everytime a property change, update the button with it
-		PropertyChangeListener listener = new PropertyChangeListener() {
-			public void propertyChange( PropertyChangeEvent evt )
-			{
-				Property prop = (Property) evt.getSource();
-				prop.writeToObject( data );
-				System.out.println( "Updated object to " + data );
-			}
-		};
-		sheet.addPropertySheetChangeListener( listener );
-        
+        sheet.setMode(PropertySheet.VIEW_AS_FLAT_LIST);
+        sheet.setProperties(new Property[]{new ColorProperty(), level0, root});
+        sheet.readFromObject(data);
+        sheet.setDescriptionVisible(true);
+        sheet.setSortingCategories(true);
+        sheet.setSortingProperties(true);
+        add(sheet, "*");
+
+        // everytime a property change, update the button with it
+        PropertyChangeListener listener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                Property prop = (Property) evt.getSource();
+                prop.writeToObject(data);
+                System.out.println("Updated object to " + data);
+            }
+        };
+        sheet.addPropertySheetChangeListener(listener);
+
         JButton button = new JButton(new AbstractAction("Click to setWantsExtraIndent(true)") {
-          public void actionPerformed(ActionEvent e) {
-            sheet.getTable().setWantsExtraIndent(!sheet.getTable().getWantsExtraIndent());
-            putValue(NAME, "Click to setWantsExtraIndent(" + !sheet.getTable().getWantsExtraIndent() + ")");
-          }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sheet.getTable().setWantsExtraIndent(!sheet.getTable().getWantsExtraIndent());
+                putValue(NAME, "Click to setWantsExtraIndent(" + !sheet.getTable().getWantsExtraIndent() + ")");
+            }
         });
         add(button);
-	}
+    }
 
     static class NoReadWriteProperty extends DefaultProperty {
-      public void readFromObject(Object object) {
-      }
-      public void writeToObject(Object object) {
-      }
+
+        @Override
+        public void readFromObject(Object object) {
+        }
+
+        @Override
+        public void writeToObject(Object object) {
+        }
     }
-    
-	public static class Colorful
-	{
-		private Color color;
 
-		public Color getColor()
-		{
-			return color;
-		}
-		
-		public void setColor( Color color )
-		{
-			this.color = color;
-		}
+    public static class Colorful {
 
-		public int getRed()
-		{
-			return color.getRed();
-		}
-		
-		public void setRed( int red )
-		{
-			color = new Color( red, getGreen(), getBlue() );
-		}
-		
-		public int getGreen()
-		{
-			return color.getGreen();
-		}
-		
-		public void setGreen( int green )
-		{
-			color = new Color( getRed(), green, getBlue() );
-		}
-		
-		public int getBlue()
-		{
-			return color.getBlue();
-		}
-		
-		public void setBlue( int blue )
-		{
-			color = new Color( getRed(), getGreen(), blue );
-		}
-		
-		public String toString()
-		{
-			return color.toString();
-		}
-	}
+        private Color color;
 
-	public static class ColorProperty extends DefaultProperty
-	{
-		public ColorProperty()
-		{
-			setName( "color" );
-			setCategory( RESOURCE.getString( "color.cat" ) );
-			setDisplayName( RESOURCE.getString( "color.name" ) );
-			setShortDescription( RESOURCE.getString( "color.desc" ) );
-			setType( Color.class );
-			
-			addSubProperty( new ColorComponentProperty( "red" ) );
-			addSubProperty( new ColorComponentProperty( "green" ) );
-			addSubProperty( new ColorComponentProperty( "blue" ) );
-		}
-	}
-	
-	public static class ColorComponentProperty extends DefaultProperty
-	{
-		public ColorComponentProperty( String name )
-		{
-			setName( name );
-			setDisplayName( RESOURCE.getString( name + ".name" ) );
-			setShortDescription( RESOURCE.getString( name  + ".desc" ) );
-			setType( int.class );
-		}
-	}
+        public Color getColor() {
+            return color;
+        }
+
+        public void setColor(Color color) {
+            this.color = color;
+        }
+
+        public int getRed() {
+            return color.getRed();
+        }
+
+        public void setRed(int red) {
+            color = new Color(red, getGreen(), getBlue());
+        }
+
+        public int getGreen() {
+            return color.getGreen();
+        }
+
+        public void setGreen(int green) {
+            color = new Color(getRed(), green, getBlue());
+        }
+
+        public int getBlue() {
+            return color.getBlue();
+        }
+
+        public void setBlue(int blue) {
+            color = new Color(getRed(), getGreen(), blue);
+        }
+
+        @Override
+        public String toString() {
+            return color.toString();
+        }
+    }
+
+    public static class ColorProperty extends DefaultProperty {
+
+        public ColorProperty() {
+            setName("color");
+            setCategory(RESOURCE.getString("color.cat"));
+            setDisplayName(RESOURCE.getString("color.name"));
+            setShortDescription(RESOURCE.getString("color.desc"));
+            setType(Color.class);
+
+            addSubProperty(new ColorComponentProperty("red"));
+            addSubProperty(new ColorComponentProperty("green"));
+            addSubProperty(new ColorComponentProperty("blue"));
+        }
+    }
+
+    public static class ColorComponentProperty extends DefaultProperty {
+
+        public ColorComponentProperty(String name) {
+            setName(name);
+            setDisplayName(RESOURCE.getString(name + ".name"));
+            setShortDescription(RESOURCE.getString(name + ".desc"));
+            setType(int.class);
+        }
+    }
 }
