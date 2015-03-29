@@ -16,6 +16,7 @@
 package com.l2fprod.common.propertysheet;
 
 import com.l2fprod.common.annotations.EditorRegistry;
+import com.l2fprod.common.annotations.PropertyEditorOverride;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
@@ -34,7 +35,7 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
 
     private final Map typeToEditor;
     private final Map propertyToEditor;
-    
+
     public final static PropertyEditorRegistry Instance = new PropertyEditorRegistry();
 
     private PropertyEditorRegistry() {
@@ -74,9 +75,19 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
         if (property instanceof PropertyDescriptorAdapter) {
             PropertyDescriptor descriptor = ((PropertyDescriptorAdapter) property).getDescriptor();
             if (descriptor != null) {
-                Class clz = descriptor.getPropertyEditorClass();
-                if (clz != null) {
-                    editor = loadPropertyEditor(clz);
+                //allow a per/set property editor override
+                PropertyEditorOverride annotation = descriptor.getWriteMethod().getAnnotation(PropertyEditorOverride.class);
+                if (annotation != null) {
+                    Class clz = annotation.type();
+                    if (clz != null) {
+                        editor = loadPropertyEditor(clz);
+                    }
+                }
+                if (editor == null) {
+                    Class clz = descriptor.getPropertyEditorClass();
+                    if (clz != null) {
+                        editor = loadPropertyEditor(clz);
+                    }
                 }
             }
         }
@@ -131,7 +142,7 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
     public synchronized PropertyEditor getEditor(Class type) {
         PropertyEditor editor = null;
         Object value = typeToEditor.get(type);
-        if(value == null && type.isEnum()) {
+        if (value == null && type.isEnum()) {
             value = typeToEditor.get(Enum.class);
         }
         if (value instanceof PropertyEditor) {
@@ -181,7 +192,7 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
     public void registerDefaults() {
         typeToEditor.clear();
         propertyToEditor.clear();
-        
+
         //switch to service loader and use of custom annotation
         ServiceLoader<PropertyEditor> propertyLoader = ServiceLoader.load(PropertyEditor.class);
         try {

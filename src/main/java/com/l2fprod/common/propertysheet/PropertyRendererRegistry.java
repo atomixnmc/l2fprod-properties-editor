@@ -15,6 +15,7 @@
  */
 package com.l2fprod.common.propertysheet;
 
+import com.l2fprod.common.annotations.PropertyRendererOverride;
 import com.l2fprod.common.annotations.RendererRegistry;
 import com.l2fprod.common.beans.ExtendedPropertyDescriptor;
 import java.util.HashMap;
@@ -78,6 +79,18 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
         TableCellRenderer renderer = null;
         if (property instanceof PropertyDescriptorAdapter) {
             PropertyDescriptor descriptor = ((PropertyDescriptorAdapter) property).getDescriptor();
+            Method readMethod = descriptor.getReadMethod();
+            //allow a per/get property renderer override.
+            if (readMethod != null) {
+                PropertyRendererOverride annotation = readMethod.getAnnotation(PropertyRendererOverride.class);
+                if (annotation != null) {
+                    try {
+                        return annotation.type().newInstance();
+                    } catch (InstantiationException | IllegalAccessException ex) {
+                        Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
             if (descriptor instanceof ExtendedPropertyDescriptor) {
                 if (((ExtendedPropertyDescriptor) descriptor).getPropertyTableRendererClass() != null) {
                     try {

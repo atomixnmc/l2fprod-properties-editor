@@ -15,20 +15,26 @@
  */
 package com.l2fprod.common.demo;
 
+import com.l2fprod.common.annotations.PropertyEditorOverride;
+import com.l2fprod.common.annotations.PropertyRendererOverride;
 import com.l2fprod.common.beans.BeanBinder;
-import static com.l2fprod.common.demo.PropertySheetPage.Seasons.SUMMER;
+import com.l2fprod.common.beans.editor.ComboBoxPropertyEditor;
 import com.l2fprod.common.propertysheet.PropertySheet;
 import com.l2fprod.common.propertysheet.PropertySheetPanel;
 import com.l2fprod.common.swing.LookAndFeelTweaks;
+import com.l2fprod.common.swing.renderer.DefaultCellRenderer;
 
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
+import java.util.Arrays;
 import java.util.ListResourceBundle;
+import javax.swing.Icon;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
 /**
  * PropertySheetPage. <br>
@@ -169,13 +175,25 @@ public class PropertySheetPage extends JPanel {
             return doubleValue;
         }
 
-        private Seasons season = SUMMER;
+        private Seasons seasonEnum = Seasons.SUMMER;
 
-        public void setSeason(Seasons s) {
+        public void setSeasonEnum(Seasons s) {
+            seasonEnum = s;
+        }
+
+        public Seasons getSeasonEnum() {
+            return seasonEnum;
+        }
+
+        private String season = "SUMMER";
+
+        @PropertyEditorOverride(type = SeasonEditor.class)
+        public void setSeason(String s) {
             season = s;
         }
 
-        public Seasons getSeason() {
+        @PropertyRendererOverride(type = SeasonRenderer.class)
+        public String getSeason() {
             return season;
         }
 
@@ -203,47 +221,33 @@ public class PropertySheetPage extends JPanel {
         }
 
     }
-//
-//    public static class BeanBeanInfo extends BaseBeanInfo {
-//
-//        public BeanBeanInfo() {
-//            super(Bean.class);
-//            addProperty("id").setCategory("General");
-//            addProperty("name").setCategory("General");
-//            addProperty("text").setCategory("General");
-//            addProperty("visible").setCategory("General");
-//            addProperty("calendar").setCategory("General");
-//
-//            // the File attribute will not be shown if running in Java Web
-//            // Start, otherwise it will lead to exception when rendering the
-//            // value
-//            if (System.getProperty("javawebstart.version") == null) {
-//                addProperty("path").setCategory("Details");
-//            }
-//
-//            addProperty("time").setCategory("Details");
-//            addProperty("color").setCategory("Details");
-//            addProperty("aDouble").setCategory("Numbers");
-//            addProperty("season").setCategory("Details").setPropertyEditorClass(
-//                    SeasonEditor.class);
-//            // a readonly property
-//            addProperty("version");
-//            // a constrained property
-//            addProperty("constrained");
-//        }
-//    }
 
-//    @EditorRegistry(type = {Seasons.class})
-//    public static class SeasonEditor extends ComboBoxPropertyEditor {
-//
-//        public SeasonEditor() {
-//            super();
-//            setAvailableValues(new String[]{"Spring", "Summer", "Fall", "Winter",});
-//            Icon[] icons = new Icon[4];
-//            Arrays.fill(icons, UIManager.getIcon("Tree.openIcon"));
-//            setAvailableIcons(icons);
-//        }
-//    }
+    public static class SeasonEditor extends ComboBoxPropertyEditor {
+
+        public SeasonEditor() {
+            super();
+            setAvailableValues(new String[]{"Spring", "Summer", "Fall", "Winter",});
+            Icon[] icons = new Icon[4];
+            Arrays.fill(icons, UIManager.getIcon("Tree.openIcon"));
+            setAvailableIcons(icons);
+        }
+    }
+
+    public static class SeasonRenderer extends DefaultCellRenderer {
+
+        public SeasonRenderer() {
+            super();
+        }
+
+        @Override
+        public void setValue(Object value) {
+            if (value == null) {
+                setText("");
+            } else {
+                setText(value + " STRING");
+            }
+        }
+    }
 
     public static class BeanRB extends ListResourceBundle {
 
