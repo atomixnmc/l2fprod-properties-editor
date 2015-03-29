@@ -131,7 +131,7 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
     public synchronized PropertyEditor getEditor(Class type) {
         PropertyEditor editor = null;
         Object value = typeToEditor.get(type);
-        if(type.isEnum()) {
+        if(value == null && type.isEnum()) {
             value = typeToEditor.get(Enum.class);
         }
         if (value instanceof PropertyEditor) {
