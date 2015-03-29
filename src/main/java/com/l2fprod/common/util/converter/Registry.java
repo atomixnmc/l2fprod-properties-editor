@@ -21,8 +21,8 @@ package com.l2fprod.common.util.converter;
  */
 public interface Registry {
 
-    void addConverter(Class from, Class to, Converter converter);
+    void addConverter(Class<?> from, Class<?> to, Converter converter);
 
-    Converter getConverter(Class from, Class to);
+    Converter getConverter(Class<?> from, Class<?> to);
     
 }

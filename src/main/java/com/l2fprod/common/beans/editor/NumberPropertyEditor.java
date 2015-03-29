@@ -47,7 +47,7 @@ public abstract class NumberPropertyEditor extends AbstractPropertyEditor {
         ((JFormattedTextField) editor).setBorder(LookAndFeelTweaks.EMPTY_BORDER);
 
         // use a custom formatter to have numbers with up to 64 decimals
-        NumberFormat format = NumberConverters.getDefaultFormat();
+        NumberFormat format = NumberConverters.defaultFormat;
 
         ((JFormattedTextField) editor).setFormatterFactory(
                 new DefaultFormatterFactory(new NumberFormatter(format))
@@ -73,7 +73,6 @@ public abstract class NumberPropertyEditor extends AbstractPropertyEditor {
                     || Character.isDigit(character)) {
                 number.append(character);
             } else if (' ' == character) {
-                continue;
             } else {
                 break;
             }

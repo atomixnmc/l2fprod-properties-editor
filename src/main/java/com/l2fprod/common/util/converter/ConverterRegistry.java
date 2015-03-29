@@ -21,44 +21,68 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
- * ConverterRegistry. <br>
- *
+ * ConverterRegistry.
  */
 public final class ConverterRegistry implements Registry {
 
     private static final ConverterRegistry sharedInstance = new ConverterRegistry();
+    private final Map<Class<?>, Map<Class<?>, Converter>> fromMap;
 
-    private final Map fromMap;
-
-    public ConverterRegistry() {
-        fromMap = new HashMap();
+    /**
+     * Constructor.
+     */
+    private ConverterRegistry() {
+        //use ServiceLoader to get instances of Converter classes.
+        //force them to register w/ this class.
+        fromMap = new HashMap<>();
         ServiceLoader<Converter> loader = ServiceLoader.load(Converter.class);
         Iterator<Converter> iterator = loader.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iterator.next().register((Registry) this);
         }
     }
 
+    /**
+     * Converter calls this method to register conversion path.
+     *
+     * @param from
+     * @param to
+     * @param converter
+     */
     @Override
     public void addConverter(Class from, Class to, Converter converter) {
-        Map toMap = (Map) fromMap.get(from);
+        Map toMap = fromMap.get(from);
         if (toMap == null) {
-            toMap = new HashMap();
+            toMap = new HashMap<>();
             fromMap.put(from, toMap);
         }
         toMap.put(to, converter);
     }
 
+    /**
+     * Get the desired converter.
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     @Override
     public Converter getConverter(Class from, Class to) {
-        Map toMap = (Map) fromMap.get(from);
+        Map<Class<?>, Converter> toMap = fromMap.get(from);
         if (toMap != null) {
-            return (Converter) toMap.get(to);
+            return toMap.get(to);
         } else {
             return null;
         }
     }
 
+    /**
+     * Do Conversion.
+     *
+     * @param targetType
+     * @param value
+     * @return
+     */
     public Object convert(Class targetType, Object value) {
         if (value == null) {
             return null;
@@ -73,6 +97,11 @@ public final class ConverterRegistry implements Registry {
         }
     }
 
+    /**
+     * Get the instance.
+     *
+     * @return
+     */
     public static ConverterRegistry instance() {
         return sharedInstance;
     }

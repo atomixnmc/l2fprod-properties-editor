@@ -105,7 +105,7 @@ public class PropertySheetTable extends JTable {
 
         // default renderers and editors
         setRendererFactory(new PropertyRendererRegistry());
-        setEditorFactory(new PropertyEditorRegistry());
+        setEditorFactory(PropertyEditorRegistry.Instance);
 
         nameRenderer = new NameRenderer();
 

@@ -34,8 +34,10 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
 
     private final Map typeToEditor;
     private final Map propertyToEditor;
+    
+    public final static PropertyEditorRegistry Instance = new PropertyEditorRegistry();
 
-    public PropertyEditorRegistry() {
+    private PropertyEditorRegistry() {
         typeToEditor = new HashMap();
         propertyToEditor = new HashMap();
         registerDefaults();
@@ -129,6 +131,9 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
     public synchronized PropertyEditor getEditor(Class type) {
         PropertyEditor editor = null;
         Object value = typeToEditor.get(type);
+        if(type.isEnum()) {
+            value = typeToEditor.get(Enum.class);
+        }
         if (value instanceof PropertyEditor) {
             editor = (PropertyEditor) value;
         } else if (value instanceof Class) {
