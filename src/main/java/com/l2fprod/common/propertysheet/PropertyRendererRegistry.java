@@ -36,11 +36,11 @@ import javax.swing.table.TableCellRenderer;
 public final class PropertyRendererRegistry implements PropertyRendererFactory {
 
     private final Map typeToRenderer;
-    private final Map propertyToRenderer;
+//    private final Map propertyToRenderer;
 
     public PropertyRendererRegistry() {
         typeToRenderer = new HashMap();
-        propertyToRenderer = new HashMap();
+//        propertyToRenderer = new HashMap();
         registerDefaults();
     }
 
@@ -101,7 +101,7 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
                 }
             }
         }
-        Object value = propertyToRenderer.get(property);
+        Object value = typeToRenderer.get(property);
         if (value instanceof TableCellRenderer) {
             renderer = (TableCellRenderer) value;
         } else if (value instanceof Class) {
@@ -159,18 +159,18 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
         typeToRenderer.remove(type);
     }
 
-    public synchronized void registerRenderer(Property property, Class rendererClass) {
-        propertyToRenderer.put(property, rendererClass);
-    }
-
-    public synchronized void registerRenderer(Property property,
-            TableCellRenderer renderer) {
-        propertyToRenderer.put(property, renderer);
-    }
-
-    public synchronized void unregisterRenderer(Property property) {
-        propertyToRenderer.remove(property);
-    }
+//    public synchronized void registerRenderer(Property property, Class rendererClass) {
+//        propertyToRenderer.put(property, rendererClass);
+//    }
+//
+//    public synchronized void registerRenderer(Property property,
+//            TableCellRenderer renderer) {
+//        propertyToRenderer.put(property, renderer);
+//    }
+//
+//    public synchronized void unregisterRenderer(Property property) {
+//        propertyToRenderer.remove(property);
+//    }
 
     /**
      * Adds default renderers. This method is called by the constructor but may
@@ -181,7 +181,7 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
      */
     public void registerDefaults() {
         typeToRenderer.clear();
-        propertyToRenderer.clear();
+//        propertyToRenderer.clear();
 
         ServiceLoader<TableCellRenderer> serviceLoader = ServiceLoader.load(TableCellRenderer.class);
         Iterator<TableCellRenderer> iterator = serviceLoader.iterator();
