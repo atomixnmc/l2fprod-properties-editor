@@ -55,7 +55,9 @@ public class BeanInfoFactory {
             try {
                 PropertyDescriptor[] props = Introspector.getBeanInfo(c).getPropertyDescriptors();
                 for (PropertyDescriptor prop : props) {
-                    if (prop.getReadMethod().getDeclaringClass() != Object.class) {
+                    if (prop.getReadMethod() == null) {
+                        Logger.getLogger(BeanInfoFactory.class.getName()).log(Level.WARNING, "Property: {1}:{0} has a null read method.", new Object[]{prop.getDisplayName(), c.getName()});
+                    } else if (prop.getReadMethod().getDeclaringClass() != Object.class) {
                         Categorization cat = prop.getReadMethod().getAnnotation(Categorization.class);
                         Browsable browse = prop.getReadMethod().getAnnotation(Browsable.class);
                         FileProperty fp = prop.getReadMethod().getAnnotation(FileProperty.class);
