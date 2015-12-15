@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.tros</groupId>
     <artifactId>l2fprod-properties-editor</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
     <name>l2fprod-properties-editor</name>
     <url>https://github.com/ZenHarbinger/l2fprod-properties-editor</url>
@@ -146,6 +146,11 @@
         </resources>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>org.tros</groupId>
+            <artifactId>l2fprod-common-annotations</artifactId>
+            <version>1.0.3</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

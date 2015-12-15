@@ -37,7 +37,7 @@ public final class Version {
     /**
      * Singleton Instance.
      */
-    public final static Version Instance = new Version();
+    public final static Version INSTANCE = new Version();
 
     public Version() {
         //load prop file...
