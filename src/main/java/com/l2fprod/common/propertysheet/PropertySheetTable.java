@@ -22,16 +22,20 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyEditor;
 
 import javax.swing.AbstractAction;
 import javax.swing.CellEditor;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
@@ -671,12 +675,8 @@ public class PropertySheetTable extends JTable {
         public CellBorder() {
             expandedIcon = (Icon) UIManager.get(TREE_EXPANDED_ICON_KEY);
             collapsedIcon = (Icon) UIManager.get(TREE_COLLAPSED_ICON_KEY);
-            if (expandedIcon == null) {
-                expandedIcon = new ExpandedIcon();
-            }
-            if (collapsedIcon == null) {
-                collapsedIcon = new CollapsedIcon();
-            }
+            expandedIcon = expandedIcon == null ? new ExpandedIcon() : new ImageIcon(render(expandedIcon));
+            collapsedIcon = collapsedIcon == null ? new CollapsedIcon() : new ImageIcon(render(collapsedIcon));
         }
 
         public void configure(PropertySheetTable table, Item item) {
@@ -713,6 +713,19 @@ public class PropertySheetTable extends JTable {
             return true;
         }
 
+        private static BufferedImage render(Icon icon) {
+            JLabel test = new JLabel(icon);
+            test.setSize(icon.getIconWidth(), icon.getIconHeight());
+            return render(test);
+        }
+
+        private static BufferedImage render(Component component) {
+            BufferedImage result = new BufferedImage(component.getWidth(), component.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2 = result.createGraphics();
+            component.paint(g2);
+            g2.dispose();
+            return result;
+        }
     }
 
     private static class ExpandedIcon implements Icon {
