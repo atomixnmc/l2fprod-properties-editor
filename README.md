@@ -1,4 +1,6 @@
 # l2fprod
+[![Join the chat at https://gitter.im/ZenHarbinger/l2fprod-properties-editor](https://badges.gitter.im/ZenHarbinger/l2fprod-properties-editor.svg)](https://gitter.im/ZenHarbinger/l2fprod-properties-editor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Fork and Extension of l2fprod's Java properties editing component.
 
 I found this source somewhere on the Internet after looking for a property editor for Java.
