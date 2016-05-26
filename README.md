@@ -1,4 +1,5 @@
 # l2fprod
+[![Build Status](https://travis-ci.org/ZenHarbinger/l2fprod-properties-editor.svg?branch=master)](https://travis-ci.org/ZenHarbinger/l2fprod-properties-editor)  
 [![Join the chat at https://gitter.im/ZenHarbinger/l2fprod-properties-editor](https://badges.gitter.im/ZenHarbinger/l2fprod-properties-editor.svg)](https://gitter.im/ZenHarbinger/l2fprod-properties-editor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Fork and Extension of l2fprod's Java properties editing component.
