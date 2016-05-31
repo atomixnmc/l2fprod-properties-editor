@@ -96,7 +96,7 @@ public class UserPreferences {
     public static JFileChooser getDirectoryChooser(String id) {
         JFileChooser chooser;
         try {
-            Class directoryChooserClass = Class
+            Class<?> directoryChooserClass = Class
                     .forName("com.l2fprod.common.swing.JDirectoryChooser");
             chooser = (JFileChooser) directoryChooserClass.newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -161,10 +161,10 @@ public class UserPreferences {
             window.setBounds(rect);
         }
 
-        window.addComponentListener(windowDimension);
+        window.addComponentListener(WINDOW_DIMENSIONS);
     }
 
-    private static final ComponentListener windowDimension = new ComponentAdapter() {
+    private static final ComponentListener WINDOW_DIMENSIONS = new ComponentAdapter() {
         @Override
         public void componentMoved(ComponentEvent e) {
             store((Window) e.getComponent());
@@ -316,10 +316,10 @@ public class UserPreferences {
 
         // track changes
         split.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
-                splitPaneListener);
+                SPLIT_PANE_LISTENER);
     }
 
-    private static final PropertyChangeListener splitPaneListener = new PropertyChangeListener() {
+    private static final PropertyChangeListener SPLIT_PANE_LISTENER = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             JSplitPane split = (JSplitPane) evt.getSource();

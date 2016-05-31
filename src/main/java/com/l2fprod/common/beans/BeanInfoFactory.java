@@ -33,12 +33,20 @@ import java.util.logging.Logger;
  *
  * @author matta
  */
-public class BeanInfoFactory {
+public final class BeanInfoFactory {
 
+    /**
+     * Hidden Constructor.
+     */
     private BeanInfoFactory() {
-
     }
 
+    /**
+     * Get the bean information of a type.
+     *
+     * @param c The type to get the bean information of.
+     * @return The BeanInfo of the specified type.
+     */
     public static BeanInfo createBeanInfo(Class<? extends Object> c) {
         BeanInfo bi = DefaultBeanInfoResolver.getBeanInfoHelper(c);
         if (bi == null) {
@@ -48,8 +56,22 @@ public class BeanInfoFactory {
         return bi;
     }
 
-    public static class ConfigBeanInfo extends BaseBeanInfo {
+    /**
+     * This class overrides BaseBeanInfo.
+     *
+     * This class will auto-populate the properties reading from the
+     * Introspector.
+     */
+    private static class ConfigBeanInfo extends BaseBeanInfo {
 
+        /**
+         * Constructor.
+         *
+         * Initialize properties from the Introspector.
+         *
+         * @param c The type to wrap.
+         */
+        @SuppressWarnings("OverridableMethodCallInConstructor")
         public ConfigBeanInfo(Class<? extends Object> c) {
             super(c);
             try {
@@ -63,6 +85,9 @@ public class BeanInfoFactory {
                         FileProperty fp = prop.getReadMethod().getAnnotation(FileProperty.class);
                         DirectoryProperty dir_p = prop.getReadMethod().getAnnotation(DirectoryProperty.class);
 
+                        /*
+                         * Do not add properties that have the Browse annotation set to false.
+                         */
                         if (browse == null || browse.enabled()) {
                             ExtendedPropertyDescriptor epd = addProperty(prop.getName()).setCategory(cat == null ? "General" : cat.category());
                             if (fp != null) {

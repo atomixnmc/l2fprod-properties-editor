@@ -60,7 +60,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
  */
 public class LookAndFeelAddons {
 
-    private static final List contributedComponents = new ArrayList();
+    private static final List<ComponentAddon> CONTRIBUTED_COMPONENTS = new ArrayList<>();
 
     /**
      * Key used to ensure the current UIManager has been populated by the
@@ -91,15 +91,13 @@ public class LookAndFeelAddons {
     private static LookAndFeelAddons currentAddon;
 
     public void initialize() {
-        for (Iterator iter = contributedComponents.iterator(); iter.hasNext();) {
-            ComponentAddon addon = (ComponentAddon) iter.next();
+        for (ComponentAddon addon : CONTRIBUTED_COMPONENTS) {
             addon.initialize(this);
         }
     }
 
     public void uninitialize() {
-        for (Iterator iter = contributedComponents.iterator(); iter.hasNext();) {
-            ComponentAddon addon = (ComponentAddon) iter.next();
+        for (ComponentAddon addon : CONTRIBUTED_COMPONENTS) {
             addon.uninitialize(this);
         }
     }
@@ -138,7 +136,7 @@ public class LookAndFeelAddons {
         setAddon(Class.forName(addonClassName));
     }
 
-    public static void setAddon(Class addonClass) throws InstantiationException,
+    public static void setAddon(Class<?> addonClass) throws InstantiationException,
             IllegalAccessException {
         LookAndFeelAddons addon = (LookAndFeelAddons) addonClass.newInstance();
         setAddon(addon);
@@ -222,7 +220,7 @@ public class LookAndFeelAddons {
      * @param component
      */
     public static void contribute(ComponentAddon component) {
-        contributedComponents.add(component);
+        CONTRIBUTED_COMPONENTS.add(component);
 
         if (currentAddon != null) {
       // make sure to initialize any addons added after the
@@ -237,7 +235,7 @@ public class LookAndFeelAddons {
      * @param component
      */
     public static void uncontribute(ComponentAddon component) {
-        contributedComponents.remove(component);
+        CONTRIBUTED_COMPONENTS.remove(component);
 
         if (currentAddon != null) {
             component.uninitialize(currentAddon);
@@ -252,13 +250,13 @@ public class LookAndFeelAddons {
      * @param expectedUIClass
      * @return an instance of expectedUIClass
      */
-    public static ComponentUI getUI(JComponent component, Class expectedUIClass) {
+    public static ComponentUI getUI(JComponent component, Class<?> expectedUIClass) {
         maybeInitialize();
 
         // solve issue with ClassLoader not able to find classes
         String uiClassname = (String) UIManager.get(component.getUIClassID());
         try {
-            Class uiClass = Class.forName(uiClassname);
+            Class<?> uiClass = Class.forName(uiClassname);
             UIManager.put(uiClassname, uiClass);
         } catch (ClassNotFoundException e) {
             // we ignore the ClassNotFoundException
@@ -270,7 +268,7 @@ public class LookAndFeelAddons {
             return ui;
         } else {
             String realUI = ui.getClass().getName();
-            Class realUIClass;
+            Class<?> realUIClass;
             try {
                 realUIClass = expectedUIClass.getClassLoader()
                         .loadClass(realUI);

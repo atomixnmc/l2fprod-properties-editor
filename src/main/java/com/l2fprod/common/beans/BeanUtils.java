@@ -15,65 +15,70 @@
  */
 package com.l2fprod.common.beans;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * BeanUtils. <br>
  *
+ * Adds helper methods for accessing read/write methods for a property.
  */
 public class BeanUtils {
 
+    /**
+     * Hidden Constructor.
+     */
     private BeanUtils() {
     }
 
-    public static Method getReadMethod(Class clazz, String propertyName) {
+    /**
+     * Helper method for getting a read method for a property.
+     *
+     * @param clazz the type to get the method for.
+     * @param propertyName the name of the property.
+     * @return the method for reading the property.
+     */
+    public static Method getReadMethod(Class<?> clazz, String propertyName) {
         Method readMethod = null;
-        String base = capitalize(propertyName);
-
-        // Since there can be multiple setter methods but only one getter
-        // method, find the getter method first so that you know what the
-        // property type is. For booleans, there can be "is" and "get"
-        // methods. If an "is" method exists, this is the official
-        // reader method so look for this one first.
         try {
-            readMethod = clazz.getMethod("is" + base);
-        } catch (NoSuchMethodException | SecurityException getterExc) {
-            try {
-                // no "is" method, so look for a "get" method.
-                readMethod = clazz.getMethod("get" + base);
-            } catch (NoSuchMethodException | SecurityException e) {
-                // no is and no get, we will return null
+            PropertyDescriptor[] thisProps = Introspector.getBeanInfo(clazz).getPropertyDescriptors();
+            for (PropertyDescriptor pd : thisProps) {
+                if (pd.getName().equals(propertyName) && pd.getReadMethod() != null) {
+                    readMethod = pd.getReadMethod();
+                    break;
+                }
             }
+        } catch (IntrospectionException ex) {
+            Logger.getLogger(BeanUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return readMethod;
     }
 
-    public static Method getWriteMethod(
-            Class clazz,
-            String propertyName,
-            Class propertyType) {
+    /**
+     * Helper method for getting a write method for a property.
+     *
+     * @param clazz
+     * @param propertyName
+     * @return
+     */
+    public static Method getWriteMethod(Class<?> clazz, String propertyName) {
         Method writeMethod = null;
-        String base = capitalize(propertyName);
-
-        Class params[] = {propertyType};
         try {
-            writeMethod = clazz.getMethod("set" + base, params);
-        } catch (NoSuchMethodException | SecurityException e) {
-            // no write method
+            PropertyDescriptor[] thisProps = Introspector.getBeanInfo(clazz).getPropertyDescriptors();
+            for (PropertyDescriptor pd : thisProps) {
+                if (pd.getName().equals(propertyName) && pd.getWriteMethod() != null) {
+                    writeMethod = pd.getWriteMethod();
+                    break;
+                }
+            }
+        } catch (IntrospectionException ex) {
+            Logger.getLogger(BeanUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return writeMethod;
-    }
-
-    private static String capitalize(String s) {
-        if (s.length() == 0) {
-            return s;
-        } else {
-            char chars[] = s.toCharArray();
-            chars[0] = Character.toUpperCase(chars[0]);
-            return String.valueOf(chars);
-        }
     }
 
 }

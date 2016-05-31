@@ -39,6 +39,7 @@ import javax.swing.JTextArea;
  */
 public class PropertySheetPage2 extends JPanel {
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public PropertySheetPage2() {
         setLayout(LookAndFeelTweaks.createVerticalPercentLayout());
 

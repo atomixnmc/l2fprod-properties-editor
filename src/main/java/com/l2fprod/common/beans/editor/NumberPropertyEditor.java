@@ -33,10 +33,10 @@ import javax.swing.text.NumberFormatter;
  */
 public abstract class NumberPropertyEditor extends AbstractPropertyEditor {
 
-    private final Class type;
+    private final Class<?> type;
     private Object lastGoodValue;
 
-    public NumberPropertyEditor(Class type) {
+    public NumberPropertyEditor(Class<?> type) {
         if (!Number.class.isAssignableFrom(type)) {
             throw new IllegalArgumentException("type must be a subclass of Number");
         }
@@ -47,7 +47,7 @@ public abstract class NumberPropertyEditor extends AbstractPropertyEditor {
         ((JFormattedTextField) editor).setBorder(LookAndFeelTweaks.EMPTY_BORDER);
 
         // use a custom formatter to have numbers with up to 64 decimals
-        NumberFormat format = NumberConverters.defaultFormat;
+        NumberFormat format = NumberConverters.DEFAULT_FORMAT;
 
         ((JFormattedTextField) editor).setFormatterFactory(
                 new DefaultFormatterFactory(new NumberFormatter(format))

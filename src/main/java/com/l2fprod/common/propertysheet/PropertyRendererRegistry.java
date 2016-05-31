@@ -35,11 +35,11 @@ import javax.swing.table.TableCellRenderer;
  */
 public final class PropertyRendererRegistry implements PropertyRendererFactory {
 
-    private final Map typeToRenderer;
+    private final Map<Class<?>, Object> typeToRenderer;
 //    private final Map propertyToRenderer;
 
     public PropertyRendererRegistry() {
-        typeToRenderer = new HashMap();
+        typeToRenderer = new HashMap<>();
 //        propertyToRenderer = new HashMap();
         registerDefaults();
     }
@@ -50,7 +50,7 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
     }
 
     @Override
-    public TableCellRenderer createTableCellRenderer(Class type) {
+    public TableCellRenderer createTableCellRenderer(Class<?> type) {
         return getRenderer(type);
     }
 
@@ -101,12 +101,12 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
                 }
             }
         }
-        Object value = typeToRenderer.get(property);
+        Object value = typeToRenderer.get(property.getType());
         if (value instanceof TableCellRenderer) {
             renderer = (TableCellRenderer) value;
-        } else if (value instanceof Class) {
+        } else if (value instanceof Class<?>) {
             try {
-                renderer = (TableCellRenderer) ((Class) value).newInstance();
+                renderer = (TableCellRenderer) ((Class<?>) value).newInstance();
             } catch (IllegalAccessException | InstantiationException e) {
                 Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -132,14 +132,14 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
      * @return a renderer editor suitable for the Property type or null if none
      * found
      */
-    public synchronized TableCellRenderer getRenderer(Class type) {
+    public synchronized TableCellRenderer getRenderer(Class<?> type) {
         TableCellRenderer renderer = null;
         Object value = typeToRenderer.get(type);
         if (value instanceof TableCellRenderer) {
             renderer = (TableCellRenderer) value;
-        } else if (value instanceof Class) {
+        } else if (value instanceof Class<?>) {
             try {
-                renderer = (TableCellRenderer) ((Class) value).newInstance();
+                renderer = (TableCellRenderer) ((Class<?>) value).newInstance();
             } catch (IllegalAccessException | InstantiationException e) {
                 Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -147,19 +147,19 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
         return renderer;
     }
 
-    public synchronized void registerRenderer(Class type, Class rendererClass) {
+    public synchronized void registerRenderer(Class<?> type, Class<?> rendererClass) {
         typeToRenderer.put(type, rendererClass);
     }
 
-    public synchronized void registerRenderer(Class type, TableCellRenderer renderer) {
+    public synchronized void registerRenderer(Class<?> type, TableCellRenderer renderer) {
         typeToRenderer.put(type, renderer);
     }
 
-    public synchronized void unregisterRenderer(Class type) {
+    public synchronized void unregisterRenderer(Class<?> type) {
         typeToRenderer.remove(type);
     }
 
-//    public synchronized void registerRenderer(Property property, Class rendererClass) {
+//    public synchronized void registerRenderer(Property property, Class<?> rendererClass) {
 //        propertyToRenderer.put(property, rendererClass);
 //    }
 //

@@ -59,6 +59,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
      *
      * @throws java.beans.IntrospectionException
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public JCollapsiblePaneBeanInfo() throws java.beans.IntrospectionException {
         // setup bean descriptor in constructor.
         bd.setName("JCollapsiblePane");
@@ -91,7 +92,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
         ArrayList<BeanInfo> bi = new ArrayList<>();
         BeanInfo[] biarr = null;
         try {
-            for (Class cl = com.l2fprod.common.swing.JCollapsiblePane.class
+            for (Class<?> cl = com.l2fprod.common.swing.JCollapsiblePane.class
                     .getSuperclass(); !cl.equals(java.awt.Component.class.getSuperclass()); cl = cl
                     .getSuperclass()) {
                 bi.add(Introspector.getBeanInfo(cl));
@@ -165,7 +166,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
             ArrayList<PropertyDescriptor> descriptors = new ArrayList<>();
-            PropertyDescriptor descriptor = null;
+            PropertyDescriptor descriptor;
 
             try {
                 descriptor = new PropertyDescriptor("animated",

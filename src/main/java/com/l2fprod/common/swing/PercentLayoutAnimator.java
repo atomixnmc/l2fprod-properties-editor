@@ -31,7 +31,7 @@ import javax.swing.Timer;
 public class PercentLayoutAnimator implements ActionListener {
 
     private Timer animatorTimer;
-    private final List tasks = new ArrayList();
+    private final List<PercentTask> tasks = new ArrayList<>();
     private final PercentLayout layout;
     private final Container container;
 
@@ -69,8 +69,7 @@ public class PercentLayoutAnimator implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         boolean allCompleted = true;
 
-        for (Iterator iter = tasks.iterator(); iter.hasNext();) {
-            PercentTask element = (PercentTask) iter.next();
+        for (PercentTask element : tasks) {
             if (!element.isCompleted()) {
                 allCompleted = false;
                 element.execute();

@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  */
 public class ResourceManager {
 
-    static Map nameToRM = new HashMap();
+    static Map<String, ResourceManager> nameToRM = new HashMap<>();
 
     private final ResourceBundle bundle;
 
@@ -38,7 +38,7 @@ public class ResourceManager {
      * @param clazz
      * @return the ResourceManager associated with the class
      */
-    public static ResourceManager get(Class clazz) {
+    public static ResourceManager get(Class<?> clazz) {
         String bundleName = clazz.getName() + "RB";
         return get(bundleName);
     }
@@ -63,7 +63,7 @@ public class ResourceManager {
      * @param clazz
      * @return the "AllRB" in the class package
      */
-    public static ResourceManager all(Class clazz) {
+    public static ResourceManager all(Class<?> clazz) {
         return get(getPackage(clazz) + ".AllRB");
     }
 
@@ -186,7 +186,7 @@ public class ResourceManager {
         return result;
     }
 
-    private static String getPackage(Class clazz) {
+    private static String getPackage(Class<?> clazz) {
         String pck = clazz.getName();
         int index = pck.lastIndexOf('.');
         if (index != -1) {

@@ -144,6 +144,7 @@ public class JCollapsiblePane extends JPanel {
      * and a vertical {@link PercentLayout} with a gap of 2 pixels as layout
      * manager.
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public JCollapsiblePane() {
         super.setLayout(new BorderLayout(0, 0));
 
@@ -165,12 +166,13 @@ public class JCollapsiblePane extends JPanel {
     private class ToggleAction extends AbstractAction implements
             PropertyChangeListener {
 
+        @SuppressWarnings("OverridableMethodCallInConstructor")
         public ToggleAction() {
             super(TOGGLE_ACTION);
             updateIcon();
-      // the action must track the collapsed status of the pane to update its
+            // the action must track the collapsed status of the pane to update its
             // icon
-            JCollapsiblePane.this.addPropertyChangeListener("collapsed", this);
+            JCollapsiblePane.this.addPropertyChangeListener("collapsed", (PropertyChangeListener) this);
         }
 
         @Override
@@ -228,6 +230,7 @@ public class JCollapsiblePane extends JPanel {
 
     /**
      * Overriden to redirect call to the content pane.
+     *
      * @param mgr
      */
     @Override
@@ -240,6 +243,7 @@ public class JCollapsiblePane extends JPanel {
 
     /**
      * Overriden to redirect call to the content pane.
+     *
      * @param comp
      * @param constraints
      * @param index
@@ -251,6 +255,7 @@ public class JCollapsiblePane extends JPanel {
 
     /**
      * Overriden to redirect call to the content pane
+     *
      * @param comp
      */
     @Override
@@ -260,6 +265,7 @@ public class JCollapsiblePane extends JPanel {
 
     /**
      * Overriden to redirect call to the content pane.
+     *
      * @param index
      */
     @Override
@@ -505,7 +511,7 @@ public class JCollapsiblePane extends JPanel {
                 if (startHeight == finalHeight) {
                     animateTimer.stop();
                     animateAlpha = animationParams.alphaEnd;
-          // keep the content pane hidden when it is collapsed, other it may
+                    // keep the content pane hidden when it is collapsed, other it may
                     // still receive focus.
                     if (finalHeight > 0) {
                         wrapper.showContent();
@@ -524,10 +530,8 @@ public class JCollapsiblePane extends JPanel {
                     if (newHeight < finalHeight) {
                         newHeight = finalHeight;
                     }
-                } else {
-                    if (newHeight > finalHeight) {
-                        newHeight = finalHeight;
-                    }
+                } else if (newHeight > finalHeight) {
+                    newHeight = finalHeight;
                 }
                 animateAlpha = (float) newHeight
                         / (float) wrapper.c.getPreferredSize().height;
@@ -542,7 +546,7 @@ public class JCollapsiblePane extends JPanel {
                 setBounds(bounds);
                 startHeight = newHeight;
 
-        // it happens the animateAlpha goes over the alphaStart/alphaEnd range
+                // it happens the animateAlpha goes over the alphaStart/alphaEnd range
                 // this code ensures it stays in bounds. This behavior is seen when
                 // component such as JTextComponents are used in the container.
                 if (contracting) {
@@ -615,12 +619,13 @@ public class JCollapsiblePane extends JPanel {
         private Container c;
         float alpha = 1.0f;
 
+        @SuppressWarnings("OverridableMethodCallInConstructor")
         public WrapperContainer(Container c) {
             super(new BorderLayout());
             this.c = c;
             add(c, BorderLayout.CENTER);
 
-      // we must ensure the container is opaque. It is not opaque it introduces
+            // we must ensure the container is opaque. It is not opaque it introduces
             // painting glitches specially on Linux with JDK 1.5 and GTK look and feel.
             // GTK look and feel calls setOpaque(false)
             if (c instanceof JComponent && !((JComponent) c).isOpaque()) {
@@ -660,12 +665,12 @@ public class JCollapsiblePane extends JPanel {
             if (!useAnimation || c.isVisible()) {
                 super.paintComponent(g);
             } else {
-        // within netbeans, it happens we arrive here and the image has not been
+                // within netbeans, it happens we arrive here and the image has not been
                 // created yet. We ensure it is.
                 if (img == null) {
                     makeImage();
                 }
-        // and we paint it only if it has been created and only if we have a
+                // and we paint it only if it has been created and only if we have a
                 // valid graphics
                 if (g != null && img != null) {
                     // draw the image with y being height - imageHeight

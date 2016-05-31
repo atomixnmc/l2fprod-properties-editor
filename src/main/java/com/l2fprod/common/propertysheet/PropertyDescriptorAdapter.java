@@ -63,7 +63,7 @@ class PropertyDescriptorAdapter extends AbstractProperty {
     }
 
     @Override
-    public Class getType() {
+    public Class<?> getType() {
         return descriptor.getPropertyType();
     }
 

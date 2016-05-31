@@ -28,10 +28,10 @@ import java.util.logging.Logger;
  */
 public class ExtendedPropertyDescriptor extends PropertyDescriptor {
 
-    private Class tableCellRendererClass = null;
+    private Class<?> tableCellRendererClass = null;
     private String category = "";
 
-    public ExtendedPropertyDescriptor(String propertyName, Class beanClass)
+    public ExtendedPropertyDescriptor(String propertyName, Class<?> beanClass)
             throws IntrospectionException {
         super(propertyName, beanClass);
     }
@@ -46,7 +46,7 @@ public class ExtendedPropertyDescriptor extends PropertyDescriptor {
 
     public ExtendedPropertyDescriptor(
             String propertyName,
-            Class beanClass,
+            Class<?> beanClass,
             String getterName,
             String setterName)
             throws IntrospectionException {
@@ -91,20 +91,20 @@ public class ExtendedPropertyDescriptor extends PropertyDescriptor {
      *
      * @param tableCellRendererClass
      */
-    public void setPropertyTableRendererClass(Class tableCellRendererClass) {
+    public void setPropertyTableRendererClass(Class<?> tableCellRendererClass) {
         this.tableCellRendererClass = tableCellRendererClass;
     }
 
     /**
      * @return null or a custom TableCellRenderer-Class for this property
      */
-    public Class getPropertyTableRendererClass() {
+    public Class<?> getPropertyTableRendererClass() {
         return (this.tableCellRendererClass);
     }
 
     public static ExtendedPropertyDescriptor newPropertyDescriptor(
             String propertyName,
-            Class beanClass)
+            Class<?> beanClass)
             throws IntrospectionException {
         // the same initialization phase as in the PropertyDescriptor
         Method readMethod = BeanUtils.getReadMethod(beanClass, propertyName);
@@ -119,10 +119,7 @@ public class ExtendedPropertyDescriptor extends PropertyDescriptor {
         }
 
         writeMethod
-                = BeanUtils.getWriteMethod(
-                        beanClass,
-                        propertyName,
-                        readMethod.getReturnType());
+                = BeanUtils.getWriteMethod(beanClass, propertyName);
 
         return new ExtendedPropertyDescriptor(
                 propertyName,
@@ -142,34 +139,32 @@ public class ExtendedPropertyDescriptor extends PropertyDescriptor {
                 return 1;
             } else if (desc1 == null && desc2 != null) {
                 return -1;
+            } else if (desc1 instanceof ExtendedPropertyDescriptor
+                    && !(desc2 instanceof ExtendedPropertyDescriptor)) {
+                return -1;
+            } else if (!(desc1 instanceof ExtendedPropertyDescriptor)
+                    && desc2 instanceof ExtendedPropertyDescriptor) {
+                return 1;
+            } else if (!(desc1 instanceof ExtendedPropertyDescriptor)
+                    && !(desc2 instanceof ExtendedPropertyDescriptor)) {
+                return String.CASE_INSENSITIVE_ORDER.compare(
+                        desc1.getDisplayName(),
+                        desc2.getDisplayName());
             } else {
-                if (desc1 instanceof ExtendedPropertyDescriptor
-                        && !(desc2 instanceof ExtendedPropertyDescriptor)) {
-                    return -1;
-                } else if (!(desc1 instanceof ExtendedPropertyDescriptor)
-                        && desc2 instanceof ExtendedPropertyDescriptor) {
-                    return 1;
-                } else if (!(desc1 instanceof ExtendedPropertyDescriptor)
-                        && !(desc2 instanceof ExtendedPropertyDescriptor)) {
+                int category
+                        = String.CASE_INSENSITIVE_ORDER.compare(
+                                ((ExtendedPropertyDescriptor) desc1).getCategory() == null
+                                        ? ""
+                                        : ((ExtendedPropertyDescriptor) desc1).getCategory(),
+                                ((ExtendedPropertyDescriptor) desc2).getCategory() == null
+                                        ? ""
+                                        : ((ExtendedPropertyDescriptor) desc2).getCategory());
+                if (category == 0) {
                     return String.CASE_INSENSITIVE_ORDER.compare(
                             desc1.getDisplayName(),
                             desc2.getDisplayName());
                 } else {
-                    int category
-                            = String.CASE_INSENSITIVE_ORDER.compare(
-                                    ((ExtendedPropertyDescriptor) desc1).getCategory() == null
-                                    ? ""
-                                    : ((ExtendedPropertyDescriptor) desc1).getCategory(),
-                                    ((ExtendedPropertyDescriptor) desc2).getCategory() == null
-                                    ? ""
-                                    : ((ExtendedPropertyDescriptor) desc2).getCategory());
-                    if (category == 0) {
-                        return String.CASE_INSENSITIVE_ORDER.compare(
-                                desc1.getDisplayName(),
-                                desc2.getDisplayName());
-                    } else {
-                        return category;
-                    }
+                    return category;
                 }
             }
         }

@@ -51,7 +51,7 @@ public class DirectoryPropertyEditor extends FilePropertyEditor {
         } else {
             oldFile = new File((String) x);
         }
-        if (oldFile != null && oldFile.isDirectory()) {
+        if (oldFile.isDirectory()) {
             try {
                 chooser.setCurrentDirectory(oldFile.getCanonicalFile());
             } catch (IOException e) {

@@ -20,12 +20,16 @@ import java.util.MissingResourceException;
 
 /**
  * DefaultBeanDescriptor.
- *
  */
 final class DefaultBeanDescriptor extends BeanDescriptor {
 
-    private String displayName;
-
+    /**
+     * Override values of displayName and shortDescription.
+     *
+     * @param beanInfo uses the beanInfo to access resources for beanName and
+     * beanDiscription.
+     */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public DefaultBeanDescriptor(BaseBeanInfo beanInfo) {
         super(beanInfo.getType());
         try {
@@ -38,16 +42,6 @@ final class DefaultBeanDescriptor extends BeanDescriptor {
         } catch (MissingResourceException e) {
             // this resource is not mandatory
         }
-    }
-
-    @Override
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    @Override
-    public void setDisplayName(String p_name) {
-        displayName = p_name;
     }
 
 }

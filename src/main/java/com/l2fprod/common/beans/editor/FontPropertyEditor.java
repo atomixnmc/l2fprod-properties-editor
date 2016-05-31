@@ -29,16 +29,16 @@ import javax.swing.JComboBox;
 @EditorRegistry(type = Font.class)
 public class FontPropertyEditor extends ComboBoxPropertyEditor {
 
-    private final static Map<String, Font> fontMap = new TreeMap<>();
+    private final static Map<String, Font> FONT_MAP = new TreeMap<>();
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public FontPropertyEditor() {
         for (Font f : GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()) {
-            if (!fontMap.containsKey(f.getName())) {
-                fontMap.put(f.getName(), f);
+            if (!FONT_MAP.containsKey(f.getName())) {
+                FONT_MAP.put(f.getName(), f);
             }
         }
-        setAvailableValues(fontMap.keySet().toArray(new String[]{}));
+        setAvailableValues(FONT_MAP.keySet().toArray(new String[]{}));
     }
 
     @Override

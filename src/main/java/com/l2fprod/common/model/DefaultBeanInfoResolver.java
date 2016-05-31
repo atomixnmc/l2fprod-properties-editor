@@ -27,15 +27,15 @@ import java.util.HashMap;
  */
 public class DefaultBeanInfoResolver implements BeanInfoResolver {
 
-    private static final HashMap<String, BeanInfo> map = new HashMap<>();
+    private static final HashMap<String, BeanInfo> MAP = new HashMap<>();
 
     public static synchronized void addBeanInfo(Class<?> clazz, BeanInfo bi) {
-        map.put(clazz.getName(), bi);
+        MAP.put(clazz.getName(), bi);
     }
     
     public static synchronized BeanInfo getBeanInfoHelper(Class<?> clazz) {
-        if (map.containsKey(clazz.getName())) {
-            return map.get(clazz.getName());
+        if (MAP.containsKey(clazz.getName())) {
+            return MAP.get(clazz.getName());
         }
         return null;
     }
@@ -54,15 +54,15 @@ public class DefaultBeanInfoResolver implements BeanInfoResolver {
     }
 
     @Override
-    public BeanInfo getBeanInfo(Class clazz) {
+    public BeanInfo getBeanInfo(Class<?> clazz) {
         if (clazz == null) {
             return null;
         }
 
         String classname = clazz.getName();
 
-        if (map.containsKey(classname)) {
-            return map.get(classname);
+        if (MAP.containsKey(classname)) {
+            return MAP.get(classname);
         }
         else {
             return BeanInfoFactory.createBeanInfo(clazz);

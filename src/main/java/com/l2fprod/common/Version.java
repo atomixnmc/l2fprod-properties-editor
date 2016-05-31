@@ -39,6 +39,12 @@ public final class Version {
      */
     public final static Version INSTANCE = new Version();
 
+    /**
+     * Constructor.
+     *
+     * Read build information from the properties file. Values in the properties
+     * file are set at build-time if applicable.
+     */
     public Version() {
         //load prop file...
         try {
@@ -59,7 +65,7 @@ public final class Version {
     }
 
     /**
-     * Version Accessor.
+     * Get the version.
      *
      * @return
      */
@@ -68,7 +74,9 @@ public final class Version {
     }
 
     /**
-     * Build Time Accessor.
+     * Get the build time.
+     *
+     * Build time format: yyyy-MM-dd HH:mm:ss
      *
      * @return
      */
@@ -104,7 +112,9 @@ public final class Version {
     }
 
     /**
-     * To string, return version.
+     * To string.
+     *
+     * Returns the version value.
      *
      * @return
      */

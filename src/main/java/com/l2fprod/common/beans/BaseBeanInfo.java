@@ -28,24 +28,40 @@ import java.util.List;
 import java.util.MissingResourceException;
 
 /**
- * A convenient class to build beaninfos by adding and removing properties. <br>
+ * A convenient class to build BeanInfo objects by adding and removing
+ * properties.
  */
 public class BaseBeanInfo extends SimpleBeanInfo {
 
-    private final Class type;
+    private final Class<?> type;
 
     private BeanDescriptor beanDescriptor;
 
-    private final List properties = new ArrayList(0);
+    private final List<PropertyDescriptor> properties = new ArrayList<>(0);
 
-    public BaseBeanInfo(Class type) {
+    /**
+     * Constructor.
+     *
+     * @param type The class type for pulling out Bean information.
+     */
+    public BaseBeanInfo(Class<?> type) {
         this.type = type;
     }
 
-    public final Class getType() {
+    /**
+     * Get the class type that the object wraps.
+     *
+     * @return
+     */
+    public final Class<?> getType() {
         return type;
     }
 
+    /**
+     * Get the resource manager associated with the wrapped type.
+     *
+     * @return the resource manager associated with the wrapped type.
+     */
     public ResourceManager getResources() {
         return ResourceManager.get(getType());
     }
@@ -60,7 +76,7 @@ public class BaseBeanInfo extends SimpleBeanInfo {
 
     @Override
     public PropertyDescriptor[] getPropertyDescriptors() {
-        return (PropertyDescriptor[]) properties.toArray(new PropertyDescriptor[0]);
+        return (PropertyDescriptor[]) properties.toArray(new PropertyDescriptor[]{});
     }
 
     public int getPropertyDescriptorCount() {

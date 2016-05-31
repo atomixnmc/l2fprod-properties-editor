@@ -29,7 +29,7 @@ public class BooleanConverter implements Converter {
     }
 
     @Override
-    public Object convert(Class type, Object value) {
+    public Object convert(Class<?> type, Object value) {
         if (String.class.equals(type) && Boolean.class.equals(value.getClass())) {
             return String.valueOf(value);
         } else if (boolean.class.equals(type) || Boolean.class.equals(type)) {

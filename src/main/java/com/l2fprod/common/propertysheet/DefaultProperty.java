@@ -34,11 +34,11 @@ public class DefaultProperty extends AbstractProperty {
     private String name;
     private String displayName;
     private String shortDescription;
-    private Class type;
+    private Class<?> type;
     private boolean editable = true;
     private String category;
     private Property parent;
-    private final List subProperties = new ArrayList();
+    private final List<Property> subProperties = new ArrayList<>();
 
     @Override
     public String getName() {
@@ -68,11 +68,11 @@ public class DefaultProperty extends AbstractProperty {
     }
 
     @Override
-    public Class getType() {
+    public Class<?> getType() {
         return type;
     }
 
-    public void setType(Class type) {
+    public void setType(Class<?> type) {
         this.type = type;
     }
 
@@ -98,6 +98,7 @@ public class DefaultProperty extends AbstractProperty {
      * Reads the value of this Property from the given object. It uses
      * reflection and looks for a method starting with "is" or "get" followed by
      * the capitalized Property name.
+     *
      * @param object
      */
     @Override
@@ -108,8 +109,7 @@ public class DefaultProperty extends AbstractProperty {
                 Object value = method.invoke(object);
                 initializeValue(value); // avoid updating parent or firing property change
                 if (value != null) {
-                    for (Iterator iter = subProperties.iterator(); iter.hasNext();) {
-                        Property subProperty = (Property) iter.next();
+                    for (Property subProperty : subProperties) {
                         subProperty.readFromObject(value);
                     }
                 }
@@ -123,13 +123,13 @@ public class DefaultProperty extends AbstractProperty {
      * Writes the value of the Property to the given object. It uses reflection
      * and looks for a method starting with "set" followed by the capitalized
      * Property name and with one parameter with the same type as the Property.
+     *
      * @param object
      */
     @Override
     public void writeToObject(Object object) {
         try {
-            Method method
-                    = BeanUtils.getWriteMethod(object.getClass(), getName(), getType());
+            Method method = BeanUtils.getWriteMethod(object.getClass(), getName());
             if (method != null) {
                 method.invoke(object, new Object[]{getValue()});
             }
@@ -152,8 +152,7 @@ public class DefaultProperty extends AbstractProperty {
             }
         }
         if (value != null) {
-            for (Iterator iter = subProperties.iterator(); iter.hasNext();) {
-                Property subProperty = (Property) iter.next();
+            for (Property subProperty : subProperties) {
                 subProperty.readFromObject(value);
             }
         }
@@ -174,8 +173,9 @@ public class DefaultProperty extends AbstractProperty {
      * equal if they are the same object or if their name, display name, short
      * description, category, type and editable property are the same. Note the
      * property value is not considered in the implementation.
+     *
      * @param other
-     * @return 
+     * @return
      */
     @Override
     public boolean equals(Object other) {
@@ -223,8 +223,7 @@ public class DefaultProperty extends AbstractProperty {
     }
 
     public void clearSubProperties() {
-        for (Iterator iter = this.subProperties.iterator(); iter.hasNext();) {
-            Property subProp = (Property) iter.next();
+        for (Property subProp : this.subProperties) {
             if (subProp instanceof DefaultProperty) {
                 ((DefaultProperty) subProp).setParentProperty(null);
             }
@@ -234,8 +233,7 @@ public class DefaultProperty extends AbstractProperty {
 
     public void addSubProperties(Collection subProperties) {
         this.subProperties.addAll(subProperties);
-        for (Iterator iter = this.subProperties.iterator(); iter.hasNext();) {
-            Property subProp = (Property) iter.next();
+        for (Property subProp : this.subProperties) {
             if (subProp instanceof DefaultProperty) {
                 ((DefaultProperty) subProp).setParentProperty(this);
             }

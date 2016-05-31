@@ -18,6 +18,7 @@ package com.l2fprod.common.util;
 /**
  * Deals with the different version of the Java Virtual Machine. <br>
  */
+@Deprecated
 public class JVM {
 
     public final static int JDK1_0 = 10;

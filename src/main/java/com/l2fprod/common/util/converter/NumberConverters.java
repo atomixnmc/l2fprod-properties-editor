@@ -26,12 +26,12 @@ import java.util.logging.Logger;
  */
 public class NumberConverters implements Converter {
 
-    public static final NumberFormat defaultFormat;
+    public static final NumberFormat DEFAULT_FORMAT;
 
     private NumberFormat format;
 
     public NumberConverters() {
-        this(defaultFormat);
+        this(DEFAULT_FORMAT);
     }
 
     public NumberConverters(NumberFormat format) {
@@ -39,11 +39,11 @@ public class NumberConverters implements Converter {
     }
 
     static {
-        defaultFormat = NumberFormat.getNumberInstance();
-        defaultFormat.setMinimumIntegerDigits(1);
-        defaultFormat.setMaximumIntegerDigits(64);
-        defaultFormat.setMinimumFractionDigits(0);
-        defaultFormat.setMaximumFractionDigits(64);
+        DEFAULT_FORMAT = NumberFormat.getNumberInstance();
+        DEFAULT_FORMAT.setMinimumIntegerDigits(1);
+        DEFAULT_FORMAT.setMaximumIntegerDigits(64);
+        DEFAULT_FORMAT.setMinimumFractionDigits(0);
+        DEFAULT_FORMAT.setMaximumFractionDigits(64);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class NumberConverters implements Converter {
      * @return
      */
     @Override
-    public Object convert(Class targetType, Object value) {
+    public Object convert(Class<?> targetType, Object value) {
         // are we dealing with a number to number conversion?
         if ((value instanceof Number) && Number.class.isAssignableFrom(targetType)) {
             if (Integer.class.equals(targetType)) {

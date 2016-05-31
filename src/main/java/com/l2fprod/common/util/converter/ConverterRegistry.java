@@ -25,7 +25,7 @@ import java.util.ServiceLoader;
  */
 public final class ConverterRegistry implements Registry {
 
-    private static final ConverterRegistry sharedInstance = new ConverterRegistry();
+    private static final ConverterRegistry SHARED_INSTANCE = new ConverterRegistry();
     private final Map<Class<?>, Map<Class<?>, Converter>> fromMap;
 
     /**
@@ -50,7 +50,7 @@ public final class ConverterRegistry implements Registry {
      * @param converter
      */
     @Override
-    public void addConverter(Class from, Class to, Converter converter) {
+    public void addConverter(Class<?> from, Class<?> to, Converter converter) {
         Map toMap = fromMap.get(from);
         if (toMap == null) {
             toMap = new HashMap<>();
@@ -67,7 +67,7 @@ public final class ConverterRegistry implements Registry {
      * @return
      */
     @Override
-    public Converter getConverter(Class from, Class to) {
+    public Converter getConverter(Class<?> from, Class<?> to) {
         Map<Class<?>, Converter> toMap = fromMap.get(from);
         if (toMap != null) {
             return toMap.get(to);
@@ -83,7 +83,7 @@ public final class ConverterRegistry implements Registry {
      * @param value
      * @return
      */
-    public Object convert(Class targetType, Object value) {
+    public Object convert(Class<?> targetType, Object value) {
         if (value == null) {
             return null;
         }
@@ -103,6 +103,6 @@ public final class ConverterRegistry implements Registry {
      * @return
      */
     public static ConverterRegistry instance() {
-        return sharedInstance;
+        return SHARED_INSTANCE;
     }
 }

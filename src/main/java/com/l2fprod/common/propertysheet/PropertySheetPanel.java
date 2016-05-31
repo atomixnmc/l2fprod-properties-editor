@@ -299,22 +299,6 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
     }
 
     /**
-     * @deprecated use {@link #setRendererFactory(PropertyRendererFactory)}
-     * @param registry
-     */
-    public void setRendererRegistry(PropertyRendererRegistry registry) {
-        table.setRendererRegistry(registry);
-    }
-
-    /**
-     * @return 
-     * @deprecated use {@link #getRendererFactory()}
-     */
-    public PropertyRendererRegistry getRendererRegistry() {
-        return table.getRendererRegistry();
-    }
-
-    /**
      * Sets sorting of categories enabled or disabled.
      *
      * @param value true to enable sorting
@@ -508,6 +492,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
 
     class ToggleModeAction extends AbstractAction {
 
+        @SuppressWarnings("OverridableMethodCallInConstructor")
         public ToggleModeAction() {
             super("toggle", IconPool.shared().get(
                     PropertySheet.class.getResource("icons/category.gif")));
@@ -528,6 +513,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
 
     class ToggleDescriptionAction extends AbstractAction {
 
+        @SuppressWarnings("OverridableMethodCallInConstructor")
         public ToggleDescriptionAction() {
             super("toggleDescription", IconPool.shared().get(
                     PropertySheet.class.getResource("icons/description.gif")));
@@ -544,6 +530,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
 
     class ToggleSortingAction extends AbstractAction {
 
+        @SuppressWarnings("OverridableMethodCallInConstructor")
         public ToggleSortingAction() {
             super("toggleSorting", IconPool.shared().get(
                     PropertySheet.class.getResource("icons/sort.gif")));

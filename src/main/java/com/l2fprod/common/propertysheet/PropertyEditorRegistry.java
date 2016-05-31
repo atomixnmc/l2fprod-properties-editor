@@ -33,14 +33,14 @@ import java.util.logging.Logger;
  */
 public final class PropertyEditorRegistry implements PropertyEditorFactory {
 
-    private final Map typeToEditor;
-    private final Map propertyToEditor;
+    private final Map<Class<?>, Object> typeToEditor;
+    private final Map<Property, Object> propertyToEditor;
 
-    public final static PropertyEditorRegistry Instance = new PropertyEditorRegistry();
+    public final static PropertyEditorRegistry INSTANCE = new PropertyEditorRegistry();
 
     private PropertyEditorRegistry() {
-        typeToEditor = new HashMap();
-        propertyToEditor = new HashMap();
+        typeToEditor = new HashMap<>();
+        propertyToEditor = new HashMap<>();
         registerDefaults();
     }
 
@@ -78,13 +78,13 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
                 //allow a per/set property editor override
                 PropertyEditorOverride annotation = descriptor.getWriteMethod().getAnnotation(PropertyEditorOverride.class);
                 if (annotation != null) {
-                    Class clz = annotation.type();
+                    Class<?> clz = annotation.type();
                     if (clz != null) {
                         editor = loadPropertyEditor(clz);
                     }
                 }
                 if (editor == null) {
-                    Class clz = descriptor.getPropertyEditorClass();
+                    Class<?> clz = descriptor.getPropertyEditorClass();
                     if (clz != null) {
                         editor = loadPropertyEditor(clz);
                     }
@@ -95,15 +95,15 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
             Object value = propertyToEditor.get(property);
             if (value instanceof PropertyEditor) {
                 editor = (PropertyEditor) value;
-            } else if (value instanceof Class) {
-                editor = loadPropertyEditor((Class) value);
+            } else if (value instanceof Class<?>) {
+                editor = loadPropertyEditor((Class<?>) value);
             } else {
                 editor = getEditor(property.getType());
             }
         }
         if ((editor == null) && (property instanceof PropertyDescriptorAdapter)) {
             PropertyDescriptor descriptor = ((PropertyDescriptorAdapter) property).getDescriptor();
-            Class clz = descriptor.getPropertyType();
+            Class<?> clz = descriptor.getPropertyType();
             editor = PropertyEditorManager.findEditor(clz);
         }
         return editor;
@@ -115,7 +115,7 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
      * @param clz Class to load from.
      * @return Loaded propertyEditor
      */
-    private PropertyEditor loadPropertyEditor(Class clz) {
+    private PropertyEditor loadPropertyEditor(Class<?> clz) {
         PropertyEditor editor = null;
         try {
             editor = (PropertyEditor) clz.newInstance();
@@ -147,9 +147,9 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
         }
         if (value instanceof PropertyEditor) {
             editor = (PropertyEditor) value;
-        } else if (value instanceof Class) {
+        } else if (value instanceof Class<?>) {
             try {
-                editor = (PropertyEditor) ((Class) value).newInstance();
+                editor = (PropertyEditor) ((Class<?>) value).newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
                 Logger.getLogger(PropertyEditorRegistry.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -157,24 +157,23 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
         return editor;
     }
 
-    public synchronized void registerEditor(Class type, Class editorClass) {
+    public synchronized void registerEditor(Class<?> type, Class<?> editorClass) {
         typeToEditor.put(type, editorClass);
     }
 
-    public synchronized void registerEditor(Class type, PropertyEditor editor) {
+    public synchronized void registerEditor(Class<?> type, PropertyEditor editor) {
         typeToEditor.put(type, editor);
     }
 
-    public synchronized void unregisterEditor(Class type) {
+    public synchronized void unregisterEditor(Class<?> type) {
         typeToEditor.remove(type);
     }
 
-    public synchronized void registerEditor(Property property, Class editorClass) {
+    public synchronized void registerEditor(Property property, Class<?> editorClass) {
         propertyToEditor.put(property, editorClass);
     }
 
-    public synchronized void registerEditor(Property property,
-            PropertyEditor editor) {
+    public synchronized void registerEditor(Property property, PropertyEditor editor) {
         propertyToEditor.put(property, editor);
     }
 

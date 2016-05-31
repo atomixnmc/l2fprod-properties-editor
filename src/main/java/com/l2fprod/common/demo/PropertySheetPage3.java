@@ -34,9 +34,10 @@ import javax.swing.JTextArea;
 
 public class PropertySheetPage3 extends JPanel {
 
-    private static final Class THIS_CLASS = PropertySheetPage3.class;
+    private static final Class<?> THIS_CLASS = PropertySheetPage3.class;
     static ResourceManager RESOURCE = ResourceManager.get(THIS_CLASS);
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public PropertySheetPage3() {
         setLayout(LookAndFeelTweaks.createVerticalPercentLayout());
 
@@ -154,6 +155,7 @@ public class PropertySheetPage3 extends JPanel {
 
     public static class ColorProperty extends DefaultProperty {
 
+        @SuppressWarnings("OverridableMethodCallInConstructor")
         public ColorProperty() {
             setName("color");
             setCategory(RESOURCE.getString("color.cat"));
@@ -169,6 +171,7 @@ public class PropertySheetPage3 extends JPanel {
 
     public static class ColorComponentProperty extends DefaultProperty {
 
+        @SuppressWarnings("OverridableMethodCallInConstructor")
         public ColorComponentProperty(String name) {
             setName(name);
             setDisplayName(RESOURCE.getString(name + ".name"));

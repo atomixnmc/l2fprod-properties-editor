@@ -40,6 +40,7 @@ public class BannerPanel extends JPanel {
 
     private final JLabel iconLabel;
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BannerPanel() {
         setBorder(
                 new CompoundBorder(new EtchedBorder(), LookAndFeelTweaks.PANEL_BORDER));

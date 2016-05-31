@@ -25,6 +25,6 @@ public interface BeanInfoResolver {
 
     public BeanInfo getBeanInfo(Object object);
 
-    public BeanInfo getBeanInfo(Class clazz);
+    public BeanInfo getBeanInfo(Class<?> clazz);
 
 }

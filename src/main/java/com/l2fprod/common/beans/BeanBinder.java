@@ -30,7 +30,7 @@ import javax.swing.UIManager;
 /**
  * Binds a bean object to a PropertySheet.
  *
- * <b>Note: this class is not part of the library</b>
+ * When the property value of a bean changes, it is reflected back in the UI.
  */
 public class BeanBinder {
 
@@ -38,10 +38,23 @@ public class BeanBinder {
     private final PropertySheetPanel sheet;
     private final PropertyChangeListener listener;
 
+    /**
+     * Constructor.
+     *
+     * @param bean
+     * @param sheet
+     */
     public BeanBinder(final Object bean, final PropertySheetPanel sheet) {
         this(bean, sheet, new DefaultBeanInfoResolver().getBeanInfo(bean));
     }
 
+    /**
+     * Constructor.
+     *
+     * @param bean
+     * @param sheet
+     * @param beanInfo
+     */
     public BeanBinder(final Object bean, final PropertySheetPanel sheet, final BeanInfo beanInfo) {
         this.bean = bean;
         this.sheet = sheet;
@@ -78,10 +91,16 @@ public class BeanBinder {
         sheet.addPropertySheetChangeListener(listener);
     }
 
+    /**
+     * Update the sheet data.
+     */
     public void update() {
         sheet.readFromObject(bean);
     }
 
+    /**
+     * Unbind the bean and the sheet.
+     */
     public void unbind() {
         sheet.removePropertyChangeListener(listener);
         sheet.setProperties(new Property[0]);

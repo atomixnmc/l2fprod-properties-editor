@@ -35,7 +35,7 @@ import javax.swing.JTextField;
 public class DateStringPropertyEditor extends AbstractPropertyEditor {
 
     public static final java.text.SimpleDateFormat DEFAULT_DATE_FORMAT = new java.text.SimpleDateFormat("MM-dd-yyy");
-    private static final Logger log = Logger.getLogger(DateStringPropertyEditor.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DateStringPropertyEditor.class.getName());
     private Date date;
 
     /**
@@ -96,7 +96,7 @@ public class DateStringPropertyEditor extends AbstractPropertyEditor {
         Date local_date = (Date) getValue();
         String s = DEFAULT_DATE_FORMAT.format(local_date);
 
-        log.log(Level.WARNING, "getAsText(): {0}", s);
+        LOGGER.log(Level.WARNING, "getAsText(): {0}", s);
         return s;
     }
 }

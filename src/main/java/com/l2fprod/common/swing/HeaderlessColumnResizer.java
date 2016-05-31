@@ -36,11 +36,11 @@ import javax.swing.table.TableColumn;
  */
 public class HeaderlessColumnResizer extends MouseInputAdapter {
 
-    private static final Cursor resizeCursor
+    private static final Cursor RESIZE_CURSOR
             = Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR);
 
     private int mouseXOffset;
-    private Cursor otherCursor = resizeCursor;
+    private Cursor otherCursor = RESIZE_CURSOR;
 
     private final JTable table;
 
@@ -117,7 +117,7 @@ public class HeaderlessColumnResizer extends MouseInputAdapter {
     @Override
     public void mouseMoved(MouseEvent e) {
         if (canResize(getResizingColumn(e.getPoint()))
-                != (table.getCursor() == resizeCursor)) {
+                != (table.getCursor() == RESIZE_CURSOR)) {
             swapCursor();
         }
     }

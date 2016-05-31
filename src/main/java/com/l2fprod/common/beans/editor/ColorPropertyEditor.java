@@ -101,7 +101,7 @@ public class ColorPropertyEditor extends AbstractPropertyEditor {
         @Override
         public void setValue(Object arg0) {
             if (arg0 instanceof Integer) {
-                super.setValue(new Color(((Integer) arg0).intValue()));
+                super.setValue(new Color(((Integer) arg0)));
             } else {
                 super.setValue(arg0);
             }
@@ -113,17 +113,17 @@ public class ColorPropertyEditor extends AbstractPropertyEditor {
             if (value == null) {
                 return null;
             } else {
-                return new Integer(((Color) value).getRGB());
+                return ((Color) value).getRGB();
             }
         }
 
         @Override
         protected void firePropertyChange(Object oldValue, Object newValue) {
             if (oldValue instanceof Color) {
-                oldValue = new Integer(((Color) oldValue).getRGB());
+                oldValue = ((Color) oldValue).getRGB();
             }
             if (newValue instanceof Color) {
-                newValue = new Integer(((Color) newValue).getRGB());
+                newValue = ((Color) newValue).getRGB();
             }
             super.firePropertyChange(oldValue, newValue);
         }

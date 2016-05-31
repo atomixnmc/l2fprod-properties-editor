@@ -92,7 +92,7 @@ public class AWTConverters implements Converter {
     }
 
     @Override
-    public Object convert(Class type, Object value) {
+    public Object convert(Class<?> type, Object value) {
         if (String.class.equals(type)) {
             if (value instanceof Rectangle) {
                 return ((Rectangle) value).getX()

@@ -28,16 +28,16 @@ import javax.swing.ImageIcon;
  */
 public class IconPool {
 
-    private static final IconPool iconPool = new IconPool();
+    private static final IconPool ICON_POOL = new IconPool();
 
-    private final Map pool;
+    private final Map<String, Icon> pool;
 
     public IconPool() {
-        pool = new HashMap();
+        pool = new HashMap<>();
     }
 
     public static IconPool shared() {
-        return iconPool;
+        return ICON_POOL;
     }
 
     /**

@@ -24,64 +24,64 @@ import javax.swing.UIManager;
  */
 public class OS {
 
-    private static final boolean osIsMacOsX;
-    private static final boolean osIsWindows;
-    private static final boolean osIsWindowsXP;
-    private static final boolean osIsWindows2003;
-    private static final boolean osIsWindowsVista;
-    private static final boolean osIsLinux;
+    private static final boolean OS_IS_MAC_OSX;
+    private static final boolean OS_IS_WINDOWS;
+    private static final boolean OS_IS_WINDOWS_XP;
+    private static final boolean OS_IS_WINDOWS_2003;
+    private static final boolean OS_IS_WINDOWS_VISTA;
+    private static final boolean OS_IS_LINUX;
 
     static {
         String os = System.getProperty("os.name").toLowerCase();
 
-        osIsMacOsX = "mac os x".equals(os);
-        osIsWindows = os.contains("windows");
-        osIsWindowsXP = "windows xp".equals(os);
-        osIsWindows2003 = "windows 2003".equals(os);
-        osIsWindowsVista = "windows vista".equals(os);
-        osIsLinux = os != null && os.contains("linux");
+        OS_IS_MAC_OSX = "mac os x".equals(os);
+        OS_IS_WINDOWS = os != null && os.contains("windows");
+        OS_IS_WINDOWS_XP = "windows xp".equals(os);
+        OS_IS_WINDOWS_2003 = "windows 2003".equals(os);
+        OS_IS_WINDOWS_VISTA = "windows vista".equals(os);
+        OS_IS_LINUX = os != null && os.contains("linux");
     }
 
     /**
      * @return true if this VM is running on Mac OS X
      */
     public static boolean isMacOSX() {
-        return osIsMacOsX;
+        return OS_IS_MAC_OSX;
     }
 
     /**
      * @return true if this VM is running on Windows
      */
     public static boolean isWindows() {
-        return osIsWindows;
+        return OS_IS_WINDOWS;
     }
 
     /**
      * @return true if this VM is running on Windows XP
      */
     public static boolean isWindowsXP() {
-        return osIsWindowsXP;
+        return OS_IS_WINDOWS_XP;
     }
 
     /**
      * @return true if this VM is running on Windows 2003
      */
     public static boolean isWindows2003() {
-        return osIsWindows2003;
+        return OS_IS_WINDOWS_2003;
     }
 
     /**
      * @return true if this VM is running on Windows Vista
      */
     public static boolean isWindowsVista() {
-        return osIsWindowsVista;
+        return OS_IS_WINDOWS_VISTA;
     }
 
     /**
      * @return true if this VM is running on a Linux distribution
      */
     public static boolean isLinux() {
-        return osIsLinux;
+        return OS_IS_LINUX;
     }
 
     /**

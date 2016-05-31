@@ -63,7 +63,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
    * @param addon
    * @param defaults
    */
-  protected void addBasicDefaults(LookAndFeelAddons addon, List defaults) {
+  protected void addBasicDefaults(LookAndFeelAddons addon, List<Object> defaults) {
   }
 
   /**
@@ -72,7 +72,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
    * @param addon
    * @param defaults
    */
-  protected void addMacDefaults(LookAndFeelAddons addon, List defaults) {
+  protected void addMacDefaults(LookAndFeelAddons addon, List<Object> defaults) {
     addBasicDefaults(addon, defaults);
   }
 
@@ -82,7 +82,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
    * @param addon
    * @param defaults
    */
-  protected void addMetalDefaults(LookAndFeelAddons addon, List defaults) {
+  protected void addMetalDefaults(LookAndFeelAddons addon, List<Object> defaults) {
     addBasicDefaults(addon, defaults);
   }
   
@@ -92,7 +92,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
    * @param addon
    * @param defaults
    */
-  protected void addMotifDefaults(LookAndFeelAddons addon, List defaults) {
+  protected void addMotifDefaults(LookAndFeelAddons addon, List<Object> defaults) {
     addBasicDefaults(addon, defaults);
   }
 
@@ -102,7 +102,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
    * @param addon
    * @param defaults
    */
-  protected void addWindowsDefaults(LookAndFeelAddons addon, List defaults) {
+  protected void addWindowsDefaults(LookAndFeelAddons addon, List<Object> defaults) {
     addBasicDefaults(addon, defaults);
   }
     
@@ -130,7 +130,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
    * </pre>
    */
   private Object[] getDefaults(LookAndFeelAddons addon) {
-    List defaults = new ArrayList();
+    List<Object> defaults = new ArrayList<>();
     if (isWindows(addon)) {
       addWindowsDefaults(addon, defaults);
     } else if (isMetal(addon)) {
@@ -156,7 +156,7 @@ public abstract class AbstractComponentAddon implements ComponentAddon {
      * @param defaults
      * @param bundleName
    */
-  protected void addResource(List defaults, String bundleName) {
+  protected void addResource(List<Object> defaults, String bundleName) {
     ResourceBundle bundle = ResourceBundle.getBundle(bundleName);
     for (Enumeration keys = bundle.getKeys(); keys.hasMoreElements(); ) {
       String key = (String)keys.nextElement();      

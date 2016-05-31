@@ -30,6 +30,7 @@ import javax.swing.UIManager;
  */
 public final class FixedButton extends JButton {
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public FixedButton() {
         super("...");
 

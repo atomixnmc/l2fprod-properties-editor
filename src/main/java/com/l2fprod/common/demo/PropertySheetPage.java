@@ -50,6 +50,7 @@ public class PropertySheetPage extends JPanel {
         SPRING
     }
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public PropertySheetPage() {
         setLayout(LookAndFeelTweaks.createVerticalPercentLayout());
 
@@ -224,6 +225,7 @@ public class PropertySheetPage extends JPanel {
 
     public static class SeasonEditor extends ComboBoxPropertyEditor {
 
+        @SuppressWarnings("OverridableMethodCallInConstructor")
         public SeasonEditor() {
             super();
             setAvailableValues(new String[]{"Spring", "Summer", "Fall", "Winter",});

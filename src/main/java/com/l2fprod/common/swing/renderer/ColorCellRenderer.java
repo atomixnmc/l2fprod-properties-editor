@@ -68,7 +68,7 @@ public class ColorCellRenderer extends DefaultCellRenderer {
             return null;
         }
         if (value instanceof Integer) {
-            value = new Color(((Integer) value).intValue());
+            value = new Color(((Integer) value));
         }
         return new PaintIcon((Paint) value);
     }

@@ -35,7 +35,7 @@ import javax.swing.JTextField;
 public class CalendarStringPropertyEditor extends AbstractPropertyEditor {
 
     public static final java.text.SimpleDateFormat DEFAULT_DATE_FORMAT = new java.text.SimpleDateFormat("MM-dd-yyy");
-    private static final Logger log = Logger.getLogger(CalendarStringPropertyEditor.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CalendarStringPropertyEditor.class.getName());
     private Date date;
 
     /**
@@ -98,7 +98,7 @@ public class CalendarStringPropertyEditor extends AbstractPropertyEditor {
         Calendar local_date = (Calendar) getValue();
         String s = DEFAULT_DATE_FORMAT.format(local_date.getTime());
 
-        log.log(Level.WARNING, "getAsText(): {0}", s);
+        LOGGER.log(Level.WARNING, "getAsText(): {0}", s);
         return s;
     }
 }

@@ -90,6 +90,7 @@ public class PropertySheetTable extends JTable {
         this(new PropertySheetTableModel());
     }
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public PropertySheetTable(PropertySheetTableModel dm) {
         super(dm);
         initDefaultColors();
@@ -105,11 +106,11 @@ public class PropertySheetTable extends JTable {
         getTableHeader().setVisible(false);
 
         // table header not being visible, make sure we can still resize the columns
-        new HeaderlessColumnResizer(this);
+        HeaderlessColumnResizer hcr = new HeaderlessColumnResizer((JTable) this);
 
         // default renderers and editors
         setRendererFactory(new PropertyRendererRegistry());
-        setEditorFactory(PropertyEditorRegistry.Instance);
+        setEditorFactory(PropertyEditorRegistry.INSTANCE);
 
         nameRenderer = new NameRenderer();
 
@@ -296,6 +297,7 @@ public class PropertySheetTable extends JTable {
     }
 
     /**
+     * @return 
      * @deprecated use {@link #getEditorFactory()}
      * @throws ClassCastException if the current editor factory is not a
      * PropertyEditorRegistry
@@ -312,26 +314,10 @@ public class PropertySheetTable extends JTable {
         return rendererFactory;
     }
 
-    /**
-     * @deprecated use {@link #setRendererFactory(PropertyRendererFactory)}
-     * @param registry
-     */
-    public void setRendererRegistry(PropertyRendererRegistry registry) {
-        setRendererFactory(registry);
-    }
-
-    /**
-     * @deprecated use {@link #getRendererFactory()}
-     * @throws ClassCastException if the current renderer factory is not a
-     * PropertyRendererRegistry
-     */
-    public PropertyRendererRegistry getRendererRegistry() {
-        return (PropertyRendererRegistry) getRendererFactory();
-    }
-
     /* (non-Javadoc)
      * @see javax.swing.JTable#isCellEditable(int, int)
      */
+    @Override
     public boolean isCellEditable(int row, int column) {
         // names are not editable
         if (column == 0) {
@@ -346,8 +332,10 @@ public class PropertySheetTable extends JTable {
      * Gets the CellEditor for the given row and column. It uses the editor
      * registry to find a suitable editor for the property.
      *
+     * @return 
      * @see javax.swing.JTable#getCellEditor(int, int)
      */
+    @Override
     public TableCellEditor getCellEditor(int row, int column) {
         if (column == 0) {
             return null;
@@ -371,6 +359,7 @@ public class PropertySheetTable extends JTable {
     /* (non-Javadoc)
      * @see javax.swing.JTable#getCellRenderer(int, int)
      */
+    @Override
     public TableCellRenderer getCellRenderer(int row, int column) {
         PropertySheetTableModel.Item item = getSheetModel()
                 .getPropertySheetElement(row);
@@ -405,7 +394,7 @@ public class PropertySheetTable extends JTable {
      * @param type the type for which a renderer should be found
      * @return a renderer for the given object type
      */
-    private TableCellRenderer getCellRenderer(Class type) {
+    private TableCellRenderer getCellRenderer(Class<?> type) {
         // try to create one from the factory
         TableCellRenderer renderer = getRendererFactory().createTableCellRenderer(type);
 
@@ -431,7 +420,9 @@ public class PropertySheetTable extends JTable {
      * <li>to prevent the cell focus rect to be painted
      * <li>to disable ({@link Component#setEnabled(boolean)} the renderer if the
      * Property is not editable
+     * @return 
      */
+    @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row,
             int column) {
         Object value = getValueAt(row, column);
@@ -451,10 +442,12 @@ public class PropertySheetTable extends JTable {
      * Overriden to register a listener on the model. This listener ensures
      * editing is canceled when editing row is being changed.
      *
+     * @param newModel
      * @see javax.swing.JTable#setModel(javax.swing.table.TableModel)
      * @throws IllegalArgumentException if dataModel is not a
      * {@link PropertySheetTableModel}
      */
+    @Override
     public void setModel(TableModel newModel) {
         if (!(newModel instanceof PropertySheetTableModel)) {
             throw new IllegalArgumentException("dataModel must be of type "
@@ -477,6 +470,7 @@ public class PropertySheetTable extends JTable {
     }
 
     /**
+     * @return 
      * @see #setWantsExtraIndent(boolean)
      */
     public boolean getWantsExtraIndent() {
@@ -500,7 +494,9 @@ public class PropertySheetTable extends JTable {
     /**
      * Ensures the table uses the full height of its parent
      * {@link javax.swing.JViewport}.
+     * @return 
      */
+    @Override
     public boolean getScrollableTracksViewportHeight() {
         return getPreferredSize().height < getParent().getHeight();
     }
@@ -530,6 +526,7 @@ public class PropertySheetTable extends JTable {
      */
     private class CancelEditing implements TableModelListener {
 
+        @Override
         public void tableChanged(TableModelEvent e) {
       // in case the table changes for the following reasons:
             // * the editing row has changed
@@ -559,6 +556,7 @@ public class PropertySheetTable extends JTable {
      */
     private static class StartEditingAction extends AbstractAction {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             JTable table = (JTable) e.getSource();
             if (!table.hasFocus()) {
@@ -585,6 +583,7 @@ public class PropertySheetTable extends JTable {
      */
     private class ToggleAction extends AbstractAction {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             int row = PropertySheetTable.this.getSelectedRow();
             Item item = PropertySheetTable.this.getSheetModel()
@@ -593,6 +592,7 @@ public class PropertySheetTable extends JTable {
             PropertySheetTable.this.addRowSelectionInterval(row, row);
         }
 
+        @Override
         public boolean isEnabled() {
             int row = PropertySheetTable.this.getSelectedRow();
             if (row != -1) {
@@ -610,6 +610,7 @@ public class PropertySheetTable extends JTable {
      */
     private static class ToggleMouseHandler extends MouseAdapter {
 
+        @Override
         public void mouseReleased(MouseEvent event) {
             PropertySheetTable table = (PropertySheetTable) event.getComponent();
             int row = table.rowAtPoint(event.getPoint());
@@ -630,7 +631,7 @@ public class PropertySheetTable extends JTable {
      * its hierarchy level.
      */
     static int getIndent(PropertySheetTable table, Item item) {
-        int indent = 0;
+        int indent;
 
         if (item.isProperty()) {
             // it is a property, it has no parent or a category, and no child
@@ -669,7 +670,7 @@ public class PropertySheetTable extends JTable {
         private boolean toggleState;
         private Icon expandedIcon;
         private Icon collapsedIcon;
-        private Insets insets = new Insets(1, 0, 1, 1);
+        private final Insets insets = new Insets(1, 0, 1, 1);
         private boolean isProperty;
 
         public CellBorder() {
@@ -685,13 +686,15 @@ public class PropertySheetTable extends JTable {
             showToggle = item.hasToggle();
 
             indentWidth = getIndent(table, item);
-            insets.left = indentWidth + (showToggle ? HOTSPOT_SIZE : 0) + 2;;
+            insets.left = indentWidth + (showToggle ? HOTSPOT_SIZE : 0) + 2;
         }
 
+        @Override
         public Insets getBorderInsets(Component c) {
             return insets;
         }
 
+        @Override
         public void paintBorder(Component c, Graphics g, int x, int y, int width,
                 int height) {
             if (!isProperty) {
@@ -709,6 +712,7 @@ public class PropertySheetTable extends JTable {
             }
         }
 
+        @Override
         public boolean isBorderOpaque() {
             return true;
         }
@@ -730,6 +734,7 @@ public class PropertySheetTable extends JTable {
 
     private static class ExpandedIcon implements Icon {
 
+        @Override
         public void paintIcon(Component c, Graphics g, int x, int y) {
             Color backgroundColor = c.getBackground();
 
@@ -745,10 +750,12 @@ public class PropertySheetTable extends JTable {
             g.drawLine(x + 2, y + 4, x + (6), y + 4);
         }
 
+        @Override
         public int getIconWidth() {
             return 9;
         }
 
+        @Override
         public int getIconHeight() {
             return 9;
         }
@@ -756,6 +763,7 @@ public class PropertySheetTable extends JTable {
 
     private static class CollapsedIcon extends ExpandedIcon {
 
+        @Override
         public void paintIcon(Component c, Graphics g, int x, int y) {
             super.paintIcon(c, g, x, y);
             g.drawLine(x + 4, y + 2, x + 4, y + 6);
@@ -767,7 +775,7 @@ public class PropertySheetTable extends JTable {
      */
     private class NameRenderer extends DefaultTableCellRenderer {
 
-        private CellBorder border;
+        private final CellBorder border;
 
         public NameRenderer() {
             border = new CellBorder();
@@ -783,6 +791,7 @@ public class PropertySheetTable extends JTable {
                     : (isSelected ? selectedCategoryBackground : categoryBackground));
         }
 
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
             super.getTableCellRendererComponent(table, value, isSelected, false, row, column);
