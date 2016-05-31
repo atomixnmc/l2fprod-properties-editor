@@ -139,7 +139,7 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
      * @param type
      * @return an editor suitable for the Property type or null if none found
      */
-    public synchronized PropertyEditor getEditor(Class type) {
+    public synchronized PropertyEditor getEditor(Class<?> type) {
         PropertyEditor editor = null;
         Object value = typeToEditor.get(type);
         if (value == null && type.isEnum()) {
@@ -157,7 +157,7 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
         return editor;
     }
 
-    public synchronized void registerEditor(Class<?> type, Class<?> editorClass) {
+    public synchronized void registerEditor(Class<?> type, Class<? extends PropertyEditor> editorClass) {
         typeToEditor.put(type, editorClass);
     }
 
@@ -169,7 +169,7 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
         typeToEditor.remove(type);
     }
 
-    public synchronized void registerEditor(Property property, Class<?> editorClass) {
+    public synchronized void registerEditor(Property property, Class<? extends PropertyEditor> editorClass) {
         propertyToEditor.put(property, editorClass);
     }
 

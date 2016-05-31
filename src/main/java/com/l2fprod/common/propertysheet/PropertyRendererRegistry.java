@@ -106,7 +106,7 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
             renderer = (TableCellRenderer) value;
         } else if (value instanceof Class<?>) {
             try {
-                renderer = (TableCellRenderer) ((Class<?>) value).newInstance();
+                renderer = (TableCellRenderer) ((Class<? extends TableCellRenderer>) value).newInstance();
             } catch (IllegalAccessException | InstantiationException e) {
                 Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -139,7 +139,7 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
             renderer = (TableCellRenderer) value;
         } else if (value instanceof Class<?>) {
             try {
-                renderer = (TableCellRenderer) ((Class<?>) value).newInstance();
+                renderer = (TableCellRenderer) ((Class<? extends TableCellRenderer>) value).newInstance();
             } catch (IllegalAccessException | InstantiationException e) {
                 Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -147,7 +147,7 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
         return renderer;
     }
 
-    public synchronized void registerRenderer(Class<?> type, Class<?> rendererClass) {
+    public synchronized void registerRenderer(Class<?> type, Class<? extends TableCellRenderer> rendererClass) {
         typeToRenderer.put(type, rendererClass);
     }
 
@@ -159,19 +159,6 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
         typeToRenderer.remove(type);
     }
 
-//    public synchronized void registerRenderer(Property property, Class<?> rendererClass) {
-//        propertyToRenderer.put(property, rendererClass);
-//    }
-//
-//    public synchronized void registerRenderer(Property property,
-//            TableCellRenderer renderer) {
-//        propertyToRenderer.put(property, renderer);
-//    }
-//
-//    public synchronized void unregisterRenderer(Property property) {
-//        propertyToRenderer.remove(property);
-//    }
-
     /**
      * Adds default renderers. This method is called by the constructor but may
      * be called later to reset any customizations made through the
@@ -181,7 +168,6 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
      */
     public void registerDefaults() {
         typeToRenderer.clear();
-//        propertyToRenderer.clear();
 
         ServiceLoader<TableCellRenderer> serviceLoader = ServiceLoader.load(TableCellRenderer.class);
         Iterator<TableCellRenderer> iterator = serviceLoader.iterator();

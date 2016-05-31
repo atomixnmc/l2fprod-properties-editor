@@ -22,7 +22,6 @@ import java.awt.Insets;
 import java.awt.LayoutManager2;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * PercentLayout. <BR>Constraint based layout which allow the space to be

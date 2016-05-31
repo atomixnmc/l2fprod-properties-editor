@@ -34,6 +34,7 @@ class PropertyDescriptorAdapter extends AbstractProperty {
         super();
     }
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public PropertyDescriptorAdapter(PropertyDescriptor descriptor) {
         this();
         setDescriptor(descriptor);
