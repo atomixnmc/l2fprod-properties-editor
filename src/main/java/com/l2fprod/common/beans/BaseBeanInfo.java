@@ -76,7 +76,7 @@ public class BaseBeanInfo extends SimpleBeanInfo {
 
     @Override
     public PropertyDescriptor[] getPropertyDescriptors() {
-        return (PropertyDescriptor[]) properties.toArray(new PropertyDescriptor[]{});
+        return properties.toArray(new PropertyDescriptor[]{});
     }
 
     public int getPropertyDescriptorCount() {
@@ -84,7 +84,7 @@ public class BaseBeanInfo extends SimpleBeanInfo {
     }
 
     public PropertyDescriptor getPropertyDescriptor(int index) {
-        return (PropertyDescriptor) properties.get(index);
+        return properties.get(index);
     }
 
     protected PropertyDescriptor addPropertyDescriptor(PropertyDescriptor property) {

@@ -108,7 +108,7 @@ public class ExtendedPropertyDescriptor extends PropertyDescriptor {
             throws IntrospectionException {
         // the same initialization phase as in the PropertyDescriptor
         Method readMethod = BeanUtils.getReadMethod(beanClass, propertyName);
-        Method writeMethod = null;
+        Method writeMethod;
 
         if (readMethod == null) {
             throw new IntrospectionException(
@@ -118,13 +118,9 @@ public class ExtendedPropertyDescriptor extends PropertyDescriptor {
                     + beanClass.getName());
         }
 
-        writeMethod
-                = BeanUtils.getWriteMethod(beanClass, propertyName);
+        writeMethod = BeanUtils.getWriteMethod(beanClass, propertyName);
 
-        return new ExtendedPropertyDescriptor(
-                propertyName,
-                readMethod,
-                writeMethod);
+        return new ExtendedPropertyDescriptor(propertyName, readMethod, writeMethod);
     }
 
     public static final Comparator BY_CATEGORY_COMPARATOR = new Comparator() {

@@ -62,7 +62,7 @@ public class IconPool {
             return null;
         }
 
-        Icon icon = (Icon) pool.get(url.toString());
+        Icon icon = pool.get(url.toString());
         if (icon == null) {
             icon = new ImageIcon(url);
             pool.put(url.toString(), icon);

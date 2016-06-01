@@ -21,8 +21,6 @@ import com.l2fprod.common.util.converter.NumberConverters;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.NumberFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;

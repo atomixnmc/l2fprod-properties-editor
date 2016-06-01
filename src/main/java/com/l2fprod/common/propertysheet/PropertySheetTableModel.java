@@ -208,7 +208,7 @@ public class PropertySheetTableModel
      * @return
      */
     public Item getPropertySheetElement(int rowIndex) {
-        return (Item) publishedModel.get(rowIndex);
+        return publishedModel.get(rowIndex);
     }
 
     /**

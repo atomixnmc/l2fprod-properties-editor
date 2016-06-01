@@ -38,7 +38,7 @@ public abstract class AbstractProperty implements Property {
 
     @Override
     public Object clone() {
-        AbstractProperty clone = null;
+        AbstractProperty clone;
         try {
             clone = (AbstractProperty) super.clone();
             return clone;

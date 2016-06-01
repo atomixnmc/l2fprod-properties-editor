@@ -226,7 +226,7 @@ public class DefaultProperty extends AbstractProperty {
 
     @Override
     public Property[] getSubProperties() {
-        return (Property[]) subProperties.toArray(new Property[subProperties.size()]);
+        return subProperties.toArray(new Property[subProperties.size()]);
     }
 
     public void clearSubProperties() {

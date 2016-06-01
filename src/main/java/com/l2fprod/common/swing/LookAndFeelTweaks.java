@@ -39,11 +39,9 @@ import javax.swing.text.html.HTMLDocument;
  */
 public class LookAndFeelTweaks {
 
-    public final static Border PANEL_BORDER = BorderFactory.createEmptyBorder(3,
-            3, 3, 3);
+    public final static Border PANEL_BORDER = BorderFactory.createEmptyBorder(3, 3, 3, 3);
 
-    public final static Border WINDOW_BORDER = BorderFactory.createEmptyBorder(4,
-            10, 10, 10);
+    public final static Border WINDOW_BORDER = BorderFactory.createEmptyBorder(4, 10, 10, 10);
 
     public final static Border EMPTY_BORDER = BorderFactory.createEmptyBorder();
 

@@ -23,6 +23,7 @@ import com.l2fprod.common.util.ResourceManager;
  */
 public class BooleanPropertyEditor extends ComboBoxPropertyEditor {
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BooleanPropertyEditor() {
         super();
         Object[] values = new Object[]{

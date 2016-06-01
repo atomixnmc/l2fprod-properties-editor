@@ -90,7 +90,7 @@ public final class StatusBar extends JComponent {
     }
 
     public Component getZone(String id) {
-        return (Component) idToZones.get(id);
+        return idToZones.get(id);
     }
 
     /**

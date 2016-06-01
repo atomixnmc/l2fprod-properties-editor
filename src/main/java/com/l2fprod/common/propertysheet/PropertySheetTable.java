@@ -639,10 +639,12 @@ public class PropertySheetTable extends JTable {
                     && !item.hasToggle()) {
                 indent = table.getWantsExtraIndent() ? HOTSPOT_SIZE : 0;
             } else // it is a property with children
-            if (item.hasToggle()) {
-                indent = item.getDepth() * HOTSPOT_SIZE;
-            } else {
-                indent = (item.getDepth() + 1) * HOTSPOT_SIZE;
+            {
+                if (item.hasToggle()) {
+                    indent = item.getDepth() * HOTSPOT_SIZE;
+                } else {
+                    indent = (item.getDepth() + 1) * HOTSPOT_SIZE;
+                }
             }
 
             if (table.getSheetModel().getMode() == PropertySheet.VIEW_AS_CATEGORIES

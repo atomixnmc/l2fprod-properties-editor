@@ -36,7 +36,6 @@ public class CalendarStringPropertyEditor extends AbstractPropertyEditor {
 
     public static final java.text.SimpleDateFormat DEFAULT_DATE_FORMAT = new java.text.SimpleDateFormat("MM-dd-yyy");
     private static final Logger LOGGER = Logger.getLogger(CalendarStringPropertyEditor.class.getName());
-    private Date date;
 
     /**
      * Constructor for JCalendarPropertyEditor
