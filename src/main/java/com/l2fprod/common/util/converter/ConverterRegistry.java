@@ -34,7 +34,7 @@ public final class ConverterRegistry implements Registry {
     private ConverterRegistry() {
         //use ServiceLoader to get instances of Converter classes.
         //force them to register w/ this class.
-        fromMap = new HashMap<>();
+        fromMap = new HashMap<Class<?>, Map<Class<?>, Converter>>();
         ServiceLoader<Converter> loader = ServiceLoader.load(Converter.class);
         Iterator<Converter> iterator = loader.iterator();
         while (iterator.hasNext()) {
@@ -53,7 +53,7 @@ public final class ConverterRegistry implements Registry {
     public void addConverter(Class<?> from, Class<?> to, Converter converter) {
         Map toMap = fromMap.get(from);
         if (toMap == null) {
-            toMap = new HashMap<>();
+            toMap = new HashMap<Class<?>, Map<Class<?>, Converter>>();
             fromMap.put(from, toMap);
         }
         toMap.put(to, converter);

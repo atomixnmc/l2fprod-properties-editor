@@ -39,8 +39,8 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
     public final static PropertyEditorRegistry INSTANCE = new PropertyEditorRegistry();
 
     private PropertyEditorRegistry() {
-        typeToEditor = new HashMap<>();
-        propertyToEditor = new HashMap<>();
+        typeToEditor = new HashMap<Class<?>, Object>();
+        propertyToEditor = new HashMap<Property, Object>();
         registerDefaults();
     }
 
@@ -119,7 +119,9 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
         PropertyEditor editor = null;
         try {
             editor = (PropertyEditor) clz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e) {
+            Logger.getLogger(PropertyEditorRegistry.class.getName()).log(Level.SEVERE, null, e);
+        } catch (IllegalAccessException e) {
             Logger.getLogger(PropertyEditorRegistry.class.getName()).log(Level.SEVERE, null, e);
         }
         return editor;
@@ -150,7 +152,9 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
         } else if (value instanceof Class<?>) {
             try {
                 editor = (PropertyEditor) ((Class<?>) value).newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (InstantiationException e) {
+                Logger.getLogger(PropertyEditorRegistry.class.getName()).log(Level.SEVERE, null, e);
+            } catch (IllegalAccessException e) {
                 Logger.getLogger(PropertyEditorRegistry.class.getName()).log(Level.SEVERE, null, e);
             }
         }

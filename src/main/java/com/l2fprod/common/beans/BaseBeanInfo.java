@@ -37,7 +37,7 @@ public class BaseBeanInfo extends SimpleBeanInfo {
 
     private BeanDescriptor beanDescriptor;
 
-    private final List<PropertyDescriptor> properties = new ArrayList<>(0);
+    private final List<PropertyDescriptor> properties = new ArrayList<PropertyDescriptor>(0);
 
     /**
      * Constructor.

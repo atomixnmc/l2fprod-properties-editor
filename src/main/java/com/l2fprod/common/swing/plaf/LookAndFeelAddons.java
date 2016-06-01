@@ -59,7 +59,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
  */
 public class LookAndFeelAddons {
 
-    private static final List<ComponentAddon> CONTRIBUTED_COMPONENTS = new ArrayList<>();
+    private static final List<ComponentAddon> CONTRIBUTED_COMPONENTS = new ArrayList<ComponentAddon>();
 
     /**
      * Key used to ensure the current UIManager has been populated by the
@@ -82,7 +82,11 @@ public class LookAndFeelAddons {
         try {
             setAddon(addonClassname);
             setTrackingLookAndFeelChanges(true);
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+        } catch (InstantiationException e) {
+            Logger.getLogger(LookAndFeelAddons.class.getName()).log(Level.SEVERE, null, e);
+        } catch (IllegalAccessException e) {
+            Logger.getLogger(LookAndFeelAddons.class.getName()).log(Level.SEVERE, null, e);
+        } catch (ClassNotFoundException e) {
             Logger.getLogger(LookAndFeelAddons.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -222,7 +226,7 @@ public class LookAndFeelAddons {
         CONTRIBUTED_COMPONENTS.add(component);
 
         if (currentAddon != null) {
-      // make sure to initialize any addons added after the
+            // make sure to initialize any addons added after the
             // LookAndFeelAddons has been installed
             component.initialize(currentAddon);
         }
@@ -282,7 +286,11 @@ public class LookAndFeelAddons {
             }
             try {
                 return (ComponentUI) createUIMethod.invoke(null, new Object[]{component});
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e2) {
+            } catch (IllegalAccessException e2) {
+                throw new RuntimeException("Failed to invoke " + realUI + "#createUI(JComponent)");
+            } catch (IllegalArgumentException e2) {
+                throw new RuntimeException("Failed to invoke " + realUI + "#createUI(JComponent)");
+            } catch (InvocationTargetException e2) {
                 throw new RuntimeException("Failed to invoke " + realUI + "#createUI(JComponent)");
             }
         }
@@ -301,7 +309,7 @@ public class LookAndFeelAddons {
      */
     private static synchronized void maybeInitialize() {
         if (currentAddon != null) {
-      // this is to ensure "UIManager#maybeInitialize" gets called and the
+            // this is to ensure "UIManager#maybeInitialize" gets called and the
             // LAFState initialized
             UIManager.getLookAndFeelDefaults();
 
@@ -311,7 +319,7 @@ public class LookAndFeelAddons {
         }
     }
 
-  //
+    //
     // TRACKING OF THE CURRENT LOOK AND FEEL
     //  
     private static class UpdateAddon implements PropertyChangeListener {
@@ -320,7 +328,13 @@ public class LookAndFeelAddons {
         public void propertyChange(PropertyChangeEvent evt) {
             try {
                 setAddon(getBestMatchAddonClassName());
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            } catch (ClassNotFoundException e) {
+                // should not happen
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                // should not happen
+                throw new RuntimeException(e);
+            } catch (InstantiationException e) {
                 // should not happen
                 throw new RuntimeException(e);
             }

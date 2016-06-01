@@ -113,7 +113,9 @@ public class FilePropertyEditor extends AbstractPropertyEditor {
                     textfield.setText(text);
                     firePropertyChange(oldFile, newFile);
                 }
-            } catch (UnsupportedFlavorException | IOException e) {
+            } catch (UnsupportedFlavorException e) {
+                Logger.getLogger(FilePropertyEditor.class.getName()).log(Level.SEVERE, null, e);
+            } catch (IOException e) {
                 Logger.getLogger(FilePropertyEditor.class.getName()).log(Level.SEVERE, null, e);
             }
             return true;
@@ -124,12 +126,10 @@ public class FilePropertyEditor extends AbstractPropertyEditor {
     public Object getValue() {
         if (_treated_as_string) {
             return textfield.getText().trim();
+        } else if ("".equals(textfield.getText().trim())) {
+            return null;
         } else {
-            if ("".equals(textfield.getText().trim())) {
-                return null;
-            } else {
-                return new File(textfield.getText());
-            }
+            return new File(textfield.getText());
         }
     }
 

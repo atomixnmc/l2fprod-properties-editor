@@ -21,6 +21,8 @@ import com.l2fprod.common.util.converter.NumberConverters;
 import java.lang.reflect.InvocationTargetException;
 
 import java.text.NumberFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
@@ -102,8 +104,17 @@ public abstract class NumberPropertyEditor extends AbstractPropertyEditor {
         try {
             return type.getConstructor(new Class[]{String.class}).newInstance(
                     new Object[]{"0"});
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            // will not happen
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        } catch (SecurityException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }

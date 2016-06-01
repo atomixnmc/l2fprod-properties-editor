@@ -33,7 +33,7 @@ public class IconPool {
     private final Map<String, Icon> pool;
 
     public IconPool() {
-        pool = new HashMap<>();
+        pool = new HashMap<String, Icon>();
     }
 
     public static IconPool shared() {

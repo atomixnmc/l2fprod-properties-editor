@@ -89,7 +89,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
      */
     @Override
     public BeanInfo[] getAdditionalBeanInfo() {
-        ArrayList<BeanInfo> bi = new ArrayList<>();
+        ArrayList<BeanInfo> bi = new ArrayList<BeanInfo>();
         BeanInfo[] biarr = null;
         try {
             for (Class<?> cl = com.l2fprod.common.swing.JCollapsiblePane.class
@@ -165,7 +165,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
     @Override
     public PropertyDescriptor[] getPropertyDescriptors() {
         try {
-            ArrayList<PropertyDescriptor> descriptors = new ArrayList<>();
+            ArrayList<PropertyDescriptor> descriptors = new ArrayList<PropertyDescriptor>();
             PropertyDescriptor descriptor;
 
             try {

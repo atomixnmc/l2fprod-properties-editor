@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  */
 public class ResourceManager {
 
-    static Map<String, ResourceManager> nameToRM = new HashMap<>();
+    static Map<String, ResourceManager> nameToRM = new HashMap<String, ResourceManager>();
 
     private final ResourceBundle bundle;
 

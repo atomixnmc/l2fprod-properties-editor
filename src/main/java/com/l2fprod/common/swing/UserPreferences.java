@@ -95,11 +95,18 @@ public class UserPreferences {
      */
     public static JFileChooser getDirectoryChooser(String id) {
         JFileChooser chooser;
+        Class<?> directoryChooserClass;
         try {
-            Class<?> directoryChooserClass = Class
+            directoryChooserClass = Class
                     .forName("com.l2fprod.common.swing.JDirectoryChooser");
             chooser = (JFileChooser) directoryChooserClass.newInstance();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        } catch (ClassNotFoundException ex) {
+            chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        } catch (InstantiationException ex) {
+            chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        } catch (IllegalAccessException ex) {
             chooser = new JFileChooser();
             chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         }

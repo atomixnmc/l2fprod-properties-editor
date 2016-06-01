@@ -27,7 +27,7 @@ import java.util.HashMap;
  */
 public class DefaultBeanInfoResolver implements BeanInfoResolver {
 
-    private static final HashMap<String, BeanInfo> MAP = new HashMap<>();
+    private static final HashMap<String, BeanInfo> MAP = new HashMap<String, BeanInfo>();
 
     public static synchronized void addBeanInfo(Class<?> clazz, BeanInfo bi) {
         MAP.put(clazz.getName(), bi);

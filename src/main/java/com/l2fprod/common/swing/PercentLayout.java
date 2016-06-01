@@ -110,7 +110,7 @@ public final class PercentLayout implements LayoutManager2 {
         setOrientation(orientation);
         this.gap = gap;
 
-        m_ComponentToConstraint = new HashMap<>();
+        m_ComponentToConstraint = new HashMap<Component, Object>();
     }
 
     public void setGap(int gap) {
@@ -354,7 +354,7 @@ public final class PercentLayout implements LayoutManager2 {
         }
 
         // finally share the remaining space between the other components    
-        ArrayList<Integer> remaining = new ArrayList<>();
+        ArrayList<Integer> remaining = new ArrayList<Integer>();
         for (int i = 0, c = components.length; i < c; i++) {
             if (components[i].isVisible()) {
                 Constraint constraint

@@ -58,14 +58,14 @@ public class PropertySheetTableModel
     private Map<String, Boolean> toggleStates;
 
     public PropertySheetTableModel() {
-        model = new ArrayList<>();
-        publishedModel = new ArrayList<>();
-        properties = new ArrayList<>();
+        model = new ArrayList<Item>();
+        publishedModel = new ArrayList<Item>();
+        properties = new ArrayList<Property>();
         mode = PropertySheet.VIEW_AS_FLAT_LIST;
         sortingCategories = false;
         sortingProperties = false;
         restoreToggleStates = false;
-        toggleStates = new HashMap<>();
+        toggleStates = new HashMap<String, Boolean>();
     }
 
     /* (non-Javadoc)
@@ -476,7 +476,7 @@ public class PropertySheetTableModel
     }
 
     protected List<Property> sortProperties(List localProperties) {
-        List<Property> sortedProperties = new ArrayList<>(localProperties);
+        List<Property> sortedProperties = new ArrayList<Property>(localProperties);
         if (sortingProperties) {
             if (propertySortingComparator == null) {
                 // if no comparator was defined by the user, use the default
@@ -488,7 +488,7 @@ public class PropertySheetTableModel
     }
 
     protected List<String> sortCategories(List<String> localCategories) {
-        List<String> sortedCategories = new ArrayList<>(localCategories);
+        List<String> sortedCategories = new ArrayList<String>(localCategories);
         if (sortingCategories) {
             if (categorySortingComparator == null) {
                 // if no comparator was defined by the user, use the default
@@ -500,7 +500,7 @@ public class PropertySheetTableModel
     }
 
     protected List<String> getPropertyCategories(List<Property> localProperties) {
-        List<String> categories = new ArrayList<>();
+        List<String> categories = new ArrayList<String>();
         for (Property property : localProperties) {
             if (!categories.contains(property.getCategory())) {
                 categories.add(property.getCategory());
@@ -532,7 +532,7 @@ public class PropertySheetTableModel
      * Convenience method to get all the properties of one category.
      */
     private List<Property> getPropertiesForCategory(List<Property> localProperties, String category) {
-        List<Property> categoryProperties = new ArrayList<>();
+        List<Property> categoryProperties = new ArrayList<Property>();
         for (Property property : localProperties) {
             if (property.getCategory().equals(category)) {
                 categoryProperties.add(property);

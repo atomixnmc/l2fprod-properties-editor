@@ -29,7 +29,7 @@ import javax.swing.JComboBox;
 @EditorRegistry(type = Font.class)
 public class FontPropertyEditor extends ComboBoxPropertyEditor {
 
-    private final static Map<String, Font> FONT_MAP = new TreeMap<>();
+    private final static Map<String, Font> FONT_MAP = new TreeMap<String, Font>();
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public FontPropertyEditor() {

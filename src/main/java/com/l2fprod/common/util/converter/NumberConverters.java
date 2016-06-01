@@ -76,11 +76,23 @@ public class NumberConverters implements Converter {
                 //intValue is the odd man out
                 return ((Number) value).intValue();
             } else {
-                try {
                     //everything else is short/long/float/byte/doubleValue().
+                try {
                     Method m = value.getClass().getMethod(targetType.getSimpleName().toLowerCase() + "Value");
                     return m.invoke(value);
-                } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                } catch (NoSuchMethodException ex) {
+                    Logger.getLogger(NumberConverters.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new IllegalArgumentException("this code must not be reached");
+                } catch (SecurityException ex) {
+                    Logger.getLogger(NumberConverters.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new IllegalArgumentException("this code must not be reached");
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(NumberConverters.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new IllegalArgumentException("this code must not be reached");
+                } catch (IllegalArgumentException ex) {
+                    Logger.getLogger(NumberConverters.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new IllegalArgumentException("this code must not be reached");
+                } catch (InvocationTargetException ex) {
                     Logger.getLogger(NumberConverters.class.getName()).log(Level.SEVERE, null, ex);
                     throw new IllegalArgumentException("this code must not be reached");
                 }
@@ -98,11 +110,23 @@ public class NumberConverters implements Converter {
                 //parseInt is the odd man out
                 return Integer.parseInt(value.toString());
             } else {
-                //everything else is parseShort/Long/Float/etc.
                 try {
+                    //everything else is parseShort/Long/Float/etc.
                     Method m = targetType.getMethod("parse" + targetType.getSimpleName(), String.class);
                     return m.invoke(null, value.toString());
-                } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                } catch (NoSuchMethodException ex) {
+                    Logger.getLogger(NumberConverters.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new IllegalArgumentException("this code must not be reached");
+                } catch (SecurityException ex) {
+                    Logger.getLogger(NumberConverters.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new IllegalArgumentException("this code must not be reached");
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(NumberConverters.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new IllegalArgumentException("this code must not be reached");
+                } catch (IllegalArgumentException ex) {
+                    Logger.getLogger(NumberConverters.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new IllegalArgumentException("this code must not be reached");
+                } catch (InvocationTargetException ex) {
                     Logger.getLogger(NumberConverters.class.getName()).log(Level.SEVERE, null, ex);
                     throw new IllegalArgumentException("this code must not be reached");
                 }

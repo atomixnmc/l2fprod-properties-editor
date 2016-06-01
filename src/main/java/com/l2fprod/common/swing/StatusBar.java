@@ -48,7 +48,7 @@ public final class StatusBar extends JComponent {
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public StatusBar() {
         setLayout(LookAndFeelTweaks.createHorizontalPercentLayout());
-        idToZones = new HashMap<>();
+        idToZones = new HashMap<String, Component>();
         setZoneBorder(BorderFactory.createLineBorder(Color.lightGray));
     }
 

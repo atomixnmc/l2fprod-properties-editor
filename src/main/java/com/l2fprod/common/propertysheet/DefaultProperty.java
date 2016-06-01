@@ -37,7 +37,7 @@ public class DefaultProperty extends AbstractProperty {
     private boolean editable = true;
     private String category;
     private Property parent;
-    private final List<Property> subProperties = new ArrayList<>();
+    private final List<Property> subProperties = new ArrayList<Property>();
 
     @Override
     public String getName() {
@@ -113,7 +113,11 @@ public class DefaultProperty extends AbstractProperty {
                     }
                 }
             }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }
@@ -132,7 +136,11 @@ public class DefaultProperty extends AbstractProperty {
             if (method != null) {
                 method.invoke(object, new Object[]{getValue()});
             }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }

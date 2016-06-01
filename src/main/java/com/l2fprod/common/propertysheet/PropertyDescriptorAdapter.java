@@ -21,6 +21,8 @@ import java.beans.PropertyDescriptor;
 import java.beans.PropertyVetoException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * PropertyDescriptorAdapter.<br>
@@ -82,7 +84,23 @@ class PropertyDescriptorAdapter extends AbstractProperty {
             if (method != null) {
                 setValue(method.invoke(object));
             }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
+            String message = "Got exception when reading property " + getName();
+            if (object == null) {
+                message += ", object was 'null'";
+            } else {
+                message += ", object was " + String.valueOf(object);
+            }
+            throw new RuntimeException(message, e);
+        } catch (IllegalArgumentException e) {
+            String message = "Got exception when reading property " + getName();
+            if (object == null) {
+                message += ", object was 'null'";
+            } else {
+                message += ", object was " + String.valueOf(object);
+            }
+            throw new RuntimeException(message, e);
+        } catch (InvocationTargetException e) {
             String message = "Got exception when reading property " + getName();
             if (object == null) {
                 message += ", object was 'null'";
@@ -95,25 +113,41 @@ class PropertyDescriptorAdapter extends AbstractProperty {
 
     @Override
     public void writeToObject(Object object) {
-        try {
-            Method method = descriptor.getWriteMethod();
-            if (method != null) {
+        Method method = descriptor.getWriteMethod();
+        if (method != null) {
+            try {
                 method.invoke(object, new Object[]{getValue()});
-            }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            // let PropertyVetoException go to the upper level without logging
-            if (e instanceof InvocationTargetException
-                    && ((InvocationTargetException) e).getTargetException() instanceof PropertyVetoException) {
-                throw new RuntimeException(((InvocationTargetException) e).getTargetException());
-            }
+            } catch (IllegalAccessException e) {
+                String message = "Got exception when writing property " + getName();
+                if (object == null) {
+                    message += ", object was 'null'";
+                } else {
+                    message += ", object was " + String.valueOf(object);
+                }
+                throw new RuntimeException(message, e);
+            } catch (IllegalArgumentException e) {
+                String message = "Got exception when writing property " + getName();
+                if (object == null) {
+                    message += ", object was 'null'";
+                } else {
+                    message += ", object was " + String.valueOf(object);
+                }
+                throw new RuntimeException(message, e);
+            } catch (InvocationTargetException e) {
+                // let PropertyVetoException go to the upper level without logging
+                if (e instanceof InvocationTargetException
+                        && ((InvocationTargetException) e).getTargetException() instanceof PropertyVetoException) {
+                    throw new RuntimeException(((InvocationTargetException) e).getTargetException());
+                }
 
-            String message = "Got exception when writing property " + getName();
-            if (object == null) {
-                message += ", object was 'null'";
-            } else {
-                message += ", object was " + String.valueOf(object);
+                String message = "Got exception when writing property " + getName();
+                if (object == null) {
+                    message += ", object was 'null'";
+                } else {
+                    message += ", object was " + String.valueOf(object);
+                }
+                throw new RuntimeException(message, e);
             }
-            throw new RuntimeException(message, e);
         }
     }
 

@@ -39,7 +39,7 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
 //    private final Map propertyToRenderer;
 
     public PropertyRendererRegistry() {
-        typeToRenderer = new HashMap<>();
+        typeToRenderer = new HashMap<Class<?>, Object>();
 //        propertyToRenderer = new HashMap();
         registerDefaults();
     }
@@ -86,7 +86,9 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
                 if (annotation != null) {
                     try {
                         return annotation.type().newInstance();
-                    } catch (InstantiationException | IllegalAccessException ex) {
+                    } catch (InstantiationException ex) {
+                        Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalAccessException ex) {
                         Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -95,8 +97,10 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
                 if (((ExtendedPropertyDescriptor) descriptor).getPropertyTableRendererClass() != null) {
                     try {
                         return (TableCellRenderer) (((ExtendedPropertyDescriptor) descriptor).getPropertyTableRendererClass()).newInstance();
-                    } catch (IllegalAccessException | InstantiationException e) {
-                        Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, e);
+                    } catch (InstantiationException ex) {
+                        Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalAccessException ex) {
+                        Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -107,8 +111,10 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
         } else if (value instanceof Class<?>) {
             try {
                 renderer = (TableCellRenderer) ((Class<? extends TableCellRenderer>) value).newInstance();
-            } catch (IllegalAccessException | InstantiationException e) {
-                Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, e);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             renderer = getRenderer(property.getType());
@@ -140,8 +146,10 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
         } else if (value instanceof Class<?>) {
             try {
                 renderer = (TableCellRenderer) ((Class<? extends TableCellRenderer>) value).newInstance();
-            } catch (IllegalAccessException | InstantiationException e) {
-                Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, e);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(PropertyRendererRegistry.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return renderer;
@@ -184,7 +192,11 @@ public final class PropertyRendererRegistry implements PropertyRendererFactory {
                 if (m != null) {
                     m.invoke(next, false);
                 }
-            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            } catch (NoSuchMethodException ex) {
+            } catch (SecurityException ex) {
+            } catch (IllegalAccessException ex) {
+            } catch (IllegalArgumentException ex) {
+            } catch (InvocationTargetException ex) {
             }
         }
     }
