@@ -26,3 +26,4 @@ hs_err_pid*
 parts/
 stage/
 snap/
+/nbproject/

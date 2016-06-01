@@ -24,7 +24,7 @@ import java.awt.Insets;
  * InsetsPropertyEditor. <br>
  *
  */
-@EditorRegistry (type = Insets.class)
+@EditorRegistry(type = Insets.class)
 public class InsetsPropertyEditor extends StringConverterPropertyEditor {
 
     @Override

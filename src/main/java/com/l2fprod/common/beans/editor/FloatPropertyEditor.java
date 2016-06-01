@@ -21,7 +21,7 @@ import com.l2fprod.common.annotations.EditorRegistry;
  * FloatPropertyEditor.<br>
  *
  */
-@EditorRegistry (type = {Float.class, float.class})
+@EditorRegistry(type = {Float.class, float.class})
 public class FloatPropertyEditor extends NumberPropertyEditor {
 
     public FloatPropertyEditor() {

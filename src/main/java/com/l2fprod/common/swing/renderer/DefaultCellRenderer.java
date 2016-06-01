@@ -34,7 +34,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  */
 @RendererRegistry(type = {Object.class, Short.class, short.class, Integer.class, int.class, Long.class, long.class,
-        Float.class, float.class, Double.class, double.class, Byte.class, byte.class, Character.class, char.class})
+    Float.class, float.class, Double.class, double.class, Byte.class, byte.class, Character.class, char.class})
 public class DefaultCellRenderer
         extends DefaultTableCellRenderer
         implements ListCellRenderer {

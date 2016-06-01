@@ -113,11 +113,9 @@ public class PercentLayoutAnimator implements ActionListener {
                     currentPercent = targetPercent;
                     completed = true;
                 }
-            } else {
-                if (currentPercent < targetPercent) {
-                    currentPercent = targetPercent;
-                    completed = true;
-                }
+            } else if (currentPercent < targetPercent) {
+                currentPercent = targetPercent;
+                completed = true;
             }
 
             layout.setConstraint(component, new PercentLayout.PercentConstraint(

@@ -180,7 +180,7 @@ public class CellEditorAdapter
 
         final Component cellEditor = editor.getCustomEditor();
 
-    // request focus later so the editor can be used to enter value as soon as
+        // request focus later so the editor can be used to enter value as soon as
         // made visible
         SwingUtilities.invokeLater(new Runnable() {
             @Override

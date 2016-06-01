@@ -25,7 +25,7 @@ import javax.swing.JCheckBox;
  * BooleanAsCheckBoxPropertyEditor.
  *
  */
-@EditorRegistry (type = {Boolean.class, boolean.class})
+@EditorRegistry(type = {Boolean.class, boolean.class})
 public class BooleanAsCheckBoxPropertyEditor extends AbstractPropertyEditor {
 
     public BooleanAsCheckBoxPropertyEditor() {

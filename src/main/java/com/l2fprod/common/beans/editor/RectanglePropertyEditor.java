@@ -24,7 +24,7 @@ import java.awt.Rectangle;
  * RectanglePropertyEditor. <br>
  *
  */
-@EditorRegistry (type = Rectangle.class)
+@EditorRegistry(type = Rectangle.class)
 public class RectanglePropertyEditor extends StringConverterPropertyEditor {
 
     @Override

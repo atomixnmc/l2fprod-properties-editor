@@ -120,7 +120,7 @@ public class OS {
     public static String getWindowsVisualStyle() {
         String style = UIManager.getString("win.xpstyle.name");
         if (style == null) {
-      // guess the name of the current XPStyle
+            // guess the name of the current XPStyle
             // (win.xpstyle.colorName property found in awt_DesktopProperties.cpp in
             // JDK source)
             style = (String) Toolkit.getDefaultToolkit().getDesktopProperty(

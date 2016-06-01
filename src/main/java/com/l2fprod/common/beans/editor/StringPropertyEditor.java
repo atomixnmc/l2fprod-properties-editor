@@ -25,7 +25,7 @@ import javax.swing.text.JTextComponent;
  * StringPropertyEditor.<br>
  *
  */
-@EditorRegistry (type = String.class)
+@EditorRegistry(type = String.class)
 public class StringPropertyEditor extends AbstractPropertyEditor {
 
     public StringPropertyEditor() {

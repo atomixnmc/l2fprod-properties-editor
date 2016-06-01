@@ -32,14 +32,14 @@ public class DefaultBeanInfoResolver implements BeanInfoResolver {
     public static synchronized void addBeanInfo(Class<?> clazz, BeanInfo bi) {
         MAP.put(clazz.getName(), bi);
     }
-    
+
     public static synchronized BeanInfo getBeanInfoHelper(Class<?> clazz) {
         if (MAP.containsKey(clazz.getName())) {
             return MAP.get(clazz.getName());
         }
         return null;
     }
-    
+
     public DefaultBeanInfoResolver() {
         super();
     }
@@ -63,8 +63,7 @@ public class DefaultBeanInfoResolver implements BeanInfoResolver {
 
         if (MAP.containsKey(classname)) {
             return MAP.get(classname);
-        }
-        else {
+        } else {
             return BeanInfoFactory.createBeanInfo(clazz);
         }
     }

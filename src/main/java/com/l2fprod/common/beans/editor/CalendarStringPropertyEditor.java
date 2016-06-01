@@ -31,7 +31,7 @@ import javax.swing.JTextField;
  * href="http://www.toedter.com/en/jcalendar/index.html">toedter JCalendar </a>
  * component. <br>
  */
-@EditorRegistry (type = Calendar.class)
+@EditorRegistry(type = Calendar.class)
 public class CalendarStringPropertyEditor extends AbstractPropertyEditor {
 
     public static final java.text.SimpleDateFormat DEFAULT_DATE_FORMAT = new java.text.SimpleDateFormat("MM-dd-yyy");

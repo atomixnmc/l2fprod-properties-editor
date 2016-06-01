@@ -24,5 +24,5 @@ public interface Registry {
     void addConverter(Class<?> from, Class<?> to, Converter converter);
 
     Converter getConverter(Class<?> from, Class<?> to);
-    
+
 }

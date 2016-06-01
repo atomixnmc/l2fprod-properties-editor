@@ -122,6 +122,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
 
     /**
      * React to property changes by repainting.
+     *
      * @param evt
      */
     @Override
@@ -171,6 +172,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
     /**
      * Set the current mode, either {@link PropertySheet#VIEW_AS_CATEGORIES} or
      * {@link PropertySheet#VIEW_AS_FLAT_LIST}.
+     *
      * @param mode
      */
     public void setMode(int mode) {
@@ -283,8 +285,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
     }
 
     /**
-     * @return 
-     * @deprecated use {@link #getEditorFactory()}
+     * @return @deprecated use {@link #getEditorFactory()}
      */
     public PropertyEditorRegistry getEditorRegistry() {
         return (PropertyEditorRegistry) table.getEditorFactory();
@@ -480,7 +481,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
                         + (prop.getDisplayName() == null ? "" : prop.getDisplayName())
                         + "</b><br>"
                         + (prop.getShortDescription() == null ? "" : prop
-                        .getShortDescription()));
+                                .getShortDescription()));
             } else {
                 descriptionPanel.setText("<html>");
             }

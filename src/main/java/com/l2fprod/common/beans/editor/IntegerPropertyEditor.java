@@ -21,7 +21,7 @@ import com.l2fprod.common.annotations.EditorRegistry;
  * IntegerPropertyEditor.<br>
  *
  */
-@EditorRegistry (type = {Integer.class, int.class})
+@EditorRegistry(type = {Integer.class, int.class})
 public class IntegerPropertyEditor extends NumberPropertyEditor {
 
     public IntegerPropertyEditor() {

@@ -297,8 +297,7 @@ public class PropertySheetTable extends JTable {
     }
 
     /**
-     * @return 
-     * @deprecated use {@link #getEditorFactory()}
+     * @return @deprecated use {@link #getEditorFactory()}
      * @throws ClassCastException if the current editor factory is not a
      * PropertyEditorRegistry
      */
@@ -332,7 +331,7 @@ public class PropertySheetTable extends JTable {
      * Gets the CellEditor for the given row and column. It uses the editor
      * registry to find a suitable editor for the property.
      *
-     * @return 
+     * @return
      * @see javax.swing.JTable#getCellEditor(int, int)
      */
     @Override
@@ -420,7 +419,8 @@ public class PropertySheetTable extends JTable {
      * <li>to prevent the cell focus rect to be painted
      * <li>to disable ({@link Component#setEnabled(boolean)} the renderer if the
      * Property is not editable
-     * @return 
+     *
+     * @return
      */
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row,
@@ -470,8 +470,7 @@ public class PropertySheetTable extends JTable {
     }
 
     /**
-     * @return 
-     * @see #setWantsExtraIndent(boolean)
+     * @return @see #setWantsExtraIndent(boolean)
      */
     public boolean getWantsExtraIndent() {
         return wantsExtraIndent;
@@ -494,7 +493,8 @@ public class PropertySheetTable extends JTable {
     /**
      * Ensures the table uses the full height of its parent
      * {@link javax.swing.JViewport}.
-     * @return 
+     *
+     * @return
      */
     @Override
     public boolean getScrollableTracksViewportHeight() {
@@ -528,7 +528,7 @@ public class PropertySheetTable extends JTable {
 
         @Override
         public void tableChanged(TableModelEvent e) {
-      // in case the table changes for the following reasons:
+            // in case the table changes for the following reasons:
             // * the editing row has changed
             // * the editing row was removed
             // * all rows were changed
@@ -638,13 +638,11 @@ public class PropertySheetTable extends JTable {
             if ((item.getParent() == null || !item.getParent().isProperty())
                     && !item.hasToggle()) {
                 indent = table.getWantsExtraIndent() ? HOTSPOT_SIZE : 0;
+            } else // it is a property with children
+            if (item.hasToggle()) {
+                indent = item.getDepth() * HOTSPOT_SIZE;
             } else {
-                // it is a property with children
-                if (item.hasToggle()) {
-                    indent = item.getDepth() * HOTSPOT_SIZE;
-                } else {
-                    indent = (item.getDepth() + 1) * HOTSPOT_SIZE;
-                }
+                indent = (item.getDepth() + 1) * HOTSPOT_SIZE;
             }
 
             if (table.getSheetModel().getMode() == PropertySheet.VIEW_AS_CATEGORIES

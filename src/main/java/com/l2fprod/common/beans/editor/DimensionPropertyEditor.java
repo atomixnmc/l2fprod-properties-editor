@@ -24,7 +24,7 @@ import java.awt.Dimension;
  * DimensionPropertyEditor. <br>Editor for java.awt.Dimension object, where the
  * dimension is specified as "width x height"
  */
-@EditorRegistry (type = Dimension.class)
+@EditorRegistry(type = Dimension.class)
 public class DimensionPropertyEditor extends StringConverterPropertyEditor {
 
     @Override

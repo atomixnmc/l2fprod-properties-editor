@@ -118,8 +118,7 @@ public final class PercentLayout implements LayoutManager2 {
     }
 
     /**
-     * @return 
-     * @javabean.property bound="true" preferred="true"
+     * @return @javabean.property bound="true" preferred="true"
      */
     public int getGap() {
         return gap;
@@ -133,8 +132,7 @@ public final class PercentLayout implements LayoutManager2 {
     }
 
     /**
-     * @return 
-     * @javabean.property bound="true" preferred="true"
+     * @return @javabean.property bound="true" preferred="true"
      */
     public int getOrientation() {
         return orientation;
@@ -185,8 +183,9 @@ public final class PercentLayout implements LayoutManager2 {
      * be a number between 0 and 1 where 0 represents alignment along the
      * origin, 1 is aligned the furthest away from the origin, 0.5 is centered,
      * etc.
+     *
      * @param target
-     * @return 
+     * @return
      */
     @Override
     public float getLayoutAlignmentX(Container target) {
@@ -199,8 +198,9 @@ public final class PercentLayout implements LayoutManager2 {
      * be a number between 0 and 1 where 0 represents alignment along the
      * origin, 1 is aligned the furthest away from the origin, 0.5 is centered,
      * etc.
+     *
      * @param target
-     * @return 
+     * @return
      */
     @Override
     public float getLayoutAlignmentY(Container target) {
@@ -210,6 +210,7 @@ public final class PercentLayout implements LayoutManager2 {
     /**
      * Invalidates the layout, indicating that if the layout manager has cached
      * information it should be discarded.
+     *
      * @param target
      */
     @Override
@@ -241,7 +242,7 @@ public final class PercentLayout implements LayoutManager2 {
      * components in the specified parent container.
      *
      * @param parent the component to be laid out
-     * @return 
+     * @return
      * @see #preferredLayoutSize
      */
     @Override
@@ -253,7 +254,7 @@ public final class PercentLayout implements LayoutManager2 {
      * Returns the maximum size of this component.
      *
      * @param parent
-     * @return 
+     * @return
      * @see java.awt.Component#getMinimumSize()
      * @see java.awt.Component#getPreferredSize()
      * @see java.awt.LayoutManager
@@ -317,9 +318,9 @@ public final class PercentLayout implements LayoutManager2 {
                 - (components.length - 1) * gap;
         int availableSize = totalSize;
 
-    // PENDING(fred): the following code iterates 4 times on the component
+        // PENDING(fred): the following code iterates 4 times on the component
         // array, need to find something more efficient!
-    // give priority to components who want to use their preferred size or who
+        // give priority to components who want to use their preferred size or who
         // have a predefined size
         for (int i = 0, c = components.length; i < c; i++) {
             if (components[i].isVisible()) {
@@ -328,8 +329,8 @@ public final class PercentLayout implements LayoutManager2 {
                 if (constraint == null || constraint == PREFERRED_SIZE) {
                     sizes[i]
                             = (HORIZONTAL == orientation
-                            ? components[i].getPreferredSize().width
-                            : components[i].getPreferredSize().height);
+                                    ? components[i].getPreferredSize().width
+                                    : components[i].getPreferredSize().height);
                     availableSize -= sizes[i];
                 } else if (constraint instanceof NumberConstraint) {
                     sizes[i] = ((NumberConstraint) constraint).intValue();
@@ -338,7 +339,7 @@ public final class PercentLayout implements LayoutManager2 {
             }
         }
 
-    // then work with the components who want a percentage of the remaining
+        // then work with the components who want a percentage of the remaining
         // space
         int remainingSize = availableSize;
         for (int i = 0, c = components.length; i < c; i++) {

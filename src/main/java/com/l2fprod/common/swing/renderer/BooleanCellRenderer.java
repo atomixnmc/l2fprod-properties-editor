@@ -26,53 +26,53 @@ import javax.swing.table.TableCellRenderer;
 
 /**
  * BooleanCellRenderer. <br>
- *  
+ *
  */
-@RendererRegistry (type = {Boolean.class, boolean.class})
+@RendererRegistry(type = {Boolean.class, boolean.class})
 public class BooleanCellRenderer
-  extends JCheckBox
-  implements TableCellRenderer, ListCellRenderer {
+        extends JCheckBox
+        implements TableCellRenderer, ListCellRenderer {
 
-  @Override
-  public Component getTableCellRendererComponent(
-    JTable table,
-    Object value,
-    boolean isSelected,
-    boolean hasFocus,
-    int row,
-    int column) {
-        
-    if (isSelected) {
-      setBackground(table.getSelectionBackground());
-      setForeground(table.getSelectionForeground());
-    } else {
-      setBackground(table.getBackground());
-      setForeground(table.getForeground());
-    }
-    
-    setSelected(Boolean.TRUE.equals(value));
-    
-    return this;
-  }
-  
-  @Override
-  public Component getListCellRendererComponent(
-    JList list,
-    Object value,
-    int index,
-    boolean isSelected,
-    boolean cellHasFocus) {
+    @Override
+    public Component getTableCellRendererComponent(
+            JTable table,
+            Object value,
+            boolean isSelected,
+            boolean hasFocus,
+            int row,
+            int column) {
 
-    if (isSelected) {
-      setBackground(list.getSelectionBackground());
-      setForeground(list.getSelectionForeground());
-    } else {
-      setBackground(list.getBackground());
-      setForeground(list.getForeground());
+        if (isSelected) {
+            setBackground(table.getSelectionBackground());
+            setForeground(table.getSelectionForeground());
+        } else {
+            setBackground(table.getBackground());
+            setForeground(table.getForeground());
+        }
+
+        setSelected(Boolean.TRUE.equals(value));
+
+        return this;
     }
-    
-    setSelected(Boolean.TRUE.equals(value));
-    
-    return this;    
-  }
+
+    @Override
+    public Component getListCellRendererComponent(
+            JList list,
+            Object value,
+            int index,
+            boolean isSelected,
+            boolean cellHasFocus) {
+
+        if (isSelected) {
+            setBackground(list.getSelectionBackground());
+            setForeground(list.getSelectionForeground());
+        } else {
+            setBackground(list.getBackground());
+            setForeground(list.getForeground());
+        }
+
+        setSelected(Boolean.TRUE.equals(value));
+
+        return this;
+    }
 }

@@ -33,7 +33,7 @@ import javax.swing.JPanel;
  * ColorPropertyEditor. <br>
  *
  */
-@EditorRegistry (type = java.awt.Color.class)
+@EditorRegistry(type = java.awt.Color.class)
 public class ColorPropertyEditor extends AbstractPropertyEditor {
 
     private final ColorCellRenderer label;

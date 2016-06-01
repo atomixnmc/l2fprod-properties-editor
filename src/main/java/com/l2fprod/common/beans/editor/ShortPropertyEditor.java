@@ -21,7 +21,7 @@ import com.l2fprod.common.annotations.EditorRegistry;
  * ShortPropertyEditor.<br>
  *
  */
-@EditorRegistry (type = {Short.class, short.class})
+@EditorRegistry(type = {Short.class, short.class})
 public class ShortPropertyEditor extends NumberPropertyEditor {
 
     public ShortPropertyEditor() {

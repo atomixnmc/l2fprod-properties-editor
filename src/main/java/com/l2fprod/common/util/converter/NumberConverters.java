@@ -76,7 +76,7 @@ public class NumberConverters implements Converter {
                 //intValue is the odd man out
                 return ((Number) value).intValue();
             } else {
-                    //everything else is short/long/float/byte/doubleValue().
+                //everything else is short/long/float/byte/doubleValue().
                 try {
                     Method m = value.getClass().getMethod(targetType.getSimpleName().toLowerCase() + "Value");
                     return m.invoke(value);

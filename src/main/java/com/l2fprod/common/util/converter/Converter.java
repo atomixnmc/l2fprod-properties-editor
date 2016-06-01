@@ -16,8 +16,7 @@
 package com.l2fprod.common.util.converter;
 
 /**
- * Converter.
- * Roughly Equivalent to the Apache beanutils converter
+ * Converter. Roughly Equivalent to the Apache beanutils converter
  */
 public interface Converter {
 
@@ -32,7 +31,8 @@ public interface Converter {
 
     /**
      * Register the converter
-     * @param registry 
+     *
+     * @param registry
      */
     void register(Registry registry);
 }
