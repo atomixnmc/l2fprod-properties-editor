@@ -12,7 +12,7 @@ Renderers are used to display the data in the properties editor when NOT editing
 
 These are generally pretty straight forward. The DefaultCellRenderer provides the ability to show an Icon and String rendering of the value to display.
 
-# Font Renderer
+## Font Renderer
 
 Here is a quick example of a `Font` object being rendered using a `DefaultCellRenderer`.
 
@@ -38,7 +38,7 @@ Essentially, use the `RendererRegistry` custom annotation to register as a Rende
 
 Then call the `super.setValue(...)` with a `String` value to represent the value of the `Font` object to modify. This will display the name and the font size of the Font object.
 
-# Color Renderer
+## Color Renderer
 
 Here you can see that we are registering the class to be a renderer for the `Color` class type.
 
@@ -173,3 +173,33 @@ protected Icon convertToIcon(Object value) {
 So when it is done; you get an icon of the color, the RGB, and Hex representation.
 
 ![]({{site.baseurl}}/tros-images/color-screen.png)
+
+# Registration
+
+1. The `javax.swing.table.TableCellRenderer` class must be the base type for the renderer.
+2. A custom attribute `@RendererRegistry(type = { ... types ... })` is used at the Class level.
+3. In the META-INF.services directory, create a file: `javax.swing.table.TableCellRenderer` and add the full class name of the new renderer.
+
+If using Maven, the services file (#3) can be automatically generated using the `eu.somatik.serviceloader-maven-plugin` plugin in your pom.xml file.
+
+```xml
+<plugin>
+    <groupId>eu.somatik.serviceloader-maven-plugin</groupId>
+    <artifactId>serviceloader-maven-plugin</artifactId>
+    <version>1.0.7</version>
+    <configuration>
+        <services>
+            <param>javax.swing.table.TableCellRenderer</param>
+        </services>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+This will automatically generate the ServiceLoader file with all derived classes from `javax.swing.table.TableCellRenderer`.
