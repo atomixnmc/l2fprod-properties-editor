@@ -27,3 +27,6 @@ parts/
 stage/
 snap/
 /nbproject/
+
+Gemfile.lock
+_site
