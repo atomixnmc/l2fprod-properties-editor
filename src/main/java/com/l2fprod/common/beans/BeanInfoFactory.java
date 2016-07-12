@@ -21,7 +21,6 @@ import com.l2fprod.common.annotations.DirectoryProperty;
 import com.l2fprod.common.annotations.FileProperty;
 import com.l2fprod.common.beans.editor.DirectoryPropertyEditor;
 import com.l2fprod.common.beans.editor.FilePropertyEditor;
-import com.l2fprod.common.model.DefaultBeanInfoResolver;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;

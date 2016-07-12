@@ -16,8 +16,8 @@
 package com.l2fprod.common.swing.renderer;
 
 import com.l2fprod.common.annotations.RendererRegistry;
-import com.l2fprod.common.model.DefaultObjectRenderer;
-import com.l2fprod.common.model.ObjectRenderer;
+import com.l2fprod.common.util.converter.Converter;
+import com.l2fprod.common.util.converter.ConverterRegistry;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -39,7 +39,7 @@ public class DefaultCellRenderer
         extends DefaultTableCellRenderer
         implements ListCellRenderer {
 
-    private final ObjectRenderer objectRenderer = new DefaultObjectRenderer();
+//    private final ObjectRenderer objectRenderer = new DefaultObjectRenderer();
 
     private Color oddBackgroundColor = SystemColor.window;
     private Color evenBackgroundColor = SystemColor.window;
@@ -116,7 +116,11 @@ public class DefaultCellRenderer
     }
 
     protected String convertToString(Object value) {
-        return objectRenderer.getText(value);
+        if (value == null) {
+            return null;
+        }
+        Converter converter = ConverterRegistry.instance().getConverter(String.class, value.getClass()); //.convert(String.class, value);
+        return (converter == null) ? value.toString() : (String) converter.convert(String.class, value);
     }
 
     protected Icon convertToIcon(Object value) {

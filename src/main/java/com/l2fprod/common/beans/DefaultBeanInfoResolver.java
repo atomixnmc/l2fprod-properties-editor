@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.l2fprod.common.model;
+package com.l2fprod.common.beans;
 
 import com.l2fprod.common.beans.BeanInfoFactory;
 import com.l2fprod.common.beans.BeanInfoResolver;

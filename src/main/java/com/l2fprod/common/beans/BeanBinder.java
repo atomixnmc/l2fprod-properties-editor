@@ -15,7 +15,6 @@
  */
 package com.l2fprod.common.beans;
 
-import com.l2fprod.common.model.DefaultBeanInfoResolver;
 import com.l2fprod.common.propertysheet.Property;
 import com.l2fprod.common.propertysheet.PropertySheetPanel;
 
