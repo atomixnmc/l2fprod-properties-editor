@@ -74,7 +74,7 @@ public class VersionTest {
     public void testGetBuilder() {
         System.out.println("getBuilder");
         Version instance = new Version();
-        assertNotNull(instance.getVersion());
+        assertNotNull(instance.getBuilder());
     }
 
     /**
