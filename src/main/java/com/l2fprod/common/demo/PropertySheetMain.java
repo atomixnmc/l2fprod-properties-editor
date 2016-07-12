@@ -32,12 +32,12 @@ import javax.swing.UIManager;
 public class PropertySheetMain extends JPanel {
 
     static ResourceManager RESOURCE = ResourceManager.get(PropertySheetMain.class);
+    protected JTabbedPane tabs = new JTabbedPane();
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public PropertySheetMain() {
         setLayout(new BorderLayout());
 
-        JTabbedPane tabs = new JTabbedPane();
         tabs.add("Sheet 1", new PropertySheetPage());
         tabs.add("Sheet 2", new PropertySheetPage2());
         tabs.add("Sheet 3", new PropertySheetPage3());
