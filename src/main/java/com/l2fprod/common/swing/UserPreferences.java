@@ -41,7 +41,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 
-import com.l2fprod.common.swing.table.TableHelper;
 import com.l2fprod.common.util.converter.ConverterRegistry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
