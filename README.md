@@ -1,8 +1,5 @@
 # l2fprod
-[![Join the chat at https://gitter.im/ZenHarbinger/l2fprod-properties-editor](https://badges.gitter.im/ZenHarbinger/l2fprod-properties-editor.svg)](https://gitter.im/ZenHarbinger/l2fprod-properties-editor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/ZenHarbinger/l2fprod-properties-editor.svg?branch=master)](https://travis-ci.org/ZenHarbinger/l2fprod-properties-editor)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.tros/l2fprod-properties-editor/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.tros/l2fprod-properties-editor/)
-[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![Join the chat at https://gitter.im/ZenHarbinger/l2fprod-properties-editor](https://badges.gitter.im/ZenHarbinger/l2fprod-properties-editor.svg)](https://gitter.im/ZenHarbinger/l2fprod-properties-editor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/ZenHarbinger/l2fprod-properties-editor.svg?branch=master)](https://travis-ci.org/ZenHarbinger/l2fprod-properties-editor) [![Coverage Status](https://coveralls.io/repos/github/ZenHarbinger/l2fprod-properties-editor/badge.svg?branch=master)](https://coveralls.io/github/ZenHarbinger/l2fprod-properties-editor?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.tros/l2fprod-properties-editor/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.tros/l2fprod-properties-editor/) [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 Fork and Extension of l2fprod's Java properties editing component.
 
@@ -12,34 +9,38 @@ I honestly don't remember where I found the source anymore, but the available so
 
 I have been working w/ this code for a while and have updated some of it to Java6 with Generics and ServiceLoader functionality.  I have been using it in a project for work.  Changes are made as needed.
 
+For more complete examples from below to go [to my web-site](http://tros.org/l2fprod-properties-editor/).
+
 ## Example
 In this example, data is an object with get/set methods which we wish to configure.
 
-            final PropertySheetPanel sheet = new PropertySheetPanel();
-            JPanel p = new JPanel();
-            p.setLayout(new BorderLayout());
-            p.setBorder(BorderFactory.createTitledBorder(data.displayName()));
-            add(p, java.awt.BorderLayout.CENTER);
-            sheet.setMode(PropertySheet.VIEW_AS_CATEGORIES);
-            sheet.setDescriptionVisible(true);
-            sheet.setSortingCategories(true);
-            sheet.setSortingProperties(true);
-            sheet.setRestoreToggleStates(true);
-            p.add(sheet, java.awt.BorderLayout.CENTER);
+```java
+final PropertySheetPanel sheet = new PropertySheetPanel();
+JPanel p = new JPanel();
+p.setLayout(new BorderLayout());
+p.setBorder(BorderFactory.createTitledBorder(data.displayName()));
+add(p, java.awt.BorderLayout.CENTER);
+sheet.setMode(PropertySheet.VIEW_AS_CATEGORIES);
+sheet.setDescriptionVisible(true);
+sheet.setSortingCategories(true);
+sheet.setSortingProperties(true);
+sheet.setRestoreToggleStates(true);
+p.add(sheet, java.awt.BorderLayout.CENTER);
 
-            // everytime a property change, update the sheet with it
-            BeanBinder bb = new BeanBinder(data, sheet);
+// everytime a property change, update the sheet with it
+BeanBinder bb = new BeanBinder(data, sheet);
+```
 
 ## Extending
 To extend addtional types, 2 new classes are used.
 
-###Renderers
+### Renderers
 The renderer class will display the value of the object while it is not being edited.  By default, toString() is called if a new type is not defined and registered.
  1. First, the `javax.swing.table.TableCellRenderer` class must be derived.
  2. A custom attribute `@RendererRegistry(type = { ... types ... })` is added.
  3. In the META-INF.services directory, create a file: `javax.swing.table.TableCellRenderer` and add the full class name of the new Renderer.
 
-###Editors
+### Editors
 The renderer class will allow the user to change the value of the type.
  1. First, the `java.beans.PropertyEditor` class must be derived.
  2. A custom attribute `@EditorRegistry (type = { ... types ... } )` is added.
