@@ -64,5 +64,8 @@ public class ConverterRegistryTest {
             exception = true;
         }
         assertTrue(exception);
+        String test = "test";
+        String res = (String) ConverterRegistry.instance().convert(String.class, test);
+        assertEquals(test, res);
     }
 }
