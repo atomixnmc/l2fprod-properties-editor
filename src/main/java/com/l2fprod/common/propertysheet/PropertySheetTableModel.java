@@ -534,7 +534,7 @@ public class PropertySheetTableModel
     private List<Property> getPropertiesForCategory(List<Property> localProperties, String category) {
         List<Property> categoryProperties = new ArrayList<Property>();
         for (Property property : localProperties) {
-            if (property.getCategory().equals(category)) {
+            if (property.getCategory() != null && property.getCategory().equals(category)) {
                 categoryProperties.add(property);
             }
         }
