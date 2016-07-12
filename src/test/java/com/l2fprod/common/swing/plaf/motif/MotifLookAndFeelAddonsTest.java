@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.l2fprod.common.util.converter;
+package com.l2fprod.common.swing.plaf.motif;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author matta
  */
-public class BooleanConverterTest {
+public class MotifLookAndFeelAddonsTest {
     
-    public BooleanConverterTest() {
+    public MotifLookAndFeelAddonsTest() {
     }
     
     @BeforeClass
@@ -49,23 +47,10 @@ public class BooleanConverterTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of convert method, of class BooleanConverter.
-     */
     @Test
-    public void testConvert() {
-        Converter lookup = ConverterRegistry.instance().getConverter(String.class, Boolean.class);
-        assertTrue((Boolean) lookup.convert(Boolean.class, "true"));
-        assertFalse((Boolean) lookup.convert(Boolean.class, "false"));
-        lookup = ConverterRegistry.instance().getConverter(Boolean.class, String.class);
-        assertEquals("true", lookup.convert(String.class, true));
-        assertEquals("false", lookup.convert(String.class, false));
-        boolean exception = false;
-        try {
-            lookup.convert(Integer.class, true);
-        } catch(Exception ex) {
-            exception = true;
-        }
-        assertTrue(exception);
+    public void testSomeMethod() {
+        // TODO review the generated test code and remove the default call to fail.
+        assertNotNull(new MotifLookAndFeelAddons());
     }
+    
 }

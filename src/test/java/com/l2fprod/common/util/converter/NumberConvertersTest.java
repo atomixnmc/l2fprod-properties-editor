@@ -17,6 +17,7 @@ package com.l2fprod.common.util.converter;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -132,5 +133,18 @@ public class NumberConvertersTest {
             Float integer = ii;
             assertEquals(integer.toString(), lookup.convert(String.class, integer));
         }
+    }
+
+    @Test
+    public void testConvertFail() {
+        Converter lookup = ConverterRegistry.instance().getConverter(String.class, Float.class);
+        Float integer = new Float(1);
+        boolean exception = false;
+        try {
+            assertEquals(integer, lookup.convert(ConverterRegistry.class, integer.toString()));
+        } catch (Exception ex) {
+            exception = true;
+        }
+        Assert.assertTrue(exception);
     }
 }

@@ -17,53 +17,50 @@ package com.l2fprod.common.util.converter;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author matta
  */
-public class BooleanConverterTest {
-    
-    public BooleanConverterTest() {
+public class ConverterRegistryTest {
+
+    public ConverterRegistryTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of convert method, of class BooleanConverter.
+     * Test of addConverter method, of class ConverterRegistry.
      */
     @Test
-    public void testConvert() {
-        Converter lookup = ConverterRegistry.instance().getConverter(String.class, Boolean.class);
-        assertTrue((Boolean) lookup.convert(Boolean.class, "true"));
-        assertFalse((Boolean) lookup.convert(Boolean.class, "false"));
-        lookup = ConverterRegistry.instance().getConverter(Boolean.class, String.class);
-        assertEquals("true", lookup.convert(String.class, true));
-        assertEquals("false", lookup.convert(String.class, false));
+    public void testGetConverter() {
+        System.out.println("getConverter: No Converter");
+        Converter converter = ConverterRegistry.instance().getConverter(ConverterRegistry.class, Integer.class);
+        assertNull(converter);
+        assertNull(ConverterRegistry.instance().convert(String.class, null));
+
         boolean exception = false;
         try {
-            lookup.convert(Integer.class, true);
-        } catch(Exception ex) {
+            ConverterRegistry.instance().convert(String.class, ConverterRegistryTest.class);
+        } catch (Exception ex) {
             exception = true;
         }
         assertTrue(exception);
