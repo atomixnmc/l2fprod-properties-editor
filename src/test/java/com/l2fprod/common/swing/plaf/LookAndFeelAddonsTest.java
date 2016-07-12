@@ -15,14 +15,11 @@
  */
 package com.l2fprod.common.swing.plaf;
 
-import javax.swing.JComponent;
-import javax.swing.plaf.ComponentUI;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
