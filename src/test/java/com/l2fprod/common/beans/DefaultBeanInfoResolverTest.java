@@ -93,7 +93,8 @@ public class DefaultBeanInfoResolverTest {
         assertNotNull(beanInfo);
         BeanInfo beanInfo2 = res.getBeanInfo(new TestBean());
         assertEquals(beanInfo, beanInfo2);
-        assertNull(res.getBeanInfo(null));
+        assertNull(res.getBeanInfo((Object) null));
+        assertNull(res.getBeanInfo((Class<?>) null));
         DefaultBeanInfoResolver.addBeanInfo(TestBean.class, beanInfo);
         BeanInfo beanInfoHelper = DefaultBeanInfoResolver.getBeanInfoHelper(TestBean.class);
         assertNotNull(beanInfoHelper);
