@@ -55,7 +55,7 @@ public class PropertySheetEditor {
      */
     @Test
     public void testMain() throws Exception {
-        System.out.println("main");
+        System.out.println("editing");
         JFrame frame = new JFrame("PropertySheet");
         frame.getContentPane().setLayout(new BorderLayout());
         PropertySheetMain psm = new PropertySheetMain();
