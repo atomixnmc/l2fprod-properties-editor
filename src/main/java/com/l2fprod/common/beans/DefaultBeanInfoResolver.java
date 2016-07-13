@@ -15,9 +15,6 @@
  */
 package com.l2fprod.common.beans;
 
-import com.l2fprod.common.beans.BeanInfoFactory;
-import com.l2fprod.common.beans.BeanInfoResolver;
-
 import java.beans.BeanInfo;
 import java.util.HashMap;
 
