@@ -29,7 +29,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.ListResourceBundle;
+import java.util.Locale;
 import javax.swing.Icon;
 
 import javax.swing.JPanel;
@@ -83,6 +85,9 @@ public class PropertySheetPage extends JPanel {
     public static class Bean {
 
         private java.util.Calendar calendar;
+        private java.util.Date date;
+        private java.util.Calendar calendar1;
+        private java.util.Date date1;
 
         public java.util.Calendar getCalendar() {
             return calendar;
@@ -90,6 +95,30 @@ public class PropertySheetPage extends JPanel {
 
         public void setCalendar(java.util.Calendar value) {
             calendar = value;
+        }
+
+        public java.util.Date getDate() {
+            return date;
+        }
+
+        public void setDate(java.util.Date value) {
+            date = value;
+        }
+
+        public java.util.Calendar getCalendar1() {
+            return calendar1;
+        }
+
+        public void setCalendar1(java.util.Calendar value) {
+            calendar1 = value;
+        }
+
+        public java.util.Date getDate1() {
+            return date1;
+        }
+
+        public void setDate1(java.util.Date value) {
+            date1 = value;
         }
 
         private String name;
@@ -221,6 +250,11 @@ public class PropertySheetPage extends JPanel {
                     + ",season=" + getSeason() + "]";
         }
 
+        public Bean() {
+            calendar = Calendar.getInstance();
+            date = calendar.getTime();
+        }
+        
     }
 
     public static class SeasonEditor extends ComboBoxPropertyEditor {

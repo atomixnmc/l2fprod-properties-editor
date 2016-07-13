@@ -61,8 +61,8 @@ public class FileConverterTest {
         assertNotNull(f2);
         boolean exception = false;
         try {
-            instance.convert(File.class, 0);
-        } catch (Exception ex) {
+            instance.convert(FileConverter.class, 0);
+        } catch (IllegalArgumentException ex) {
             exception = true;
         }
         assertTrue(exception);
