@@ -77,7 +77,7 @@ public class PropertySheetMainTest {
         pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_RIGHT}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
-        pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
 
         for (int ii = 0; ii < 30; ii++) {
             pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
@@ -86,7 +86,7 @@ public class PropertySheetMainTest {
 //            pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
 //            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
             pressKey(robot, new int[]{KeyEvent.VK_SPACE}, 100);
-            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+            pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
         }
 
 //        robot.delay(1000);
@@ -100,7 +100,7 @@ public class PropertySheetMainTest {
         pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_RIGHT}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
-        pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
         for (int ii = 0; ii < 50; ii++) {
             pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
 //            pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
@@ -108,7 +108,7 @@ public class PropertySheetMainTest {
 //            pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
 //            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
             pressKey(robot, new int[]{KeyEvent.VK_SPACE}, 100);
-            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+            pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
         }
 //        robot.delay(1000);
         psm.tabs.setSelectedIndex(2);
@@ -121,7 +121,7 @@ public class PropertySheetMainTest {
         pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_RIGHT}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
-        pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
         for (int ii = 0; ii < 10; ii++) {
             pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
 //            pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
@@ -129,7 +129,7 @@ public class PropertySheetMainTest {
 //            pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
 //            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
             pressKey(robot, new int[]{KeyEvent.VK_SPACE}, 100);
-            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+            pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
         }
 //        robot.delay(1000);
         frame.dispose();
