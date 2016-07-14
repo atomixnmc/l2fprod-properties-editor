@@ -17,6 +17,7 @@ package com.l2fprod.common.demo;
 
 import java.awt.BorderLayout;
 import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -66,11 +67,71 @@ public class PropertySheetMainTest {
         frame.setVisible(true);
         
         Robot robot = new Robot();
-        robot.delay(1000);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+
+        pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_RIGHT}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+
+        for (int ii = 0; ii < 30; ii++) {
+            pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+            pressKey(robot, new int[]{KeyEvent.VK_SPACE}, 100);
+            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+        }
+
+//        robot.delay(1000);
         psm.tabs.setSelectedIndex(1);
-        robot.delay(1000);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_RIGHT}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+        for (int ii = 0; ii < 50; ii++) {
+            pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+            pressKey(robot, new int[]{KeyEvent.VK_SPACE}, 100);
+            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+        }
+//        robot.delay(1000);
         psm.tabs.setSelectedIndex(2);
-        robot.delay(1000);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_RIGHT}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
+        pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+        for (int ii = 0; ii < 10; ii++) {
+            pressKey(robot, new int[]{KeyEvent.VK_DOWN}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_D}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_ENTER}, 100);
+//            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+            pressKey(robot, new int[]{KeyEvent.VK_SPACE}, 100);
+            pressKey(robot, new int[]{KeyEvent.VK_ESCAPE}, 100);
+        }
+//        robot.delay(1000);
         frame.dispose();
     }
 
