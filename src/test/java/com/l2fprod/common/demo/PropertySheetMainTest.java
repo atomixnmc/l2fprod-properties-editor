@@ -66,6 +66,7 @@ public class PropertySheetMainTest {
         frame.setLocation(100, 100);
         frame.setVisible(true);
         
+        System.out.println("tab 0");
         Robot robot = new Robot();
         pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
@@ -91,6 +92,7 @@ public class PropertySheetMainTest {
 
 //        robot.delay(1000);
         psm.tabs.setSelectedIndex(1);
+        System.out.println("tab 1");
         pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
@@ -112,6 +114,7 @@ public class PropertySheetMainTest {
         }
 //        robot.delay(1000);
         psm.tabs.setSelectedIndex(2);
+        System.out.println("tab 2");
         pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
         pressKey(robot, new int[]{KeyEvent.VK_TAB}, 100);
