@@ -46,12 +46,6 @@ public class EnumerationPropertyEditor extends ComboBoxPropertyEditor {
         }
 
         JComboBox e = (JComboBox) editor;
-
-        for (int ii = 0; ii < e.getItemCount(); ii++) {
-            if (value != null && e.getItemAt(ii).equals(value.getClass().getCanonicalName())) {
-                e.setSelectedIndex(ii);
-                break;
-            }
-        }
+        e.getModel().setSelectedItem(value);
     }
 }
