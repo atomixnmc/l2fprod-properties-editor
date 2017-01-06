@@ -1,0 +1,5 @@
+test:
+  override:
+    - mvn clean cobertura:cobertura
+  post:
+    - bash <(curl -s https://codecov.io/bash)
