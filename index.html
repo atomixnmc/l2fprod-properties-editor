@@ -3,43 +3,65 @@ layout: default
 author_profile: true
 ---
 <div class="home">
-
+    <h1>{{ site.title }}</h1>
+<p>
+    <a href="https://gitter.im/ZenHarbinger/l2fprod-properties-editor?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge">
+        <img src="https://camo.githubusercontent.com/5585d9e9803d5a8a22ca89b888f8b9af8551fed8/68747470733a2f2f6261646765732e6769747465722e696d2f5a656e48617262696e6765722f6c326670726f642d70726f706572746965732d656469746f722e737667" alt="Join the chat at https://gitter.im/ZenHarbinger/l2fprod-properties-editor" data-canonical-src="https://badges.gitter.im/ZenHarbinger/l2fprod-properties-editor.svg" style="max-width:100%;">
+    </a>
+    <a href="https://circleci.com/gh/ZenHarbinger/l2fprod-properties-editor">
+        <img src="https://camo.githubusercontent.com/aa010a17c47bc8d710154e74bf77fe7baa07f37d/68747470733a2f2f636972636c6563692e636f6d2f67682f5a656e48617262696e6765722f6c326670726f642d70726f706572746965732d656469746f722e7376673f7374796c653d736869656c6426636972636c652d746f6b656e3d3a636972636c652d746f6b656e" alt="Build Status" data-canonical-src="https://circleci.com/gh/ZenHarbinger/l2fprod-properties-editor.svg?style=shield&amp;circle-token=:circle-token" style="max-width:100%;">
+    </a>
+    <a href="https://codecov.io/github/ZenHarbinger/l2fprod-properties-editor">
+        <img src="https://camo.githubusercontent.com/846047c429042c33dc65d9969a6631cc6c6dff96/68747470733a2f2f636f6465636f762e696f2f6769746875622f5a656e48617262696e6765722f6c326670726f642d70726f706572746965732d656469746f722f636f7665726167652e7376673f6272616e63683d6d6173746572" alt="Coverage Status" data-canonical-src="https://codecov.io/github/ZenHarbinger/l2fprod-properties-editor/coverage.svg?branch=master" style="max-width:100%;">
+    </a>
+    <a href="https://maven-badges.herokuapp.com/maven-central/org.tros/l2fprod-properties-editor/">
+        <img src="https://camo.githubusercontent.com/e3cb0b9ab3879d9582cddd3f99e95dcb69ab5875/68747470733a2f2f6d6176656e2d6261646765732e6865726f6b756170702e636f6d2f6d6176656e2d63656e7472616c2f6f72672e74726f732f6c326670726f642d70726f706572746965732d656469746f722f62616467652e737667" alt="Maven Central" data-canonical-src="https://maven-badges.herokuapp.com/maven-central/org.tros/l2fprod-properties-editor/badge.svg" style="max-width:100%;">
+    </a>
+    <a href="http://www.apache.org/licenses/LICENSE-2.0.html">
+        <img src="https://camo.githubusercontent.com/8bf81d4b6a63eaf6f712e3092fe7238f8716e615/687474703a2f2f696d672e736869656c64732e696f2f3a6c6963656e73652d6170616368652d626c75652e737667" alt="License" data-canonical-src="http://img.shields.io/:license-apache-blue.svg" style="max-width:100%;">
+    </a>
+</p>
   <ul class="post-list">
-    {% for post in paginator.posts %}
+      {% for post in site.posts %}
+      <div class="unit whole single-post-excerpt">
+          {% if post.tags contains "release" %}
+          <h2><a href="{{site.baseurl}}{{ post.url }}">{{ post.title }}</a></h2>
+          <div class="meta-info">
+              <span class="meta"><time class="timeago postlist-meta" datetime="{{ post.date | date: "%Y-%m-%d" }}"><i class="fa fa-calendar"></i>{{ post.date | date: "%B %-d, %Y" }}</time></span>
+              <!-- {% if post.tags and post.tags.size > 0 %}
+                  <div class="tags">
+                      Tagged:
+                      {% for tag in post.tags %}
+                      <span><i class="fa fa-tag"></i>{{ tag }}</span>
+                      {% endfor %}
+                  </div>
+              {% endif %} -->
+          </div>
+          <p class="description">{{ post.excerpt | strip_html}}</p>
+        {% break %}
+        {% endif %}
+      </div>
+    {% endfor %}
+    {% for post in site.posts %}
     <div class="unit whole single-post-excerpt">
-    	<h2><a href="{{site.baseurl}}{{ post.url }}">{{ post.title }}</a></h2>
-    	<div class="meta-info">
-    		<span class="meta"><time class="timeago postlist-meta" datetime="{{ post.date | date: "%Y-%m-%d" }}"><i class="fa fa-calendar"></i>{{ post.date | date: "%B %-d, %Y" }}</time></span>
-    		<!-- {% if post.tags and post.tags.size > 0 %}
-    			<div class="tags">
-    				Tagged:
-    				{% for tag in post.tags %}
-    				<span><i class="fa fa-tag"></i>{{ tag }}</span>
-    				{% endfor %}
-    			</div>
-    		{% endif %} -->
-    	</div>
-    	<p class="description">{{ post.excerpt | strip_html}}</p>
+        {% if post.tags contains "release" %}
+        {% else %}
+        <h2><a href="{{site.baseurl}}{{ post.url }}">{{ post.title }}</a></h2>
+        <div class="meta-info">
+            <span class="meta"><time class="timeago postlist-meta" datetime="{{ post.date | date: "%Y-%m-%d" }}"><i class="fa fa-calendar"></i>{{ post.date | date: "%B %-d, %Y" }}</time></span>
+            <!-- {% if post.tags and post.tags.size > 0 %}
+                <div class="tags">
+                    Tagged:
+                    {% for tag in post.tags %}
+                    <span><i class="fa fa-tag"></i>{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %} -->
+        </div>
+        <p class="description">{{ post.excerpt | strip_html}}</p>
+        {% endif %}
     </div>
     {% endfor %}
   </ul>
-
-  <!-- Pagination links -->
-  {% if paginator.total_pages > 1 %}
-     <div class="pagination">
-      {% if paginator.previous_page %}
-        <a href="{{ paginator.previous_page_path }}" class="previous">Previous</a>
-      {% else %}
-        <span class="previous">Previous</span>
-      {% endif %}
-      <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
-      {% if paginator.next_page %}
-        <a href="{{ paginator.next_page_path }}" class="next">Next</a>
-      {% else %}
-        <span class="next ">Next</span>
-      {% endif %}
-    </div>
-  {% endif %}
-  <!-- <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p> -->
 
 </div>
