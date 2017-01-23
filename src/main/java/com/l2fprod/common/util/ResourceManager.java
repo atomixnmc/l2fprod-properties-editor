@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,11 +23,20 @@ import java.util.ResourceBundle;
 /**
  * Manages application resources. <br>
  */
-public class ResourceManager {
+public final class ResourceManager {
 
     static Map<String, ResourceManager> nameToRM = new HashMap<String, ResourceManager>();
 
     private final ResourceBundle bundle;
+
+    /**
+     * Can't be directly constructed.
+     *
+     * @param bundle
+     */
+    private ResourceManager(ResourceBundle bundle) {
+        this.bundle = bundle;
+    }
 
     /**
      * Gets the ResourceManager associated with <code>clazz</code>. It looks for
@@ -110,15 +119,6 @@ public class ResourceManager {
     public static String resolve(String rbAndProperty, Object[] args) {
         String value = common().resolve0(rbAndProperty);
         return MessageFormat.format(value, args);
-    }
-
-    /**
-     * Can't be directly constructed
-     *
-     * @param bundle
-     */
-    private ResourceManager(ResourceBundle bundle) {
-        this.bundle = bundle;
     }
 
     /**

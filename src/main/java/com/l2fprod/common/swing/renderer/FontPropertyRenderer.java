@@ -1,8 +1,3 @@
-package com.l2fprod.common.swing.renderer;
-
-import com.l2fprod.common.annotations.RendererRegistry;
-import java.awt.Font;
-
 /*
  * Copyright 2016 matta.
  *
@@ -18,6 +13,11 @@ import java.awt.Font;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.l2fprod.common.swing.renderer;
+
+import com.l2fprod.common.annotations.RendererRegistry;
+import java.awt.Font;
+
 /**
  *
  * @author matta

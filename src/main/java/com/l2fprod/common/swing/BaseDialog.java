@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -59,22 +59,13 @@ public class BaseDialog extends JDialog {
      * Used to set the mode of the dialog to OK/CANCEL. When in this mode, OK
      * and Cancel buttons are automatically added to the dialog.
      */
-    public final static int OK_CANCEL_DIALOG = 0;
+    public static final int OK_CANCEL_DIALOG = 0;
 
     /**
      * Used to set the mode of the dialog to OK/CANCEL. When in this mode, a
      * Close button is automatically added to the dialog.
      */
-    public final static int CLOSE_DIALOG = 1;
-
-    private BannerPanel banner;
-    private JPanel contentPane;
-    private JPanel buttonPane;
-    private boolean cancelClicked;
-
-    private JButton okButton;
-    private JButton cancelOrCloseButton;
-    private int mode;
+    public static final int CLOSE_DIALOG = 1;
 
     private final Action okAction = new AbstractAction() {
         @Override
@@ -90,6 +81,15 @@ public class BaseDialog extends JDialog {
         }
     };
 
+    private BannerPanel banner;
+    private JPanel contentPane;
+    private JPanel buttonPane;
+    private boolean cancelClicked;
+
+    private JButton okButton;
+    private JButton cancelOrCloseButton;
+    private int mode;
+
     public BaseDialog() throws HeadlessException {
         super();
         buildUI();
@@ -98,19 +98,6 @@ public class BaseDialog extends JDialog {
     public BaseDialog(Dialog owner) throws HeadlessException {
         super(owner);
         buildUI();
-    }
-
-    public static BaseDialog newBaseDialog(Component parent) {
-        Window window = parent instanceof Window ? (Window) parent
-                : (Window) SwingUtilities.getAncestorOfClass(Window.class, parent);
-
-        if (window instanceof Frame) {
-            return new BaseDialog((Frame) window);
-        } else if (window instanceof Dialog) {
-            return new BaseDialog((Dialog) window);
-        } else {
-            return new BaseDialog();
-        }
     }
 
     public BaseDialog(Dialog owner, boolean modal) throws HeadlessException {
@@ -169,6 +156,19 @@ public class BaseDialog extends JDialog {
         buildUI();
     }
 
+    public static BaseDialog newBaseDialog(Component parent) {
+        Window window = parent instanceof Window ? (Window) parent
+                : (Window) SwingUtilities.getAncestorOfClass(Window.class, parent);
+
+        if (window instanceof Frame) {
+            return new BaseDialog((Frame) window);
+        } else if (window instanceof Dialog) {
+            return new BaseDialog((Dialog) window);
+        } else {
+            return new BaseDialog();
+        }
+    }
+
     /**
      * Gets the BannerPanel displayed in this dialog. The BannerPanel can be
      * made invisible by calling <code>getBanner().setVisible(false);</code> if
@@ -208,7 +208,7 @@ public class BaseDialog extends JDialog {
     }
 
     /**
-     * Called when the user clicks on the CANCEL or CLOSE button
+     * Called when the user clicks on the CANCEL or CLOSE button.
      */
     public void cancel() {
         cancelClicked = true;
@@ -261,7 +261,7 @@ public class BaseDialog extends JDialog {
     }
 
     /**
-     * Gets this dialog mode
+     * Gets this dialog mode.
      *
      * @return this dialog mode
      */

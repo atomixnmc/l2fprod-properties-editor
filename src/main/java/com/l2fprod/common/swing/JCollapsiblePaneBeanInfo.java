@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,29 +33,29 @@ import java.util.logging.Logger;
 public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
 
     /**
-     * Description of the Field
+     * Description of the Field.
      */
     protected BeanDescriptor bd = new BeanDescriptor(
             com.l2fprod.common.swing.JCollapsiblePane.class);
     /**
-     * Description of the Field
+     * Description of the Field.
      */
     protected Image iconMono16;
     /**
-     * Description of the Field
+     * Description of the Field.
      */
     protected Image iconColor16;
     /**
-     * Description of the Field
+     * Description of the Field.
      */
     protected Image iconMono32;
     /**
-     * Description of the Field
+     * Description of the Field.
      */
     protected Image iconColor32;
 
     /**
-     * Constructor for the JCollapsiblePaneBeanInfo object
+     * Constructor for the JCollapsiblePaneBeanInfo object.
      *
      * @throws java.beans.IntrospectionException
      */
@@ -83,7 +83,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
     }
 
     /**
-     * Gets the additionalBeanInfo
+     * Gets the additionalBeanInfo.
      *
      * @return The additionalBeanInfo value
      */
@@ -105,7 +105,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
     }
 
     /**
-     * Gets the beanDescriptor
+     * Gets the beanDescriptor.
      *
      * @return The beanDescriptor value
      */
@@ -115,14 +115,14 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
     }
 
     /**
-     * Gets the defaultPropertyIndex
+     * Gets the defaultPropertyIndex.
      *
      * @return The defaultPropertyIndex value
      */
     @Override
     public int getDefaultPropertyIndex() {
         String defName = "";
-        if (defName.equals("")) {
+        if ("".equals(defName)) {
             return -1;
         }
         PropertyDescriptor[] pd = getPropertyDescriptors();
@@ -135,7 +135,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
     }
 
     /**
-     * Gets the icon
+     * Gets the icon.
      *
      * @param type Description of the Parameter
      * @return The icon value
@@ -158,7 +158,7 @@ public class JCollapsiblePaneBeanInfo extends SimpleBeanInfo {
     }
 
     /**
-     * Gets the Property Descriptors
+     * Gets the Property Descriptors.
      *
      * @return The propertyDescriptors value
      */

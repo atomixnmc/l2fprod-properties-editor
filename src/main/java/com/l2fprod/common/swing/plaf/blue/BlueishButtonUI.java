@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,11 +30,11 @@ import javax.swing.plaf.basic.BasicButtonUI;
 public class BlueishButtonUI
         extends BasicButtonUI {
 
-    private static final Color blueishBackgroundOver = new Color(224, 232, 246);
-    private static final Color blueishBorderOver = new Color(152, 180, 226);
+    private static final Color BLUEISH_BACKGROUND_OVER = new Color(224, 232, 246);
+    private static final Color BLUEISH_BORDER_OVER = new Color(152, 180, 226);
 
-    private static final Color blueishBackgroundSelected = new Color(193, 210, 238);
-    private static final Color blueishBorderSelected = new Color(49, 106, 197);
+    private static final Color BLUEISH_BACKGROUND_SELECTED = new Color(193, 210, 238);
+    private static final Color BLUEISH_BORDER_SELECTED = new Color(49, 106, 197);
 
     public BlueishButtonUI() {
         super();
@@ -57,16 +57,16 @@ public class BlueishButtonUI
                 || button.getModel().isSelected()) {
             Color oldColor = g.getColor();
             if (button.getModel().isSelected()) {
-                g.setColor(blueishBackgroundSelected);
+                g.setColor(BLUEISH_BACKGROUND_SELECTED);
             } else {
-                g.setColor(blueishBackgroundOver);
+                g.setColor(BLUEISH_BACKGROUND_OVER);
             }
             g.fillRect(0, 0, c.getWidth() - 1, c.getHeight() - 1);
 
             if (button.getModel().isSelected()) {
-                g.setColor(blueishBorderSelected);
+                g.setColor(BLUEISH_BORDER_SELECTED);
             } else {
-                g.setColor(blueishBorderOver);
+                g.setColor(BLUEISH_BORDER_OVER);
             }
             g.drawRect(0, 0, c.getWidth() - 1, c.getHeight() - 1);
 

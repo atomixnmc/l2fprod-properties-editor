@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,6 +27,49 @@ import java.util.logging.Logger;
  *
  */
 public class ExtendedPropertyDescriptor extends PropertyDescriptor {
+
+    public static final Comparator BY_CATEGORY_COMPARATOR = new Comparator() {
+        @Override
+        public int compare(Object o1, Object o2) {
+            PropertyDescriptor desc1 = (PropertyDescriptor) o1;
+            PropertyDescriptor desc2 = (PropertyDescriptor) o2;
+
+            if (desc1 == null && desc2 == null) {
+                return 0;
+            } else if (desc1 != null && desc2 == null) {
+                return 1;
+            } else if (desc1 == null && desc2 != null) {
+                return -1;
+            } else if (desc1 instanceof ExtendedPropertyDescriptor
+                    && !(desc2 instanceof ExtendedPropertyDescriptor)) {
+                return -1;
+            } else if (!(desc1 instanceof ExtendedPropertyDescriptor)
+                    && desc2 instanceof ExtendedPropertyDescriptor) {
+                return 1;
+            } else if (!(desc1 instanceof ExtendedPropertyDescriptor)
+                    && !(desc2 instanceof ExtendedPropertyDescriptor)) {
+                return String.CASE_INSENSITIVE_ORDER.compare(
+                        desc1.getDisplayName(),
+                        desc2.getDisplayName());
+            } else {
+                int category
+                        = String.CASE_INSENSITIVE_ORDER.compare(
+                                ((ExtendedPropertyDescriptor) desc1).getCategory() == null
+                                        ? ""
+                                        : ((ExtendedPropertyDescriptor) desc1).getCategory(),
+                                ((ExtendedPropertyDescriptor) desc2).getCategory() == null
+                                        ? ""
+                                        : ((ExtendedPropertyDescriptor) desc2).getCategory());
+                if (category == 0) {
+                    return String.CASE_INSENSITIVE_ORDER.compare(
+                            desc1.getDisplayName(),
+                            desc2.getDisplayName());
+                } else {
+                    return category;
+                }
+            }
+        }
+    };
 
     private Class<?> tableCellRendererClass = null;
     private String category = "";
@@ -54,7 +97,7 @@ public class ExtendedPropertyDescriptor extends PropertyDescriptor {
     }
 
     /**
-     * Sets this property category
+     * Sets this property category.
      *
      * @param category
      * @return this property for chaining calls.
@@ -65,14 +108,14 @@ public class ExtendedPropertyDescriptor extends PropertyDescriptor {
     }
 
     /**
-     * @return the category in which this property belongs
+     * @return the category in which this property belongs.
      */
     public String getCategory() {
         return category;
     }
 
     /**
-     * Force this property to be readonly
+     * Force this property to be readonly.
      *
      * @return this property for chaining calls.
      */
@@ -122,48 +165,5 @@ public class ExtendedPropertyDescriptor extends PropertyDescriptor {
 
         return new ExtendedPropertyDescriptor(propertyName, readMethod, writeMethod);
     }
-
-    public static final Comparator BY_CATEGORY_COMPARATOR = new Comparator() {
-        @Override
-        public int compare(Object o1, Object o2) {
-            PropertyDescriptor desc1 = (PropertyDescriptor) o1;
-            PropertyDescriptor desc2 = (PropertyDescriptor) o2;
-
-            if (desc1 == null && desc2 == null) {
-                return 0;
-            } else if (desc1 != null && desc2 == null) {
-                return 1;
-            } else if (desc1 == null && desc2 != null) {
-                return -1;
-            } else if (desc1 instanceof ExtendedPropertyDescriptor
-                    && !(desc2 instanceof ExtendedPropertyDescriptor)) {
-                return -1;
-            } else if (!(desc1 instanceof ExtendedPropertyDescriptor)
-                    && desc2 instanceof ExtendedPropertyDescriptor) {
-                return 1;
-            } else if (!(desc1 instanceof ExtendedPropertyDescriptor)
-                    && !(desc2 instanceof ExtendedPropertyDescriptor)) {
-                return String.CASE_INSENSITIVE_ORDER.compare(
-                        desc1.getDisplayName(),
-                        desc2.getDisplayName());
-            } else {
-                int category
-                        = String.CASE_INSENSITIVE_ORDER.compare(
-                                ((ExtendedPropertyDescriptor) desc1).getCategory() == null
-                                        ? ""
-                                        : ((ExtendedPropertyDescriptor) desc1).getCategory(),
-                                ((ExtendedPropertyDescriptor) desc2).getCategory() == null
-                                        ? ""
-                                        : ((ExtendedPropertyDescriptor) desc2).getCategory());
-                if (category == 0) {
-                    return String.CASE_INSENSITIVE_ORDER.compare(
-                            desc1.getDisplayName(),
-                            desc2.getDisplayName());
-                } else {
-                    return category;
-                }
-            }
-        }
-    };
 
 }

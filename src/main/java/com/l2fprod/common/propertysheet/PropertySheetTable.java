@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -72,7 +72,7 @@ public class PropertySheetTable extends JTable {
     private boolean wantsExtraIndent = false;
 
     /**
-     * Cancel editing when editing row is changed
+     * Cancel editing when editing row is changed.
      */
     private TableModelListener cancelEditing;
 
@@ -368,7 +368,7 @@ public class PropertySheetTable extends JTable {
                 // name column gets a custom renderer
                 return nameRenderer;
 
-            case PropertySheetTableModel.VALUE_COLUMN: {
+            case PropertySheetTableModel.VALUE_COLUMN:
                 if (!item.isProperty()) {
                     return nameRenderer;
                 }
@@ -380,7 +380,6 @@ public class PropertySheetTable extends JTable {
                     renderer = getCellRenderer(property.getType());
                 }
                 return renderer;
-            }
             default:
                 // when will this happen, given the above?
                 return super.getCellRenderer(row, column);
@@ -415,7 +414,7 @@ public class PropertySheetTable extends JTable {
     }
 
     /**
-     * Overriden
+     * Overriden.
      * <li>to prevent the cell focus rect to be painted
      * <li>to disable ({@link Component#setEnabled(boolean)} the renderer if the
      * Property is not editable
@@ -502,7 +501,7 @@ public class PropertySheetTable extends JTable {
     }
 
     /**
-     * Commits on-going cell editing
+     * Commits on-going cell editing.
      */
     public void commitEditing() {
         TableCellEditor editor = getCellEditor();
@@ -512,7 +511,7 @@ public class PropertySheetTable extends JTable {
     }
 
     /**
-     * Cancels on-going cell editing
+     * Cancels on-going cell editing.
      */
     public void cancelEditing() {
         TableCellEditor editor = getCellEditor();
@@ -638,8 +637,8 @@ public class PropertySheetTable extends JTable {
             if ((item.getParent() == null || !item.getParent().isProperty())
                     && !item.hasToggle()) {
                 indent = table.getWantsExtraIndent() ? HOTSPOT_SIZE : 0;
-            } else // it is a property with children
-            {
+            } else {
+                // it is a property with children
                 if (item.hasToggle()) {
                     indent = item.getDepth() * HOTSPOT_SIZE;
                 } else {
@@ -673,7 +672,7 @@ public class PropertySheetTable extends JTable {
         private final Insets insets = new Insets(1, 0, 1, 1);
         private boolean isProperty;
 
-        public CellBorder() {
+        CellBorder() {
             expandedIcon = (Icon) UIManager.get(TREE_EXPANDED_ICON_KEY);
             collapsedIcon = (Icon) UIManager.get(TREE_COLLAPSED_ICON_KEY);
             expandedIcon = expandedIcon == null ? new ExpandedIcon() : new ImageIcon(render(expandedIcon));
@@ -777,7 +776,7 @@ public class PropertySheetTable extends JTable {
 
         private final CellBorder border;
 
-        public NameRenderer() {
+        NameRenderer() {
             border = new CellBorder();
         }
 

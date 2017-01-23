@@ -1,5 +1,5 @@
 test:
   override:
-    - mvn clean cobertura:cobertura
+    - mvn -DskipTests=false clean cobertura:cobertura
   post:
     - bash <(curl -s https://codecov.io/bash)

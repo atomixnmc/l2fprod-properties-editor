@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,16 +28,16 @@ import java.util.logging.Logger;
  */
 public final class Version {
 
-    private String _version;
-    private String _build_date;
-    private String _builder;
-    private String _company;
-    private String _applicationName;
-
     /**
      * Singleton Instance.
      */
-    public final static Version INSTANCE = new Version();
+    public static final Version INSTANCE = new Version();
+
+    private String version;
+    private String buildDate;
+    private String builder;
+    private String company;
+    private String applicationName;
 
     /**
      * Constructor.
@@ -54,11 +54,11 @@ public final class Version {
             URL url = ClassLoader.getSystemClassLoader().getResource(propFile);
 
             prop.load(url.openStream());
-            this._version = prop.getProperty("version");
-            this._build_date = prop.getProperty("buildTime");
-            this._builder = prop.getProperty("builder");
-            this._company = prop.getProperty("company");
-            this._applicationName = prop.getProperty("project");
+            this.version = prop.getProperty("version");
+            this.buildDate = prop.getProperty("buildTime");
+            this.builder = prop.getProperty("builder");
+            this.company = prop.getProperty("company");
+            this.applicationName = prop.getProperty("project");
         } catch (IOException ex) {
             Logger.getLogger(Version.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,7 +70,7 @@ public final class Version {
      * @return
      */
     public String getVersion() {
-        return _version;
+        return version;
     }
 
     /**
@@ -81,7 +81,7 @@ public final class Version {
      * @return
      */
     public String getBuildtime() {
-        return _build_date;
+        return buildDate;
     }
 
     /**
@@ -90,7 +90,7 @@ public final class Version {
      * @return
      */
     public String getBuilder() {
-        return _builder;
+        return builder;
     }
 
     /**
@@ -99,7 +99,7 @@ public final class Version {
      * @return
      */
     public String getApplicationName() {
-        return _applicationName;
+        return applicationName;
     }
 
     /**
@@ -108,7 +108,7 @@ public final class Version {
      * @return
      */
     public String getCompany() {
-        return _company;
+        return company;
     }
 
     /**
@@ -120,6 +120,6 @@ public final class Version {
      */
     @Override
     public String toString() {
-        return _version;
+        return version;
     }
 }
