@@ -15,7 +15,9 @@ coverage:
     changes: false
     patch: true
     project: true
-parsers:
+  ignore:
+    - .*/demo/.*
+    parsers:
   gcov:
     branch_detection:
       conditional: true
