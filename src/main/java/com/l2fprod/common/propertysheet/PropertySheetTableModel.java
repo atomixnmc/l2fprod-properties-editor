@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -299,7 +299,7 @@ public class PropertySheetTableModel
     }
 
     /**
-     * Get whether this model is restoring toggle states
+     * Get whether this model is restoring toggle states.
      *
      * @return
      */
@@ -452,7 +452,7 @@ public class PropertySheetTableModel
                     addPropertiesToModel(sortedProperties, null);
                     break;
 
-                case PropertySheet.VIEW_AS_CATEGORIES: {
+                case PropertySheet.VIEW_AS_CATEGORIES:
                     // add properties by category
                     List<String> categories = sortCategories(getPropertyCategories(sortedProperties));
 
@@ -464,8 +464,6 @@ public class PropertySheetTableModel
                                 categoryItem);
                     }
                     break;
-                }
-
                 default:
                 // should not happen
             }
@@ -492,7 +490,7 @@ public class PropertySheetTableModel
         if (sortingCategories) {
             if (categorySortingComparator == null) {
                 // if no comparator was defined by the user, use the default
-                categorySortingComparator = STRING_COMPARATOR;
+                categorySortingComparator = PropertyComparator.STRING_COMPARATOR;
             }
             Collections.sort(sortedCategories, categorySortingComparator);
         }
@@ -541,7 +539,7 @@ public class PropertySheetTableModel
         return categoryProperties;
     }
 
-    public class Item {
+    public final class Item {
 
         private final String name;
         private Property property;
@@ -633,6 +631,25 @@ public class PropertySheetTableModel
      */
     public static class PropertyComparator implements Comparator {
 
+        static final Comparator STRING_COMPARATOR
+                = new NaturalOrderStringComparator();
+
+        public static class NaturalOrderStringComparator implements Comparator {
+
+            @Override
+            public int compare(Object o1, Object o2) {
+                String s1 = (String) o1;
+                String s2 = (String) o2;
+                if (s1 == null) {
+                    return s2 == null ? 0 : -1;
+                } else if (s2 == null) {
+                    return 1;
+                } else {
+                    return s1.compareTo(s2);
+                }
+            }
+        }
+
         @Override
         public int compare(Object o1, Object o2) {
             if (o1 instanceof Property && o2 instanceof Property) {
@@ -642,25 +659,6 @@ public class PropertySheetTableModel
                         prop2.getDisplayName() == null ? null : prop2.getDisplayName().toLowerCase());
             } else {
                 return 0;
-            }
-        }
-    }
-
-    private static final Comparator STRING_COMPARATOR
-            = new NaturalOrderStringComparator();
-
-    public static class NaturalOrderStringComparator implements Comparator {
-
-        @Override
-        public int compare(Object o1, Object o2) {
-            String s1 = (String) o1;
-            String s2 = (String) o2;
-            if (s1 == null) {
-                return s2 == null ? 0 : -1;
-            } else if (s2 == null) {
-                return 1;
-            } else {
-                return s1.compareTo(s2);
             }
         }
     }

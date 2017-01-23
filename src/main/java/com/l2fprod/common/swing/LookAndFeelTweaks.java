@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,13 +37,16 @@ import javax.swing.text.html.HTMLDocument;
  * LookAndFeelTweaks. <br>
  *
  */
-public class LookAndFeelTweaks {
+public final class LookAndFeelTweaks {
 
-    public final static Border PANEL_BORDER = BorderFactory.createEmptyBorder(3, 3, 3, 3);
+    public static final Border PANEL_BORDER = BorderFactory.createEmptyBorder(3, 3, 3, 3);
 
-    public final static Border WINDOW_BORDER = BorderFactory.createEmptyBorder(4, 10, 10, 10);
+    public static final Border WINDOW_BORDER = BorderFactory.createEmptyBorder(4, 10, 10, 10);
 
-    public final static Border EMPTY_BORDER = BorderFactory.createEmptyBorder();
+    public static final Border EMPTY_BORDER = BorderFactory.createEmptyBorder();
+
+    private LookAndFeelTweaks() {
+    }
 
     public static void tweak() {
         Object listFont = UIManager.get("List.font");

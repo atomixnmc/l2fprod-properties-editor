@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,7 +50,7 @@ public class FilePropertyEditor extends AbstractPropertyEditor {
     protected JTextField textfield;
     private JButton button;
     //private JButton cancelButton;
-    private boolean _treated_as_string = false;
+    private boolean treatedAsString = false;
 
     public FilePropertyEditor() {
         this(true);
@@ -124,7 +124,7 @@ public class FilePropertyEditor extends AbstractPropertyEditor {
 
     @Override
     public Object getValue() {
-        if (_treated_as_string) {
+        if (treatedAsString) {
             return textfield.getText().trim();
         } else if ("".equals(textfield.getText().trim())) {
             return null;
@@ -139,7 +139,7 @@ public class FilePropertyEditor extends AbstractPropertyEditor {
             if (File.class.isAssignableFrom(value.getClass())) {
                 textfield.setText(((File) value).getAbsolutePath());
             } else if (String.class.isAssignableFrom(value.getClass())) {
-                _treated_as_string = true;
+                treatedAsString = true;
                 textfield.setText((String) value);
             }
         }
@@ -167,7 +167,7 @@ public class FilePropertyEditor extends AbstractPropertyEditor {
             File newFile = chooser.getSelectedFile();
             String text = newFile.getAbsolutePath();
             textfield.setText(text);
-            if (_treated_as_string) {
+            if (treatedAsString) {
                 firePropertyChange(oldFile.getAbsolutePath(), newFile.getAbsolutePath());
             } else {
                 firePropertyChange(oldFile, newFile);

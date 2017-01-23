@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,7 +31,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.ListResourceBundle;
-import java.util.Locale;
 import javax.swing.Icon;
 
 import javax.swing.JPanel;
@@ -88,6 +87,22 @@ public class PropertySheetPage extends JPanel {
         private java.util.Date date;
         private java.util.Calendar calendar1;
         private java.util.Date date1;
+        private String name;
+        private String text;
+        private long time;
+        private boolean visible;
+        private int id;
+        private File path;
+        private Color color = Color.blue;
+        private double doubleValue = 121210.4343543;
+        private Seasons seasonEnum = Seasons.SUMMER;
+        private String season = "SUMMER";
+        private String constrained;
+
+        public Bean() {
+            calendar = Calendar.getInstance();
+            date = calendar.getTime();
+        }
 
         public java.util.Calendar getCalendar() {
             return calendar;
@@ -121,8 +136,6 @@ public class PropertySheetPage extends JPanel {
             date1 = value;
         }
 
-        private String name;
-
         public String getName() {
             return name;
         }
@@ -131,8 +144,6 @@ public class PropertySheetPage extends JPanel {
             this.name = name;
         }
 
-        private String text;
-
         public String getText() {
             return text;
         }
@@ -140,8 +151,6 @@ public class PropertySheetPage extends JPanel {
         public void setText(String text) {
             this.text = text;
         }
-
-        private long time;
 
         public long getTime() {
             return time;
@@ -155,8 +164,6 @@ public class PropertySheetPage extends JPanel {
             return "1.0";
         }
 
-        private boolean visible;
-
         public boolean isVisible() {
             return visible;
         }
@@ -164,8 +171,6 @@ public class PropertySheetPage extends JPanel {
         public void setVisible(boolean visible) {
             this.visible = visible;
         }
-
-        private int id;
 
         public int getId() {
             return id;
@@ -175,8 +180,6 @@ public class PropertySheetPage extends JPanel {
             this.id = id;
         }
 
-        private File path;
-
         public File getPath() {
             return path;
         }
@@ -184,8 +187,6 @@ public class PropertySheetPage extends JPanel {
         public void setPath(File path) {
             this.path = path;
         }
-
-        private Color color = Color.blue;
 
         public Color getColor() {
             return color;
@@ -195,8 +196,6 @@ public class PropertySheetPage extends JPanel {
             this.color = color;
         }
 
-        private double doubleValue = 121210.4343543;
-
         public void setADouble(double d) {
             this.doubleValue = d;
         }
@@ -205,8 +204,6 @@ public class PropertySheetPage extends JPanel {
             return doubleValue;
         }
 
-        private Seasons seasonEnum = Seasons.SUMMER;
-
         public void setSeasonEnum(Seasons s) {
             seasonEnum = s;
         }
@@ -214,8 +211,6 @@ public class PropertySheetPage extends JPanel {
         public Seasons getSeasonEnum() {
             return seasonEnum;
         }
-
-        private String season = "SUMMER";
 
         @PropertyEditorOverride(type = SeasonEditor.class)
         public void setSeason(String s) {
@@ -226,8 +221,6 @@ public class PropertySheetPage extends JPanel {
         public String getSeason() {
             return season;
         }
-
-        private String constrained;
 
         public String getConstrained() {
             return constrained;
@@ -250,11 +243,6 @@ public class PropertySheetPage extends JPanel {
                     + ",season=" + getSeason() + "]";
         }
 
-        public Bean() {
-            calendar = Calendar.getInstance();
-            date = calendar.getTime();
-        }
-        
     }
 
     public static class SeasonEditor extends ComboBoxPropertyEditor {

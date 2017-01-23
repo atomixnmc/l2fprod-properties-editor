@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -48,29 +48,29 @@ public final class PercentLayout implements LayoutManager2 {
      * Useful constant to layout the components horizontally (from left to
      * right).
      */
-    public final static int HORIZONTAL = 0;
+    public static final int HORIZONTAL = 0;
 
     /**
      * Useful constant to layout the components vertically (from top to bottom).
      */
-    public final static int VERTICAL = 1;
+    public static final int VERTICAL = 1;
 
     public static class Constraint {
 
         protected Object value;
 
-        private Constraint(Object value) {
+        Constraint(Object value) {
             this.value = value;
         }
     }
 
     static class NumberConstraint extends Constraint {
 
-        public NumberConstraint(int d) {
+        NumberConstraint(int d) {
             this(new Integer(d));
         }
 
-        public NumberConstraint(Integer d) {
+        NumberConstraint(Integer d) {
             super(d);
         }
 
@@ -81,7 +81,7 @@ public final class PercentLayout implements LayoutManager2 {
 
     static class PercentConstraint extends Constraint {
 
-        public PercentConstraint(float d) {
+        PercentConstraint(float d) {
             super(d);
         }
 
@@ -90,14 +90,13 @@ public final class PercentLayout implements LayoutManager2 {
         }
     }
 
-    private final static Constraint REMAINING_SPACE = new Constraint("*");
-
-    private final static Constraint PREFERRED_SIZE = new Constraint("");
+    private static final Constraint REMAINING_SPACE = new Constraint("*");
+    private static final Constraint PREFERRED_SIZE = new Constraint("");
 
     private int orientation;
     private int gap;
 
-    private HashMap<Component, Object> m_ComponentToConstraint;
+    private HashMap<Component, Object> componentToConstraint;
 
     /**
      * Creates a new HORIZONTAL PercentLayout with a gap of 0.
@@ -110,7 +109,7 @@ public final class PercentLayout implements LayoutManager2 {
         setOrientation(orientation);
         this.gap = gap;
 
-        m_ComponentToConstraint = new HashMap<Component, Object>();
+        componentToConstraint = new HashMap<Component, Object>();
     }
 
     public void setGap(int gap) {
@@ -139,12 +138,12 @@ public final class PercentLayout implements LayoutManager2 {
     }
 
     public Constraint getConstraint(Component component) {
-        return (Constraint) m_ComponentToConstraint.get(component);
+        return (Constraint) componentToConstraint.get(component);
     }
 
     public void setConstraint(Component component, Object constraints) {
         if (constraints instanceof Constraint) {
-            m_ComponentToConstraint.put(component, constraints);
+            componentToConstraint.put(component, constraints);
         } else if (constraints instanceof Number) {
             setConstraint(
                     component,
@@ -175,6 +174,16 @@ public final class PercentLayout implements LayoutManager2 {
     @Override
     public void addLayoutComponent(Component component, Object constraints) {
         setConstraint(component, constraints);
+    }
+
+    /**
+     * Adds the specified component with the specified name to the layout.
+     *
+     * @param name the component name
+     * @param comp the component to be added
+     */
+    @Override
+    public void addLayoutComponent(String name, Component comp) {
     }
 
     /**
@@ -218,23 +227,13 @@ public final class PercentLayout implements LayoutManager2 {
     }
 
     /**
-     * Adds the specified component with the specified name to the layout.
-     *
-     * @param name the component name
-     * @param comp the component to be added
-     */
-    @Override
-    public void addLayoutComponent(String name, Component comp) {
-    }
-
-    /**
      * Removes the specified component from the layout.
      *
      * @param comp the component ot be removed
      */
     @Override
     public void removeLayoutComponent(Component comp) {
-        m_ComponentToConstraint.remove(comp);
+        componentToConstraint.remove(comp);
     }
 
     /**
@@ -325,7 +324,7 @@ public final class PercentLayout implements LayoutManager2 {
         for (int i = 0, c = components.length; i < c; i++) {
             if (components[i].isVisible()) {
                 Constraint constraint
-                        = (Constraint) m_ComponentToConstraint.get(components[i]);
+                        = (Constraint) componentToConstraint.get(components[i]);
                 if (constraint == null || constraint == PREFERRED_SIZE) {
                     sizes[i]
                             = (HORIZONTAL == orientation
@@ -345,7 +344,7 @@ public final class PercentLayout implements LayoutManager2 {
         for (int i = 0, c = components.length; i < c; i++) {
             if (components[i].isVisible()) {
                 Constraint constraint
-                        = (Constraint) m_ComponentToConstraint.get(components[i]);
+                        = (Constraint) componentToConstraint.get(components[i]);
                 if (constraint instanceof PercentConstraint) {
                     sizes[i] = (int) (remainingSize * ((PercentConstraint) constraint)
                             .floatValue());
@@ -354,12 +353,12 @@ public final class PercentLayout implements LayoutManager2 {
             }
         }
 
-        // finally share the remaining space between the other components    
+        // finally share the remaining space between the other components
         ArrayList<Integer> remaining = new ArrayList<Integer>();
         for (int i = 0, c = components.length; i < c; i++) {
             if (components[i].isVisible()) {
                 Constraint constraint
-                        = (Constraint) m_ComponentToConstraint.get(components[i]);
+                        = (Constraint) componentToConstraint.get(components[i]);
                 if (constraint == REMAINING_SPACE) {
                     remaining.add(i);
                     sizes[i] = 0;

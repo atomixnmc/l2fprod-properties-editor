@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -101,36 +101,36 @@ public class JCollapsiblePane extends JPanel {
 
     /**
      * Used when generating PropertyChangeEvents for the "animationState"
-     * property
+     * property.
      */
-    public final static String ANIMATION_STATE_KEY = "animationState";
+    public static final String ANIMATION_STATE_KEY = "animationState";
 
     /**
      * JCollapsible has a built-in toggle action which can be bound to buttons.
      * Accesses the action through
      * <code>collapsiblePane.getActionMap().get(JCollapsiblePane.TOGGLE_ACTION)</code>.
      */
-    public final static String TOGGLE_ACTION = "toggle";
+    public static final String TOGGLE_ACTION = "toggle";
 
     /**
      * The icon used by the "toggle" action when the JCollapsiblePane is
      * expanded, i.e the icon which indicates the pane can be collapsed.
      */
-    public final static String COLLAPSE_ICON = "collapseIcon";
+    public static final String COLLAPSE_ICON = "collapseIcon";
 
     /**
      * The icon used by the "toggle" action when the JCollapsiblePane is
      * collapsed, i.e the icon which indicates the pane can be expanded.
      */
-    public final static String EXPAND_ICON = "expandIcon";
+    public static final String EXPAND_ICON = "expandIcon";
 
     /**
-     * Indicates whether the component is collapsed or expanded
+     * Indicates whether the component is collapsed or expanded.
      */
     private boolean collapsed = false;
 
     /**
-     * Timer used for doing the transparency animation (fade-in)
+     * Timer used for doing the transparency animation (fade-in).
      */
     private Timer animateTimer;
     private final AnimationListener animator;
@@ -167,7 +167,7 @@ public class JCollapsiblePane extends JPanel {
             PropertyChangeListener {
 
         @SuppressWarnings("OverridableMethodCallInConstructor")
-        public ToggleAction() {
+        ToggleAction() {
             super(TOGGLE_ACTION);
             updateIcon();
             // the action must track the collapsed status of the pane to update its
@@ -254,7 +254,7 @@ public class JCollapsiblePane extends JPanel {
     }
 
     /**
-     * Overriden to redirect call to the content pane
+     * Overriden to redirect call to the content pane.
      *
      * @param comp
      */
@@ -409,7 +409,7 @@ public class JCollapsiblePane extends JPanel {
     }
 
     /**
-     * Sets the parameters controlling the animation
+     * Sets the parameters controlling the animation.
      *
      * @param params
      * @throws IllegalArgumentException if params is null
@@ -434,13 +434,13 @@ public class JCollapsiblePane extends JPanel {
      * JCollapsiblePane is enough but there might be cases where the parent
      * parent must be validated.
      */
-    public static interface JCollapsiblePaneContainer {
+    public interface JCollapsiblePaneContainer {
 
         Container getValidatingContainer();
     }
 
     /**
-     * Parameters controlling the animations
+     * Parameters controlling the animations.
      */
     private static class AnimationParams {
 
@@ -457,7 +457,7 @@ public class JCollapsiblePane extends JPanel {
          * @param alphaStart the starting alpha transparency level
          * @param alphaEnd the ending alpha transparency level
          */
-        public AnimationParams(int waitTime, int deltaY, float alphaStart,
+        AnimationParams(int waitTime, int deltaY, float alphaStart,
                 float alphaEnd) {
             this.waitTime = waitTime;
             this.deltaY = deltaY;
@@ -481,10 +481,10 @@ public class JCollapsiblePane extends JPanel {
          * Mutex used to ensure that the startHeight/finalHeight are not changed
          * during a repaint operation.
          */
-        private final Object ANIMATION_MUTEX = "Animation Synchronization Mutex";
+        private final Object animationMutex = "Animation Synchronization Mutex";
         /**
-         * This is the starting height when animating. If > finalHeight, then
-         * the animation is going to be to scroll up the component. If it is <
+         * This is the starting height when animating. If &gt; finalHeight, then
+         * the animation is going to be to scroll up the component. If it is &lt;
          * then finalHeight, then the animation will scroll down the component.
          */
         private int startHeight = 0;
@@ -494,7 +494,7 @@ public class JCollapsiblePane extends JPanel {
          */
         private int finalHeight = 0;
         /**
-         * The current alpha setting used during "animation" (fade-in/fade-out)
+         * The current alpha setting used during "animation" (fade-in/fade-out).
          */
         private float animateAlpha = 1.0f;
 
@@ -507,7 +507,7 @@ public class JCollapsiblePane extends JPanel {
              * of (1)) 3) Calculate the alpha value 4) Resize the ContentContainer 5)
              * Revalidate/Repaint the content container
              */
-            synchronized (ANIMATION_MUTEX) {
+            synchronized (animationMutex) {
                 if (startHeight == finalHeight) {
                     animateTimer.stop();
                     animateAlpha = animationParams.alphaEnd;
@@ -523,9 +523,9 @@ public class JCollapsiblePane extends JPanel {
                 }
 
                 final boolean contracting = startHeight > finalHeight;
-                final int delta_y = contracting ? -1 * animationParams.deltaY
+                final int deltaY = contracting ? -1 * animationParams.deltaY
                         : animationParams.deltaY;
-                int newHeight = wrapper.getHeight() + delta_y;
+                int newHeight = wrapper.getHeight() + deltaY;
                 if (contracting) {
                     if (newHeight < finalHeight) {
                         newHeight = finalHeight;
@@ -601,7 +601,7 @@ public class JCollapsiblePane extends JPanel {
          * @param stopHeight
          */
         public void reinit(int startHeight, int stopHeight) {
-            synchronized (ANIMATION_MUTEX) {
+            synchronized (animationMutex) {
                 JCollapsiblePane.this.firePropertyChange(ANIMATION_STATE_KEY, null,
                         "reinit");
                 this.startHeight = startHeight;
@@ -615,12 +615,12 @@ public class JCollapsiblePane extends JPanel {
 
     private final class WrapperContainer extends JPanel {
 
+        float alpha = 1.0f;
         private BufferedImage img;
         private Container c;
-        float alpha = 1.0f;
 
         @SuppressWarnings("OverridableMethodCallInConstructor")
-        public WrapperContainer(Container c) {
+        WrapperContainer(Container c) {
             super(new BorderLayout());
             this.c = c;
             add(c, BorderLayout.CENTER);
@@ -645,7 +645,7 @@ public class JCollapsiblePane extends JPanel {
         }
 
         void makeImage() {
-            // if we have no image or if the image has changed      
+            // if we have no image or if the image has changed
             if (getGraphicsConfiguration() != null && getWidth() > 0) {
                 Dimension dim = c.getPreferredSize();
                 // width and height must be > 0 to be able to create an image

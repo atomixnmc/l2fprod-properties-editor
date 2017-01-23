@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,7 +22,7 @@ import javax.swing.UIManager;
 /**
  * Provides methods related to the runtime environment.
  */
-public class OS {
+public final class OS {
 
     private static final boolean OS_IS_MAC_OSX;
     private static final boolean OS_IS_WINDOWS;
@@ -40,6 +40,9 @@ public class OS {
         OS_IS_WINDOWS_2003 = "windows 2003".equals(os);
         OS_IS_WINDOWS_VISTA = "windows vista".equals(os);
         OS_IS_LINUX = os != null && os.contains("linux");
+    }
+
+    private OS() {
     }
 
     /**

@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -160,7 +160,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
     }
 
     /**
-     * Toggles the visibility of the toolbar panel
+     * Toggles the visibility of the toolbar panel.
      *
      * @param visible
      */
@@ -183,6 +183,14 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
     @Override
     public void setProperties(Property[] properties) {
         model.setProperties(properties);
+    }
+
+    public void setProperties(PropertyDescriptor[] descriptors) {
+        Property[] properties = new Property[descriptors.length];
+        for (int i = 0, c = descriptors.length; i < c; i++) {
+            properties[i] = new PropertyDescriptorAdapter(descriptors[i]);
+        }
+        setProperties(properties);
     }
 
     @Override
@@ -217,14 +225,6 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
 
     public void setBeanInfo(BeanInfo beanInfo) {
         setProperties(beanInfo.getPropertyDescriptors());
-    }
-
-    public void setProperties(PropertyDescriptor[] descriptors) {
-        Property[] properties = new Property[descriptors.length];
-        for (int i = 0, c = descriptors.length; i < c; i++) {
-            properties[i] = new PropertyDescriptorAdapter(descriptors[i]);
-        }
-        setProperties(properties);
     }
 
     /**
@@ -494,7 +494,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
     class ToggleModeAction extends AbstractAction {
 
         @SuppressWarnings("OverridableMethodCallInConstructor")
-        public ToggleModeAction() {
+        ToggleModeAction() {
             super("toggle", IconPool.shared().get(
                     PropertySheet.class.getResource("icons/category.gif")));
             putValue(Action.SHORT_DESCRIPTION, ResourceManager.get(
@@ -515,7 +515,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
     class ToggleDescriptionAction extends AbstractAction {
 
         @SuppressWarnings("OverridableMethodCallInConstructor")
-        public ToggleDescriptionAction() {
+        ToggleDescriptionAction() {
             super("toggleDescription", IconPool.shared().get(
                     PropertySheet.class.getResource("icons/description.gif")));
             putValue(Action.SHORT_DESCRIPTION, ResourceManager.get(
@@ -532,7 +532,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
     class ToggleSortingAction extends AbstractAction {
 
         @SuppressWarnings("OverridableMethodCallInConstructor")
-        public ToggleSortingAction() {
+        ToggleSortingAction() {
             super("toggleSorting", IconPool.shared().get(
                     PropertySheet.class.getResource("icons/sort.gif")));
             putValue(Action.SHORT_DESCRIPTION, ResourceManager.get(

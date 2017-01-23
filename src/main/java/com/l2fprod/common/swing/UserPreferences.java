@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,7 +50,37 @@ import java.util.prefs.BackingStoreException;
  * UserPreferences. <BR>
  *
  */
-public class UserPreferences {
+public final class UserPreferences {
+
+    private static final ComponentListener WINDOW_DIMENSIONS = new ComponentAdapter() {
+        @Override
+        public void componentMoved(ComponentEvent e) {
+            store((Window) e.getComponent());
+        }
+
+        @Override
+        public void componentResized(ComponentEvent e) {
+            store((Window) e.getComponent());
+        }
+
+        private void store(Window w) {
+            String bounds = (String) ConverterRegistry.instance().convert(
+                    String.class, w.getBounds());
+            node().node("Windows").put(w.getName() + ".bounds", bounds);
+        }
+    };
+
+    private static final PropertyChangeListener SPLIT_PANE_LISTENER = new PropertyChangeListener() {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            JSplitPane split = (JSplitPane) evt.getSource();
+            node().node("JSplitPane").put(split.getName() + ".dividerLocation",
+                    String.valueOf(split.getDividerLocation()));
+        }
+    };
+
+    private UserPreferences() {
+    }
 
     /**
      * Gets the default file chooser. Its current directory will be tracked and
@@ -170,29 +200,11 @@ public class UserPreferences {
         window.addComponentListener(WINDOW_DIMENSIONS);
     }
 
-    private static final ComponentListener WINDOW_DIMENSIONS = new ComponentAdapter() {
-        @Override
-        public void componentMoved(ComponentEvent e) {
-            store((Window) e.getComponent());
-        }
-
-        @Override
-        public void componentResized(ComponentEvent e) {
-            store((Window) e.getComponent());
-        }
-
-        private void store(Window w) {
-            String bounds = (String) ConverterRegistry.instance().convert(
-                    String.class, w.getBounds());
-            node().node("Windows").put(w.getName() + ".bounds", bounds);
-        }
-    };
-
     private static class TableWidthTracker implements TableColumnModelListener {
 
         private final JTable table;
 
-        public TableWidthTracker(JTable table) {
+        TableWidthTracker(JTable table) {
             this.table = table;
         }
 
@@ -278,7 +290,7 @@ public class UserPreferences {
 
         private final JTextComponent text;
 
-        public TextListener(JTextComponent text) {
+        TextListener(JTextComponent text) {
             this.text = text;
             restore();
             text.getDocument().addDocumentListener((DocumentListener) this);
@@ -324,15 +336,6 @@ public class UserPreferences {
         split.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY,
                 SPLIT_PANE_LISTENER);
     }
-
-    private static final PropertyChangeListener SPLIT_PANE_LISTENER = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            JSplitPane split = (JSplitPane) evt.getSource();
-            node().node("JSplitPane").put(split.getName() + ".dividerLocation",
-                    String.valueOf(split.getDividerLocation()));
-        }
-    };
 
     /**
      * @return the Preference node where User Preferences are stored.

@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,10 +33,10 @@ import java.util.logging.Logger;
  */
 public final class PropertyEditorRegistry implements PropertyEditorFactory {
 
+    public static final PropertyEditorRegistry INSTANCE = new PropertyEditorRegistry();
+
     private final Map<Class<?>, Object> typeToEditor;
     private final Map<Property, Object> propertyToEditor;
-
-    public final static PropertyEditorRegistry INSTANCE = new PropertyEditorRegistry();
 
     private PropertyEditorRegistry() {
         typeToEditor = new HashMap<Class<?>, Object>();
@@ -110,24 +110,6 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
     }
 
     /**
-     * Load PropertyEditor from clz through reflection.
-     *
-     * @param clz Class to load from.
-     * @return Loaded propertyEditor
-     */
-    private PropertyEditor loadPropertyEditor(Class<?> clz) {
-        PropertyEditor editor = null;
-        try {
-            editor = (PropertyEditor) clz.newInstance();
-        } catch (InstantiationException e) {
-            Logger.getLogger(PropertyEditorRegistry.class.getName()).log(Level.SEVERE, null, e);
-        } catch (IllegalAccessException e) {
-            Logger.getLogger(PropertyEditorRegistry.class.getName()).log(Level.SEVERE, null, e);
-        }
-        return editor;
-    }
-
-    /**
      * Gets an editor for the given property type. The lookup is as follow:
      * <ul>
      * <li>if an editor was registered with
@@ -164,6 +146,24 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
         return editor;
     }
 
+    /**
+     * Load PropertyEditor from clz through reflection.
+     *
+     * @param clz Class to load from.
+     * @return Loaded propertyEditor
+     */
+    private PropertyEditor loadPropertyEditor(Class<?> clz) {
+        PropertyEditor editor = null;
+        try {
+            editor = (PropertyEditor) clz.newInstance();
+        } catch (InstantiationException e) {
+            Logger.getLogger(PropertyEditorRegistry.class.getName()).log(Level.SEVERE, null, e);
+        } catch (IllegalAccessException e) {
+            Logger.getLogger(PropertyEditorRegistry.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return editor;
+    }
+
     public synchronized void registerEditor(Class<?> type, Class<? extends PropertyEditor> editorClass) {
         typeToEditor.put(type, editorClass);
     }
@@ -172,16 +172,16 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
         typeToEditor.put(type, editor);
     }
 
-    public synchronized void unregisterEditor(Class<?> type) {
-        typeToEditor.remove(type);
-    }
-
     public synchronized void registerEditor(Property property, Class<? extends PropertyEditor> editorClass) {
         propertyToEditor.put(property, editorClass);
     }
 
     public synchronized void registerEditor(Property property, PropertyEditor editor) {
         propertyToEditor.put(property, editor);
+    }
+
+    public synchronized void unregisterEditor(Class<?> type) {
+        typeToEditor.remove(type);
     }
 
     public synchronized void unregisterEditor(Property property) {
@@ -202,9 +202,9 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
         //switch to service loader and use of custom annotation
         ServiceLoader<PropertyEditor> propertyLoader = ServiceLoader.load(PropertyEditor.class);
         try {
-            Iterator<PropertyEditor> controllers_it = propertyLoader.iterator();
-            while (controllers_it.hasNext()) {
-                PropertyEditor c = controllers_it.next();
+            Iterator<PropertyEditor> controllersIt = propertyLoader.iterator();
+            while (controllersIt.hasNext()) {
+                PropertyEditor c = controllersIt.next();
                 EditorRegistry annotation = c.getClass().getAnnotation(EditorRegistry.class);
                 if (annotation != null) {
                     for (Class<?> clazz : annotation.type()) {

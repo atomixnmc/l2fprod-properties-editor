@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,15 +34,15 @@ import javax.swing.plaf.UIResource;
 public final class StatusBar extends JComponent {
 
     /**
-     * The key used to identified the default zone
+     * The key used to identified the default zone.
      */
-    public final static String DEFAULT_ZONE = "default";
+    public static final String DEFAULT_ZONE = "default";
 
     private final HashMap<String, Component> idToZones;
     private Border zoneBorder;
 
     /**
-     * Construct a new StatusBar
+     * Construct a new StatusBar.
      *
      */
     @SuppressWarnings("OverridableMethodCallInConstructor")
@@ -57,7 +57,7 @@ public final class StatusBar extends JComponent {
     }
 
     /**
-     * Adds a new zone in the StatusBar
+     * Adds a new zone in the StatusBar.
      *
      * @param id
      * @param zone

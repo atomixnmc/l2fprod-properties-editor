@@ -1,12 +1,12 @@
 /*
  * Copyright 2015 Matthew Aguirre
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,7 +38,7 @@ public class CalendarStringPropertyEditor extends AbstractPropertyEditor {
     private static final Logger LOGGER = Logger.getLogger(CalendarStringPropertyEditor.class.getName());
 
     /**
-     * Constructor for JCalendarPropertyEditor
+     * Constructor for JCalendarPropertyEditor.
      */
     public CalendarStringPropertyEditor() {
         editor = new JTextField();
@@ -46,7 +46,7 @@ public class CalendarStringPropertyEditor extends AbstractPropertyEditor {
     }
 
     /**
-     * Constructor for JCalendarPropertyEditor
+     * Constructor for JCalendarPropertyEditor.
      *
      * @param locale Locale used to display the Date object
      */
@@ -56,7 +56,7 @@ public class CalendarStringPropertyEditor extends AbstractPropertyEditor {
     }
 
     /**
-     * Returns the Date of the Calendar
+     * Returns the Date of the Calendar.
      *
      * @return the date choosed as a <b>java.util.Date </b>b> object or null is
      * the date is not set
@@ -75,7 +75,7 @@ public class CalendarStringPropertyEditor extends AbstractPropertyEditor {
     }
 
     /**
-     * Sets the Date of the Calendar
+     * Sets the Date of the Calendar.
      *
      * @param value the Date object
      */
@@ -94,8 +94,8 @@ public class CalendarStringPropertyEditor extends AbstractPropertyEditor {
      */
     @Override
     public String getAsText() {
-        Calendar local_date = (Calendar) getValue();
-        String s = DEFAULT_DATE_FORMAT.format(local_date.getTime());
+        Calendar localDate = (Calendar) getValue();
+        String s = DEFAULT_DATE_FORMAT.format(localDate.getTime());
 
         LOGGER.log(Level.WARNING, "getAsText(): {0}", s);
         return s;
