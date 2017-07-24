@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.tros</groupId>
     <artifactId>l2fprod-properties-editor</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
     <name>l2fprod-properties-editor</name>
     <url>https://github.com/ZenHarbinger/l2fprod-properties-editor</url>
@@ -242,7 +242,7 @@
         <dependency>
             <groupId>org.tros</groupId>
             <artifactId>l2fprod-common-annotations</artifactId>
-            <version>1.0.3</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

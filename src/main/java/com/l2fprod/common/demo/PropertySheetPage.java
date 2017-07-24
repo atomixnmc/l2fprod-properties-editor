@@ -23,14 +23,14 @@ import com.l2fprod.common.propertysheet.PropertySheet;
 import com.l2fprod.common.propertysheet.PropertySheetPanel;
 import com.l2fprod.common.swing.LookAndFeelTweaks;
 import com.l2fprod.common.swing.renderer.DefaultCellRenderer;
-
+import com.l2fprod.common.annotations.Description;
+import com.l2fprod.common.annotations.DisplayName;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.ListResourceBundle;
 import javax.swing.Icon;
 
 import javax.swing.JPanel;
@@ -136,6 +136,7 @@ public class PropertySheetPage extends JPanel {
             date1 = value;
         }
 
+        @Description("The name of this object<br>Here I'm using multple lines<br>for the property<br>so scrollbars will get enabled")
         public String getName() {
             return name;
         }
@@ -200,6 +201,8 @@ public class PropertySheetPage extends JPanel {
             this.doubleValue = d;
         }
 
+        @DisplayName("a double")
+        @Description("a double description")
         public double getADouble() {
             return doubleValue;
         }
@@ -272,20 +275,20 @@ public class PropertySheetPage extends JPanel {
             }
         }
     }
-
-    public static class BeanRB extends ListResourceBundle {
-
-        @Override
-        protected Object[][] getContents() {
-            return new Object[][]{{"name", "Name"},
-            {"name.shortDescription", "The name of this object<br>Here I'm using multple lines<br>for the property<br>so scrollbars will get enabled"},
-            {"text", "Text"}, {"time", "Time"}, {"color", "Background"},
-            {"aDouble", "a double"},
-            {"season", "Season"},
-            {
-                "constrained.shortDescription",
-                "This property is constrained. Try using <b>blah</b> as the value, the previous value will be restored"}};
-        }
-    }
+//
+//    public static class BeanRB extends ListResourceBundle {
+//
+//        @Override
+//        protected Object[][] getContents() {
+//            return new Object[][]{{"name", "Name"},
+//            {"name.shortDescription", "The name of this object<br>Here I'm using multple lines<br>for the property<br>so scrollbars will get enabled"},
+//            {"text", "Text"}, {"time", "Time"}, {"color", "Background"},
+//            {"aDouble", "a double"},
+//            {"season", "Season"},
+//            {
+//                "constrained.shortDescription",
+//                "This property is constrained. Try using <b>blah</b> as the value, the previous value will be restored"}};
+//        }
+//    }
 
 }

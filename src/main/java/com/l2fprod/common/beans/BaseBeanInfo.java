@@ -15,6 +15,8 @@
  */
 package com.l2fprod.common.beans;
 
+import com.l2fprod.common.annotations.Description;
+import com.l2fprod.common.annotations.DisplayName;
 import com.l2fprod.common.util.ResourceManager;
 
 import java.awt.Image;
@@ -101,16 +103,32 @@ public class BaseBeanInfo extends SimpleBeanInfo {
 
             descriptor = ExtendedPropertyDescriptor
                     .newPropertyDescriptor(propertyName, getType());
+            DisplayName readannotation = descriptor.getReadMethod() != null ? descriptor.getReadMethod().getAnnotation(DisplayName.class) : null;
+            DisplayName writeannotation = descriptor.getWriteMethod() != null ? descriptor.getWriteMethod().getAnnotation(DisplayName.class) : null;
+            Description readannotationDesc = descriptor.getReadMethod() != null ? descriptor.getReadMethod().getAnnotation(Description.class) : null;
+            Description writeannotationDesc = descriptor.getWriteMethod() != null ? descriptor.getWriteMethod().getAnnotation(Description.class) : null;
 
             try {
-                descriptor.setDisplayName(getResources().getString(propertyName));
+                if (readannotation != null) {
+                    descriptor.setDisplayName(readannotation.value());
+                } else if (writeannotation != null) {
+                    descriptor.setDisplayName(writeannotation.value());
+                } else {
+                    descriptor.setDisplayName(getResources().getString(propertyName));
+                }
             } catch (MissingResourceException e) {
                 // ignore, the resource may not be provided
             }
             try {
-                descriptor.setShortDescription(
-                        getResources().getString(
-                                propertyName + ".shortDescription"));
+                if (readannotationDesc != null) {
+                    descriptor.setShortDescription(readannotationDesc.value());
+                } else if (writeannotationDesc != null) {
+                    descriptor.setShortDescription(writeannotationDesc.value());
+                } else {
+                    descriptor.setShortDescription(
+                            getResources().getString(
+                                    propertyName + ".shortDescription"));
+                }
             } catch (MissingResourceException e) {
                 // ignore, the resource may not be provided
             }
