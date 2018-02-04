@@ -83,29 +83,29 @@ class PropertyDescriptorAdapter extends AbstractProperty {
                 setValue(method.invoke(object));
             }
         } catch (IllegalAccessException e) {
-            String message = "Got exception when reading property " + getName();
-            if (object == null) {
-                message += ", object was 'null'";
-            } else {
-                message += ", object was " + String.valueOf(object);
-            }
-            throw new RuntimeException(message, e);
+//            String message = "Got exception when reading property " + getName();
+//            if (object == null) {
+//                message += ", object was 'null'";
+//            } else {
+//                message += ", object was " + String.valueOf(object);
+//            }
+//            throw new RuntimeException(message, e);
         } catch (IllegalArgumentException e) {
-            String message = "Got exception when reading property " + getName();
-            if (object == null) {
-                message += ", object was 'null'";
-            } else {
-                message += ", object was " + String.valueOf(object);
-            }
-            throw new RuntimeException(message, e);
+//            String message = "Got exception when reading property " + getName();
+//            if (object == null) {
+//                message += ", object was 'null'";
+//            } else {
+//                message += ", object was " + String.valueOf(object);
+//            }
+//            throw new RuntimeException(message, e);
         } catch (InvocationTargetException e) {
-            String message = "Got exception when reading property " + getName();
-            if (object == null) {
-                message += ", object was 'null'";
-            } else {
-                message += ", object was " + String.valueOf(object);
-            }
-            throw new RuntimeException(message, e);
+//            String message = "Got exception when reading property " + getName();
+//            if (object == null) {
+//                message += ", object was 'null'";
+//            } else {
+//                message += ", object was " + String.valueOf(object);
+//            }
+//            throw new RuntimeException(message, e);
         }
     }
 

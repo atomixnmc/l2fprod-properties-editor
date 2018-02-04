@@ -21,7 +21,11 @@ import com.l2fprod.common.propertysheet.PropertySheetPanel;
 import java.beans.BeanInfo;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyDescriptor;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.UIManager;
@@ -33,7 +37,7 @@ import javax.swing.UIManager;
  */
 public class BeanBinder {
 
-    private final Object bean;
+    private final List<Object> bean = new ArrayList<Object>();
     private final PropertySheetPanel sheet;
     private final PropertyChangeListener listener;
 
@@ -44,6 +48,16 @@ public class BeanBinder {
      * @param sheet
      */
     public BeanBinder(final Object bean, final PropertySheetPanel sheet) {
+        this(new Object[]{bean}, sheet, new DefaultBeanInfoResolver().getBeanInfo(bean));
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param bean
+     * @param sheet
+     */
+    public BeanBinder(final Object[] bean, final PropertySheetPanel sheet) {
         this(bean, sheet, new DefaultBeanInfoResolver().getBeanInfo(bean));
     }
 
@@ -54,12 +68,18 @@ public class BeanBinder {
      * @param sheet
      * @param beanInfo
      */
-    public BeanBinder(final Object bean, final PropertySheetPanel sheet, final BeanInfo beanInfo) {
-        this.bean = bean;
+    public BeanBinder(final Object[] bean, final PropertySheetPanel sheet, final BeanInfo beanInfo) {
+        this.bean.addAll(Arrays.asList(bean));
+//        this.bean = bean;
         this.sheet = sheet;
 
-        sheet.setProperties(beanInfo.getPropertyDescriptors());
-        sheet.readFromObject(bean);
+        for (Object bn : bean) {
+            BeanInfo info = new DefaultBeanInfoResolver().getBeanInfo(bn);
+            for (PropertyDescriptor pd : info.getPropertyDescriptors()) {
+                sheet.addProperty(pd);
+            }
+            sheet.readFromObject(bn);
+        }
 
         //changing the property causes this to recursivly call,
         //so kill it before it gets out of hand.
@@ -72,15 +92,17 @@ public class BeanBinder {
                 if (fire.get()) {
                     fire.set(false);
                     Property prop = (Property) evt.getSource();
-                    try {
-                        prop.writeToObject(BeanBinder.this.bean);
-                        sheet.readFromObject(bean);
-                    } catch (RuntimeException e) {
-                        // handle PropertyVetoException and restore previous value
-                        if (e.getCause() instanceof PropertyVetoException) {
-                            UIManager.getLookAndFeel().provideErrorFeedback(
-                                    BeanBinder.this.sheet);
-                            prop.setValue(evt.getOldValue());
+                    for (Object bn : BeanBinder.this.bean) {
+                        try {
+                            prop.writeToObject(bn);
+                            sheet.readFromObject(bn);
+                        } catch (RuntimeException e) {
+                            // handle PropertyVetoException and restore previous value
+                            if (e.getCause() instanceof PropertyVetoException) {
+                                UIManager.getLookAndFeel().provideErrorFeedback(
+                                        BeanBinder.this.sheet);
+                                prop.setValue(evt.getOldValue());
+                            }
                         }
                     }
                 }
@@ -94,7 +116,9 @@ public class BeanBinder {
      * Update the sheet data.
      */
     public void update() {
-        sheet.readFromObject(bean);
+        for (Object bn : bean) {
+            sheet.readFromObject(bn);
+        }
     }
 
     /**

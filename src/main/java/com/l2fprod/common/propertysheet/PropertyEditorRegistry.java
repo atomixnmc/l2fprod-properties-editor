@@ -201,9 +201,9 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
 
         //switch to service loader and use of custom annotation
         ServiceLoader<PropertyEditor> propertyLoader = ServiceLoader.load(PropertyEditor.class);
-        try {
-            Iterator<PropertyEditor> controllersIt = propertyLoader.iterator();
-            while (controllersIt.hasNext()) {
+        Iterator<PropertyEditor> controllersIt = propertyLoader.iterator();
+        while (controllersIt.hasNext()) {
+            try {
                 PropertyEditor c = controllersIt.next();
                 EditorRegistry annotation = c.getClass().getAnnotation(EditorRegistry.class);
                 if (annotation != null) {
@@ -211,9 +211,9 @@ public final class PropertyEditorRegistry implements PropertyEditorFactory {
                         registerEditor(clazz, c.getClass());
                     }
                 }
-            }
-        } catch (ServiceConfigurationError serviceError) {
+          } catch (ServiceConfigurationError serviceError) {
+              Logger.getLogger(getClass().getName()).log(Level.WARNING, serviceError.getMessage(), serviceError);
+           }
         }
     }
-
 }

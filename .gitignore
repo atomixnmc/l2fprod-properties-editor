@@ -30,3 +30,5 @@ snap/
 
 Gemfile.lock
 _site
+.idea
+*.iml

@@ -198,9 +198,22 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
         return model.getProperties();
     }
 
+    public void addProperty(PropertyDescriptor property) {
+        PropertyDescriptorAdapter pda = new PropertyDescriptorAdapter(property);
+        addProperty(pda);
+    }
+
     @Override
     public void addProperty(Property property) {
-        model.addProperty(property);
+        boolean found = false;
+        for (Property p : model.getProperties()) {
+            if (p.getName().equals(property.getName())) {
+                found = true;
+            }
+        }
+        if (!found) {
+            model.addProperty(property);
+        }
     }
 
     @Override
@@ -481,7 +494,7 @@ public class PropertySheetPanel extends JPanel implements PropertySheet, Propert
                         + (prop.getDisplayName() == null ? "" : prop.getDisplayName())
                         + "</b><br>"
                         + (prop.getShortDescription() == null ? "" : prop
-                                .getShortDescription()));
+                        .getShortDescription()));
             } else {
                 descriptionPanel.setText("<html>");
             }
